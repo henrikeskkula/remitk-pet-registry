@@ -1,6 +1,9 @@
 # Default owner (team lead / architecture)
 * @henrikeskkula
 
+# Repo governance
+/.github/ @henrikeskkula
+
 # Backend
 /backend/ @M-Sirelbu @henrikeskkula
 
@@ -11,5 +14,6 @@
 /database/ @IngeRi92 @henrikeskkula
 
 # Documentation
+/docs/architecture.md @henrikeskkula
 /docs/ @marinaraid
 /README.md @marinaraid
