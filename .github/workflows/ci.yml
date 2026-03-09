@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend Build & Test
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      # Võtab repo sisu runnerisse
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Seadistab Java 21 ja Maven cache'i
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # Annab mvnw failile execute õiguse, kui wrapper on olemas
+      - name: Make Maven wrapper executable
+        run: |
+          if [ -f mvnw ]; then chmod +x mvnw; fi
+
+      # Käivitab buildi ja testid
+      # Kui mvnw on olemas, kasutab wrapperit
+      # Kui ei ole, kasutab süsteemi mavenit
+      - name: Build and test backend
+        run: |
+          if [ -f mvnw ]; then
+            ./mvnw clean verify
+          else
+            mvn clean verify
+          fi
+
+  frontend:
+    name: Frontend Build & Test
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      # Võtab repo sisu runnerisse
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Seadistab Node.js ja npm cache'i
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      # Installeerib sõltuvused
+      - name: Install dependencies
+        run: npm ci
+
+      # Käivitab testid ainult siis, kui package.json sisaldab test scripti
+      - name: Run frontend tests
+        run: |
+          if npm run | grep -q " test"; then
+            npm test -- --watch=false --browsers=ChromeHeadless
+          else
+            echo "No test script found, skipping frontend tests."
+          fi
+
+      # Buildib Angulari appi
+      # Proovib esmalt standardset production buildi
+      # Kui see ei sobi sinu Angular setupiga, kohandame järgmises sammus
+      - name: Build frontend
+        run: npm run build -- --configuration production
