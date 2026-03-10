@@ -52,7 +52,7 @@ CREATE TABLE pets (
         CHECK (sex IN ('MALE', 'FEMALE', 'UNKNOWN')),
 
     CONSTRAINT chk_pets_status
-        CHECK (status IN ('ACTIVE', 'MISSING', 'FOUND', 'DECEASED', 'ABROAD'))
+        CHECK (status IN ('ACTIVE', 'MISSING', 'DECEASED', 'ABROAD'))
 );
 
 CREATE TABLE pet_events (
