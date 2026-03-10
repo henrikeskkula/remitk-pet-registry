@@ -30,7 +30,7 @@ CREATE TABLE pets (
     owner_id BIGINT,
     species VARCHAR(20) NOT NULL,
     name VARCHAR(100),
-    sex VARCHAR(10),
+    sex VARCHAR(10) NOT NULL,
     birth_date DATE,
     breed VARCHAR(100),
     color VARCHAR(100),
@@ -49,7 +49,7 @@ CREATE TABLE pets (
         CHECK (species IN ('DOG', 'CAT', 'FERRET')),
 
     CONSTRAINT chk_pets_sex
-        CHECK (sex IN ('MALE', 'FEMALE', 'UNKNOWN') OR sex IS NULL),
+        CHECK (sex IN ('MALE', 'FEMALE', 'UNKNOWN')),
 
     CONSTRAINT chk_pets_status
         CHECK (status IN ('ACTIVE', 'MISSING', 'FOUND', 'DECEASED', 'ABROAD'))
