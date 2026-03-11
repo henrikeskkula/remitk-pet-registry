@@ -260,7 +260,7 @@ Allowed species:
 
 DOG  
 CAT  
-FERRET  
+RABBIT  
 
 Allowed sex values:
 
@@ -403,7 +403,7 @@ USED
 pets.species  
 DOG  
 CAT  
-FERRET  
+RABBIT
 
 
 pets.sex  
