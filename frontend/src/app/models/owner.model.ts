@@ -3,7 +3,9 @@ export interface Owner {
   personalCode: string;
   firstName: string;
   lastName: string;
-  address?: string;
-  email?: string;
-  phone?: string;
+  address?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }

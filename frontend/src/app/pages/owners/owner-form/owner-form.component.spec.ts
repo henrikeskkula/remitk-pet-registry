@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MicrochipForm } from './microchip-form';
+import { OwnerForm } from './owner-form.component';
 
-describe('MicrochipForm', () => {
-  let component: MicrochipForm;
-  let fixture: ComponentFixture<MicrochipForm>;
+describe('OwnerForm', () => {
+  let component: OwnerForm;
+  let fixture: ComponentFixture<OwnerForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MicrochipForm],
+      imports: [OwnerForm],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MicrochipForm);
+    fixture = TestBed.createComponent(OwnerForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

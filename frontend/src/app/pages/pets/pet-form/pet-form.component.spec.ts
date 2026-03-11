@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PetForm } from './pet-form';
+import { PetForm } from './pet-form.component';
 
 describe('PetForm', () => {
   let component: PetForm;

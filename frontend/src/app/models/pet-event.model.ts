@@ -4,6 +4,7 @@ export interface PetEvent {
   eventType: string;
   eventTimestamp: string;
   performedByRole: string;
-  description?: string;
-  metadata?: string;
+  description?: string | null;
+  metadata?: string | null;
+  createdAt: string;
 }

@@ -1,0 +1,9 @@
+<h2>Pet detail</h2>
+
+<div *ngIf="pet as petData">
+  <p>ID: {{ petData.id }}</p>
+  <p>Name: {{ petData.name }}</p>
+  <p>Species: {{ petData.species }}</p>
+  <p>Status: {{ petData.status }}</p>
+  <p>Owner: {{ petData.ownerId }}</p>
+</div>

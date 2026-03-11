@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PetEvents } from './pet-events';
+import { MicrochipForm } from './microchip-form.component';
 
-describe('PetEvents', () => {
-  let component: PetEvents;
-  let fixture: ComponentFixture<PetEvents>;
+describe('MicrochipForm', () => {
+  let component: MicrochipForm;
+  let fixture: ComponentFixture<MicrochipForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PetEvents],
+      imports: [MicrochipForm],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PetEvents);
+    fixture = TestBed.createComponent(MicrochipForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

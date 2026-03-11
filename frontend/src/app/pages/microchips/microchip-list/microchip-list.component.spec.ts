@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OwnerList } from './owner-list';
+import { MicrochipList } from './microchip-list.component';
 
-describe('OwnerList', () => {
-  let component: OwnerList;
-  let fixture: ComponentFixture<OwnerList>;
+describe('MicrochipList', () => {
+  let component: MicrochipList;
+  let fixture: ComponentFixture<MicrochipList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OwnerList],
+      imports: [MicrochipList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OwnerList);
+    fixture = TestBed.createComponent(MicrochipList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

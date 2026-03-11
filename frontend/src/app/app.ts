@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PetList } from './pages/pets/pet-list/pet-list';
+import { PetsListComponent } from './pages/pets/pets-list/pets-list.component';
 
 @Component({
   selector: 'app-root',

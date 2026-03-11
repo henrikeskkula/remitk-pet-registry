@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-owner-form',
   imports: [],
-  templateUrl: './owner-form.html',
-  styleUrl: './owner-form.scss',
+  templateUrl: './owner-form.component.html',
+styleUrl: './owner-form.component.scss'
 })
 export class OwnerForm {}
