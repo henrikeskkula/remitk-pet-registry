@@ -27,7 +27,7 @@ REST API for managing **pets, owners, microchips, pet events, and images**.
 - [Pet Ownership](#pet-ownership)
   - [`POST /api/pets/{id}/transfer`](#initiate-ownership-transfer)
   - [`POST /api/transfers/{id}/accept`<br>
-      `POST /api/transfers/{id}/reject` <br>
+    `POST /api/transfers/{id}/reject` <br>
     `POST /api/transfers/{id}/cancel`](#complete-ownership-transfer)
 - [Owners](#owners)
   - [`POST /api/owners`](#create-owner)
@@ -43,6 +43,48 @@ REST API for managing **pets, owners, microchips, pet events, and images**.
   - [`PUT /api/microchips/{id}/status`](#edit-microchip-status)
   - [`DELETE /api/microchips/{id}`](#delete-microchip)
 
+## Implementation plans
+All endpoints are divided into the core API and future plans.
+### Core API
+
+- [Pets](#pets)
+  - [`POST /api/pets`](#create-pet)
+  - [`GET /api/pets`](#search-pets)
+  - [`GET /api/pets/{id}`](#view-pet)
+  - [`PUT /api/pets/{id}`](#edit-pet)
+  - [`DELETE /api/pets/{id}`](#delete-pet)
+- [Owners](#owners)
+  - [`POST /api/owners`](#create-owner)
+  - [`GET /api/owners`](#search-owners)
+  - [`GET /api/owners/{id}`](#view-owner)
+  - [`PUT /api/owners/{id}`](#edit-owner)
+  - [`GET /api/owners/{id}/pets`](#get-owner-pets)
+- [Microchips](#microchips)
+  - [`POST /api/microchips`](#create-microchip)
+  - [`GET /api/microchips`](#search-microchips)
+  - [`PUT /api/microchips/{id}/status`](#edit-microchip-status)
+- [Pet Ownership](#pet-ownership)
+  - [`POST /api/pets/{id}/transfer`](#initiate-ownership-transfer)
+  - [`POST /api/transfers/{id}/accept`<br>
+    `POST /api/transfers/{id}/reject` <br>
+    `POST /api/transfers/{id}/cancel`](#complete-ownership-transfer)
+
+### Future extensions
+
+- [Owners](#owners)
+  - [`DELETE /api/owners/{id}`](#delete-owner)
+- [Microchips](#microchips)
+  - [`GET /api/microchips/{id}`](#view-microchip)
+  - [`DELETE /api/microchips/{id}`](#delete-microchip)
+- [Pet Images](#pet-images)
+  - [`PUT /api/pets/{id}/image`](#upload-image)
+  - [`GET /api/pets/{id}/image`](#get-image)
+  - [`DELETE /api/pets/{id}/image`](#delete-image)
+- [Pet Events](#pet-events)
+  - [`POST /api/events`](#create-event)
+  - [`GET /api/events`](#search-pet-events)
+  - [`GET /api/events/{eventId}`](#view-pet-event)
+  - [`POST /api/pets/{id}/owner`](#set-owner)
 ---
 
 # Authentication
@@ -72,7 +114,7 @@ This is the core pet entity, returned by all endpoints that return a pet.
 | Name        | Description                        | Nullable | Directly modifiable | Example                                         |
 |-------------|------------------------------------|----------|---------------------|-------------------------------------------------|
 | id          | Pet's ID, primary key              | No       | No                  | `39999`                                         |
-| microchipId | The ID of the pet's microchip      | Yes      | Yes                 | `473278223`                                     |
+| microchipId | The ID of the pet's microchip      | No       | Yes                 | `473278223`                                     |
 | species     | The pet's species                  | No       | Yes                 | `"DOG"`                                         |
 | name        | The pet's name                     | Yes      | Yes                 | `"Pauka"`                                       |
 | sex         | The pet's sex                      | No       | Yes                 | `"MALE"`                                        |
@@ -83,7 +125,7 @@ This is the core pet entity, returned by all endpoints that return a pet.
 | ownerId     | The ID of the pet's owner          | Yes      | No                  | `3729789`                                       |
 
 
-## Create Pet
+## Create Pet (Core API)
 
 `POST /api/pets`
 
@@ -130,7 +172,7 @@ A pet object, with directly modifiable fields.
 
 ---
 
-## Search Pets
+## Search Pets (Core API)
 
 `GET /api/pets`
 
@@ -150,9 +192,9 @@ Exactly **one filter must be provided**. Returns only pets visible to the user.
 
 ### Success
 
-| Code | Description                                                              |
-|------|--------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of pet objects** matching the search criteria |
+| Code | Description                                                                                                  |
+|------|--------------------------------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated list of pet objects** matching the search criteria, or an empty list if none is found. |
 
 ### Errors
 
@@ -161,12 +203,11 @@ Exactly **one filter must be provided**. Returns only pets visible to the user.
 | 400  | Invalid query parameters or multiple filters provided |
 | 401  | Authentication required                               |
 | 403  | Insufficient permissions                              |
-| 404  | No pets found                                         |
 | 500  | Internal server error                                 |
 
 ---
 
-## View Pet
+## View Pet (Core API)
 
 `GET /api/pets/{id}`
 
@@ -187,16 +228,16 @@ Requires user role to be able to see pet.
 
 ### Errors
 
-| Code | Description |
-|---|---|
-| 401 | Authentication required |
-| 403 | Insufficient permissions |
-| 404 | Pet not found |
-| 500 | Internal server error |
+| Code | Description              |
+|------|--------------------------|
+| 401  | Authentication required  |
+| 403  | Insufficient permissions |
+| 404  | Pet not found            |
+| 500  | Internal server error    |
 
 ---
 
-## Edit Pet
+## Edit Pet (Core API)
 
 `PUT /api/pets/{id}`
 
@@ -209,6 +250,7 @@ A pet object, with directly modifiable fields.
 
 #### Required fields:
 
+- microchipId
 - species
 - sex
 
@@ -244,7 +286,7 @@ A pet object, with directly modifiable fields.
 
 ---
 
-## Delete Pet
+## Delete Pet (Core API)
 
 `DELETE /api/pets/{id}`
 
@@ -419,9 +461,9 @@ Only events of pets that the user is allowed to access are presented.
 
 ### Success
 
-| Code | Description                                       |
-|------|---------------------------------------------------|
-| 200  | Returns a **paginated list of pet event objects** |
+| Code | Description                                                                      |
+|------|----------------------------------------------------------------------------------|
+| 200  | Returns a **paginated list of pet event objects** or an empty list if not found. |
 
 ### Errors
 
@@ -430,7 +472,6 @@ Only events of pets that the user is allowed to access are presented.
 | 400  | Invalid search parameters |
 | 401  | Authentication required   |
 | 403  | Insufficient permissions  |
-| 404  | Pet not found             |
 | 500  | Internal server error     |
 
 ---
@@ -515,7 +556,7 @@ An entity to record ownership transfers.
 
 ---
 
-## Initiate Ownership Transfer
+## Initiate Ownership Transfer (Core API)
 
 `POST /api/pets/{id}/transfer`
 
@@ -549,7 +590,7 @@ The body must contain the ID of the new owner.
 
 ---
 
-## Complete Ownership Transfer
+## Complete Ownership Transfer (Core API)
 
 `POST /api/transfers/{id}/accept`
 
@@ -597,20 +638,18 @@ An entity to record the information of a pet owner.
 
 ### Fields
 
-There are no nullable fields.
-
-| Name         | Description                       | Example                                      |
-|--------------|-----------------------------------|----------------------------------------------|
-| id           | The ID of the owner               | `32878`                                      |
-| personalCode | The personal ID code of the owner | `"39912121234"`                              |
-| firstName    | The first name(s) of the owner    | `"Jaan Madis"`                               |
-| lastName     | The surname(s) of the owner       | `"Tamm"`                                     |
-| address      | The physical address of the owner | `"Koera 12, Tallinn, Harju maakond, Eesti"`  |
-| email        | The e-mail address of the owner   | `"jaantamm@gmail.com"`                       |
-| phone        | The phone number of the owner     | `"+37254541010"`                             |
+| Name         | Description                       | Nullable | Example                                      |
+|--------------|-----------------------------------|----------|----------------------------------------------|
+| id           | The ID of the owner               | No       | `32878`                                      |
+| personalCode | The personal ID code of the owner | No       | `"39912121234"`                              |
+| firstName    | The first name(s) of the owner    | No       | `"Jaan Madis"`                               |
+| lastName     | The surname(s) of the owner       | No       | `"Tamm"`                                     |
+| address      | The physical address of the owner | Yes      | `"Koera 12, Tallinn, Harju maakond, Eesti"`  |
+| email        | The e-mail address of the owner   | Yes      | `"jaantamm@gmail.com"`                       |
+| phone        | The phone number of the owner     | Yes      | `"+37254541010"`                             |
 
 
-## Create Owner
+## Create Owner (Core API)
 
 `POST /api/owners`
 
@@ -650,7 +689,7 @@ All the fields in the example are required.
 
 ---
 
-## Search Owners
+## Search Owners (Core API)
 
 `GET /api/owners`
 
@@ -670,9 +709,9 @@ The user must have access to the owner.
 
 ### Success
 
-| Code | Description                                                                |
-|------|----------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of owner objects** matching the search criteria |
+| Code | Description                                                                                               |
+|------|-----------------------------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated list of owner objects** matching the search criteria or an empty list if not found. |
 
 ### Errors
 
@@ -681,12 +720,11 @@ The user must have access to the owner.
 | 400  | Invalid query parameters or both filters provided |
 | 401  | Authentication required                           |
 | 403  | Insufficient permissions                          |
-| 404  | No owners found                                   |
 | 500  | Internal server error                             |
 
 ---
 
-## View Owner
+## View Owner (Core API)
 
 `GET /api/owners/{id}`
 
@@ -715,7 +753,7 @@ Returns details for a specific owner.
 
 ---
 
-## Edit Owner
+## Edit Owner (Core API)
 
 `PUT /api/owners/{id}`
 
@@ -779,7 +817,7 @@ Deletes an owner entity. Only available for admin users.
 
 ---
 
-## Get Owner Pets
+## Get Owner Pets (Core API)
 
 `GET /api/owners/{id}/pets`
 
@@ -836,7 +874,7 @@ None of the fields are nullable.
 | status     | Whether the chip is free or in use | `"FREE"`, `"USED"` |
 
 
-## Create Microchip
+## Create Microchip (Core API)
 
 `POST /api/microchips`
 
@@ -871,7 +909,7 @@ The fields in the example are required. A new microchip will always have a statu
 
 ---
 
-## Search Microchips
+## Search Microchips (Core API)
 
 `GET /api/microchips`
 
@@ -890,9 +928,9 @@ Exactly **one filter must be provided**. Only available for admin users.
 
 ### Success
 
-| Code | Description                                                                    |
-|------|--------------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of microchip objects** matching the search criteria |
+| Code | Description                                                                                                   |
+|------|---------------------------------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated list of microchip objects** matching the search criteria or an empty list if not found. |
 
 ### Errors
 
@@ -935,7 +973,7 @@ Returns details of a specific microchip.
 
 ---
 
-## Edit Microchip Status
+## Edit Microchip Status (Core API)
 
 `PUT /api/microchips/{id}/status`
 
