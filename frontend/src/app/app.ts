@@ -4,7 +4,7 @@ import { PetList } from './pages/pets/pet-list/pet-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PetList],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
