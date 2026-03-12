@@ -23,8 +23,8 @@ REST API for managing **pets, owners, microchips, pet events, and images**.
   - [`POST /api/events`](#create-event)
   - [`GET /api/events`](#search-pet-events)
   - [`GET /api/events/{eventId}`](#view-pet-event)
-  - [`POST /api/pets/{id}/owner`](#set-owner)
 - [Pet Ownership](#pet-ownership)
+  - [`POST /api/pets/{id}/owner`](#set-owner)
   - [`POST /api/pets/{id}/transfer`](#initiate-ownership-transfer)
   - [`POST /api/transfers/{id}/accept`<br>
     `POST /api/transfers/{id}/reject` <br>
@@ -192,9 +192,11 @@ Exactly **one filter must be provided**. Returns only pets visible to the user.
 
 ### Success
 
-| Code | Description                                                                                                  |
-|------|--------------------------------------------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of pet objects** matching the search criteria, or an empty list if none is found. |
+| Code | Description                                                                                                                      |
+|------|----------------------------------------------------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated JSON list of [pet objects](#pet-entity)** matching the search criteria, or an empty list if none is found. |
+
+
 
 ### Errors
 
@@ -324,9 +326,9 @@ Binary JPEG file.
 
 ### Success
 
-| Code      | Description                                               |
-|-----------|-----------------------------------------------------------|
-| 200 / 201 | Returns a **URL pointing to the uploaded image resource** |
+| Code      | Description                                                                               |
+|-----------|-------------------------------------------------------------------------------------------|
+| 200 / 201 | Returns a **imageUrl field in the response body pointing to the uploaded image resource** |
 
 ### Errors
 
@@ -348,9 +350,9 @@ Retrieves a link to the image associated with the pet.
 
 ### Success
 
-| Code | Description                                            |
-|------|--------------------------------------------------------|
-| 200  | Returns a **URL or reference to the stored pet image** |
+| Code | Description                                                                 |
+|------|-----------------------------------------------------------------------------|
+| 200  | Returns a **imageUrl field in the response body pointing to the stored pet image** |
 
 ### Errors
 
@@ -461,9 +463,9 @@ Only events of pets that the user is allowed to access are presented.
 
 ### Success
 
-| Code | Description                                                                      |
-|------|----------------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of pet event objects** or an empty list if not found. |
+| Code | Description                                                                           |
+|------|---------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated JSON list of [pet event objects](#pet-event-entity)** or an empty list if not found. |
 
 ### Errors
 
@@ -545,7 +547,7 @@ An entity to record ownership transfers.
 | Name            | Description                                                                         | Nullable | Example                                         |
 |-----------------|-------------------------------------------------------------------------------------|----------|-------------------------------------------------|
 | id              | The ID of the ownership transfer                                                    | No       | `73283`                                         |
-| petID           | The ID of the pet transferred                                                       | No       | `67676`                                         |
+| petId           | The ID of the pet transferred                                                       | No       | `67676`                                         |
 | currentOwnerId  | The ID of the current (previous) owner of the pet                                   | No       | `32672`                                         |
 | newOwnerId      | The ID of the new owner of the pet                                                  | No       | `32132`                                         |
 | status          | The status of the transfer, whether it is pending, cancelled, accepted, or rejected | No       | `"ACCEPTED"`                                    |
@@ -658,7 +660,10 @@ Can only be done by an admin.
 
 ### Request Body
 
-All the fields in the example are required.
+Required fields:
+- **personalCode**
+- **firstName**
+- **lastName**
 
 #### Example:
 ```json
@@ -709,9 +714,9 @@ The user must have access to the owner.
 
 ### Success
 
-| Code | Description                                                                                               |
-|------|-----------------------------------------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of owner objects** matching the search criteria or an empty list if not found. |
+| Code | Description                                                                                                    |
+|------|----------------------------------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated JSON list of [owner objects](#owner-entity)** matching the search criteria or an empty list if not found. |
 
 ### Errors
 
@@ -761,7 +766,10 @@ Updates an existing owner entity. Only available for admin users.
 
 ### Request Body
 
-All the fields in the example are required.
+Required fields:
+- **personalCode**
+- **firstName**
+- **lastName**
 
 #### Example:
 
@@ -928,9 +936,9 @@ Exactly **one filter must be provided**. Only available for admin users.
 
 ### Success
 
-| Code | Description                                                                                                   |
-|------|---------------------------------------------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of microchip objects** matching the search criteria or an empty list if not found. |
+| Code | Description                                                                                                        |
+|------|--------------------------------------------------------------------------------------------------------------------|
+| 200  | Returns a **paginated JSON list of [microchip objects](#microchip-entity)** matching the search criteria or an empty list if not found. |
 
 ### Errors
 
