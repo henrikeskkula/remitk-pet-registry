@@ -43,4 +43,51 @@ public class PetEvent {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id", nullable = false, updatable = false)
     private Pet pet;
+
+    // Constructor for JPA
+    protected PetEvent() {}
+
+    // Constructor for initial creation of entity
+    public PetEvent(String eventType, LocalDateTime eventTimestamp, String performedByRole, Pet pet, String description, String metadata) {
+        this.eventType = eventType;
+        this.eventTimestamp = eventTimestamp;
+        this.performedByRole = performedByRole;
+        this.pet = pet;
+        // Description and metadata may be null
+        this.description = description;
+        this.metadata = metadata;
+    }
+
+    // Getters (no setters to ensure immutability)
+    public Long getId() {
+        return id;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public LocalDateTime getEventTimestamp() {
+        return eventTimestamp;
+    }
+
+    public String getPerformedByRole() {
+        return performedByRole;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getMetadata() {
+        return metadata;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
 }

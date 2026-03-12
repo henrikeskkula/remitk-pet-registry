@@ -32,6 +32,7 @@ public class Microchip {
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
+    // Automatically managed timestamps
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -39,4 +40,48 @@ public class Microchip {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    // Constructor for JPA
+    protected Microchip() {}
+
+    // Constructor for initial creation of entity
+    public Microchip(String chipNumber, String importer) {
+        this.chipNumber = chipNumber;
+        this.importer = importer;
+        this.status = "FREE";
+    }
+
+    // ID-only constructor for referencing a microchip in other entities
+    public Microchip(Long id) {
+        this.id = id;
+    }
+
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getChipNumber() {
+        return chipNumber;
+    }
+
+    public String getImporter() {
+        return importer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

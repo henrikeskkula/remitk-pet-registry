@@ -56,4 +56,77 @@ public class Owner {
 
     @OneToMany(mappedBy = "owner_id")
     private List<Pet> pets;
+
+    // Constructor for JPA
+    protected Owner() {}
+
+    // Constructor for initial creation of entity
+    public Owner(String personalCode, String firstName, String lastName) {
+        this.personalCode = personalCode;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    // ID-only constructor for referencing a microchip in other entities
+    public Owner(Long id) {
+        this.id = id;
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getPersonalCode() {
+        return personalCode;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
 }

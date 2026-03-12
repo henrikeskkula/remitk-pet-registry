@@ -46,4 +46,66 @@ public class OwnerTransferRequest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "new_owner_id", nullable = false, updatable = false)
     private Owner newOwner;
+
+    // Constructor for JPA
+    protected OwnerTransferRequest() {}
+
+    // Constructor for initial creation of entity
+    public OwnerTransferRequest(LocalDateTime initiatedAt, Pet pet, Owner currentOwner, Owner newOwner) {
+        this.initiatedAt = initiatedAt;
+        this.pet = pet;
+        this.currentOwner = currentOwner;
+        this.newOwner = newOwner;
+        this.status = "PENDING";
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getInitiatedAt() {
+        return initiatedAt;
+    }
+
+    public LocalDateTime getResolvedAt() {
+        return resolvedAt;
+    }
+
+    public String getResponseMessage() {
+        return responseMessage;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public Owner getCurrentOwner() {
+        return currentOwner;
+    }
+
+    public Owner getNewOwner() {
+        return newOwner;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setResolvedAt(LocalDateTime resolvedAt) {
+        this.resolvedAt = resolvedAt;
+    }
+
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
+    }
 }
