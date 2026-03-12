@@ -70,11 +70,11 @@ public class Pet {
     protected Pet() {}
 
     // Constructor for creating entity
-    public Pet(String species, String sex, Microchip microchip) {
+    public Pet(String species, String sex, Microchip microchip, String status) {
         this.species = species;
         this.sex = sex;
         this.microchip = microchip;
-        this.status = "ACTIVE";
+        this.status = status;
     }
 
     // ID-only constructor for referencing a pet in other entities
