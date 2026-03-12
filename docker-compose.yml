@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: remitk-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: remitk_registry
+      POSTGRES_USER: remitk
+      POSTGRES_PASSWORD: remitk
+    ports:
+      - "5432:5432"
+    volumes:
+      - remitk_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U remitk -d remitk_registry"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  remitk_pg_data:

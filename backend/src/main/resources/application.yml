@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/remitk_registry
     username: remitk
-    password: remitk
+    password: 
     driver-class-name: org.postgresql.Driver
 
   jpa:
