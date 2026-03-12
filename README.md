@@ -1,5 +1,7 @@
 # REMITK Pet Registry
 
+Prototype full-stack pet registry system built with Spring Boot, Angular and PostgreSQL.
+
 ## Project Overview
 
 REMITK Pet Registry is a prototype application for registering pets, managing pet owners and tracking the lifecycle of animals.
@@ -27,10 +29,10 @@ Database migrations: Flyway
 
 The system follows a typical three-layer architecture.
 
-Angular Frontend  
-↓  
-Spring Boot REST API  
-↓  
+Angular Frontend
+       ↓
+Spring Boot REST API
+       ↓
 PostgreSQL Database
 
 
@@ -54,8 +56,64 @@ Spring Boot application responsible for:
 - Flyway database migrations
 - database access
 
+### API Overview
 
-### Database
+The backend exposes a REST API for managing pets, owners, microchips, pet events and ownership transfers.
+All endpoints require authentication using HTTP Basic Authentication.
+
+Example request:
+
+curl -u username:password http://localhost:8080/api/pets
+
+### Main API Resources
+
+### Pets
+
+- POST /api/pets – register a new pet
+- GET /api/pets – search pets by filters
+- GET /api/pets/{id} – view pet details
+- PUT /api/pets/{id} – update pet data
+- DELETE /api/pets/{id} – delete pet
+
+### Owners
+
+POST /api/owners – create owner
+GET /api/owners – search owners
+GET /api/owners/{id} – view owner
+PUT /api/owners/{id} – update owner
+DELETE /api/owners/{id} – delete owner
+GET /api/owners/{id}/pets – list owner’s pets
+
+### Microchips
+
+POST /api/microchips – register microchip
+GET /api/microchips – search microchips
+GET /api/microchips/{id} – view microchip
+PUT /api/microchips/{id}/status – update chip status
+DELETE /api/microchips/{id} – delete microchip
+
+### Pet Events
+
+POST /api/events – create lifecycle event
+GET /api/events – search events
+GET /api/events/{eventId} – view event
+
+### Pet Ownership
+
+POST /api/pets/{id}/owner – assign owner to pet
+POST /api/pets/{id}/transfer – initiate ownership transfer
+POST /api/transfers/{id}/accept – accept transfer
+POST /api/transfers/{id}/reject – reject transfer
+POST /api/transfers/{id}/cancel – cancel transfer
+
+### Pet Images
+
+PUT /api/pets/{id}/image – upload pet image
+GET /api/pets/{id}/image – retrieve pet image
+DELETE /api/pets/{id}/image – delete pet image
+
+
+## Database
 
 PostgreSQL database stores:
 
