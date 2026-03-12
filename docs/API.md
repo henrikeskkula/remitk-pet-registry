@@ -125,7 +125,8 @@ This is the core pet entity, returned by all endpoints that return a pet.
 | ownerId     | The ID of the pet's owner          | Yes      | No                  | `3729789`                                       |
 
 
-## Create Pet (Core API)
+## Create Pet
+### (Core API)
 
 `POST /api/pets`
 
@@ -172,7 +173,8 @@ A pet object, with directly modifiable fields.
 
 ---
 
-## Search Pets (Core API)
+## Search Pets
+### (Core API)
 
 `GET /api/pets`
 
@@ -209,7 +211,8 @@ Exactly **one filter must be provided**. Returns only pets visible to the user.
 
 ---
 
-## View Pet (Core API)
+## View Pet
+### (Core API)
 
 `GET /api/pets/{id}`
 
@@ -239,7 +242,8 @@ Requires user role to be able to see pet.
 
 ---
 
-## Edit Pet (Core API)
+## Edit Pet
+### (Core API)
 
 `PUT /api/pets/{id}`
 
@@ -288,7 +292,8 @@ A pet object, with directly modifiable fields.
 
 ---
 
-## Delete Pet (Core API)
+## Delete Pet
+### (Core API)
 
 `DELETE /api/pets/{id}`
 
@@ -558,7 +563,8 @@ An entity to record ownership transfers.
 
 ---
 
-## Initiate Ownership Transfer (Core API)
+## Initiate Ownership Transfer
+### (Core API)
 
 `POST /api/pets/{id}/transfer`
 
@@ -592,7 +598,8 @@ The body must contain the ID of the new owner.
 
 ---
 
-## Complete Ownership Transfer (Core API)
+## Complete Ownership Transfer
+### (Core API)
 
 `POST /api/transfers/{id}/accept`
 
@@ -651,7 +658,8 @@ An entity to record the information of a pet owner.
 | phone        | The phone number of the owner     | Yes      | `"+37254541010"`                             |
 
 
-## Create Owner (Core API)
+## Create Owner
+### (Core API)
 
 `POST /api/owners`
 
@@ -694,7 +702,8 @@ Required fields:
 
 ---
 
-## Search Owners (Core API)
+## Search Owners
+### (Core API)
 
 `GET /api/owners`
 
@@ -729,7 +738,8 @@ The user must have access to the owner.
 
 ---
 
-## View Owner (Core API)
+## View Owner
+### (Core API)
 
 `GET /api/owners/{id}`
 
@@ -758,7 +768,8 @@ Returns details for a specific owner.
 
 ---
 
-## Edit Owner (Core API)
+## Edit Owner
+### (Core API)
 
 `PUT /api/owners/{id}`
 
@@ -825,7 +836,8 @@ Deletes an owner entity. Only available for admin users.
 
 ---
 
-## Get Owner Pets (Core API)
+## Get Owner Pets
+### (Core API)
 
 `GET /api/owners/{id}/pets`
 
@@ -882,7 +894,8 @@ None of the fields are nullable.
 | status     | Whether the chip is free or in use | `"FREE"`, `"USED"` |
 
 
-## Create Microchip (Core API)
+## Create Microchip
+### (Core API)
 
 `POST /api/microchips`
 
@@ -917,7 +930,8 @@ The fields in the example are required. A new microchip will always have a statu
 
 ---
 
-## Search Microchips (Core API)
+## Search Microchips
+### (Core API)
 
 `GET /api/microchips`
 
@@ -981,7 +995,8 @@ Returns details of a specific microchip.
 
 ---
 
-## Edit Microchip Status (Core API)
+## Edit Microchip Status
+### (Core API)
 
 `PUT /api/microchips/{id}/status`
 
