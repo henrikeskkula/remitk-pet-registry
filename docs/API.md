@@ -121,6 +121,7 @@ This is the core pet entity, returned by all endpoints that return a pet.
 | birthDate   | The pet's birth date in ISO format | Yes      | Yes                 | `"2026-02-02"`                                  |
 | breed       | The pet's breed                    | Yes      | Yes                 | `"Kuldne retriiver"`                            |
 | color       | The pet's color                    | Yes      | Yes                 | `"punane"`                                      |
+| status      | The pet's current status           | No       | Yes                 | `"ACTIVE"`                                        |
 | imageUrl    | The pet's image URL                | Yes      | No                  | `"https://petregistry.ee/images/32738dnm.jpeg"` |
 | ownerId     | The ID of the pet's owner          | Yes      | No                  | `3729789`                                       |
 
@@ -139,8 +140,10 @@ A pet object, with directly modifiable fields.
 
 #### Required fields:
 
-- species
-- sex
+- **microchipId**
+- **species**
+- **sex**
+- **status**
 
 #### Example:
 
@@ -152,7 +155,8 @@ A pet object, with directly modifiable fields.
   "sex": "FEMALE",
   "birthDate": "2025-02-02",
   "breed": "lühikarvaline",
-  "color": "must"
+  "color": "must",
+  "status": "MISSING"
 }
 ```
 
@@ -256,9 +260,10 @@ A pet object, with directly modifiable fields.
 
 #### Required fields:
 
-- microchipId
-- species
-- sex
+- **microchipId**
+- **species**
+- **sex**
+- **status**
 
 #### Example:
 
@@ -270,7 +275,8 @@ A pet object, with directly modifiable fields.
   "sex": "FEMALE",
   "birthDate": "2025-02-02",
   "breed": "lühikarvaline",
-  "color": "must"
+  "color": "must",
+  "status": "ABROAD"
 }
 ```
 
