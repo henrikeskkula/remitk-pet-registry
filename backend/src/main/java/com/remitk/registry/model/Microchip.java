@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 @Table(name = "microchips")
 public class Microchip {
     @Id
-    @NotNull
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull

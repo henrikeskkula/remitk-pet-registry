@@ -1,6 +1,7 @@
 package com.remitk.registry.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,9 +15,8 @@ import java.util.List;
 @Table(name = "owners")
 public class Owner {
     @Id
-    @NotNull
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
@@ -40,6 +40,7 @@ public class Owner {
 
     @Size(max = 255)
     @Column(name = "email", length = 255)
+    @Email
     private String email;
 
     @Size(max = 50)
@@ -54,7 +55,7 @@ public class Owner {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "owner_id")
+    @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
 
     // Constructor for JPA
@@ -67,7 +68,7 @@ public class Owner {
         this.lastName = lastName;
     }
 
-    // ID-only constructor for referencing a microchip in other entities
+    // ID-only constructor for referencing an owner in other entities
     public Owner(Long id) {
         this.id = id;
     }
@@ -126,7 +127,4 @@ public class Owner {
         this.address = address;
     }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
 }

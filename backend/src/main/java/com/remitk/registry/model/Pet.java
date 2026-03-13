@@ -9,11 +9,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "pets")
 public class Pet {
     @Id
-    @NotNull
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
@@ -62,6 +63,7 @@ public class Pet {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    @NotNull
     @OneToOne
     @JoinColumn(name = "microchip_id", nullable = false, unique = true)
     private Microchip microchip;

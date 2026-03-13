@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "pet_events")
 public class PetEvent {
     @Id
-    @NotNull
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
@@ -37,9 +36,10 @@ public class PetEvent {
     private String metadata;
 
     @CreationTimestamp
-    @JoinColumn(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id", nullable = false, updatable = false)
     private Pet pet;

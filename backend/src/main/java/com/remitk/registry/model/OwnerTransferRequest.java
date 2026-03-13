@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "owner_transfer_requests")
 public class OwnerTransferRequest {
     @Id
-    @NotNull
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
@@ -21,8 +20,8 @@ public class OwnerTransferRequest {
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
-    @NotNull
-    @Column(name = "initiatedAt", nullable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "initiated_at", nullable = false, updatable = false)
     private LocalDateTime initiatedAt;
 
     @Column(name = "resolved_at")
@@ -35,14 +34,17 @@ public class OwnerTransferRequest {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne
-    @JoinColumn(name = "petId", nullable = false, updatable = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id", nullable = false, updatable = false)
     private Pet pet;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "current_owner_id", nullable = false, updatable = false)
     private Owner currentOwner;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "new_owner_id", nullable = false, updatable = false)
     private Owner newOwner;
@@ -51,8 +53,7 @@ public class OwnerTransferRequest {
     protected OwnerTransferRequest() {}
 
     // Constructor for initial creation of entity
-    public OwnerTransferRequest(LocalDateTime initiatedAt, Pet pet, Owner currentOwner, Owner newOwner) {
-        this.initiatedAt = initiatedAt;
+    public OwnerTransferRequest(Pet pet, Owner currentOwner, Owner newOwner) {
         this.pet = pet;
         this.currentOwner = currentOwner;
         this.newOwner = newOwner;
