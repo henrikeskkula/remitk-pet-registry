@@ -2,7 +2,6 @@ package com.remitk.registry.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -16,9 +15,9 @@ public class OwnerTransferRequest {
     private Long id;
 
     @NotNull
-    @Size(max = 20)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    private String status;
+    private OwnerTransferRequestStatus status;
 
     @CreationTimestamp
     @Column(name = "initiated_at", nullable = false, updatable = false)
@@ -57,7 +56,7 @@ public class OwnerTransferRequest {
         this.pet = pet;
         this.currentOwner = currentOwner;
         this.newOwner = newOwner;
-        this.status = "PENDING";
+        this.status = OwnerTransferRequestStatus.PENDING;
     }
 
     // Getters and setters
@@ -66,7 +65,7 @@ public class OwnerTransferRequest {
         return id;
     }
 
-    public String getStatus() {
+    public OwnerTransferRequestStatus getStatus() {
         return status;
     }
 
@@ -98,7 +97,7 @@ public class OwnerTransferRequest {
         return newOwner;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OwnerTransferRequestStatus status) {
         this.status = status;
     }
 

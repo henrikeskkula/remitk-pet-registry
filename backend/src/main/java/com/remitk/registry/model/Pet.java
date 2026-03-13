@@ -18,18 +18,18 @@ public class Pet {
     private Long id;
 
     @NotNull
-    @Size(max = 20)
+    @Enumerated(EnumType.STRING)
     @Column(name = "species", nullable = false, length = 20)
-    private String species;
+    private PetSpecies species;
 
     @Size(max = 100)
     @Column(name = "name", length = 100)
     private String name;
 
     @NotNull
-    @Size(max = 10)
+    @Enumerated(EnumType.STRING)
     @Column(name = "sex", nullable = false, length = 10)
-    private String sex;
+    private PetSex sex;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
@@ -47,9 +47,9 @@ public class Pet {
     private String imageUrl;
 
     @NotNull
-    @Size(max = 30)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
-    private String status;
+    private PetStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -64,7 +64,7 @@ public class Pet {
     private Owner owner;
 
     @NotNull
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "microchip_id", nullable = false, unique = true)
     private Microchip microchip;
 
@@ -72,7 +72,7 @@ public class Pet {
     protected Pet() {}
 
     // Constructor for creating entity
-    public Pet(String species, String sex, Microchip microchip, String status) {
+    public Pet(PetSpecies species, PetSex sex, Microchip microchip, PetStatus status) {
         this.species = species;
         this.sex = sex;
         this.microchip = microchip;
@@ -88,7 +88,7 @@ public class Pet {
         return id;
     }
 
-    public String getSpecies() {
+    public PetSpecies getSpecies() {
         return species;
     }
 
@@ -96,7 +96,7 @@ public class Pet {
         return name;
     }
 
-    public String getSex() {
+    public PetSex getSex() {
         return sex;
     }
 
@@ -116,7 +116,7 @@ public class Pet {
         return imageUrl;
     }
 
-    public String getStatus() {
+    public PetStatus getStatus() {
         return status;
     }
 
@@ -140,6 +140,10 @@ public class Pet {
         this.name = name;
     }
 
+    public void setSex(PetSex sex) {
+        this.sex = sex;
+    }
+
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
@@ -156,7 +160,7 @@ public class Pet {
         this.imageUrl = imageUrl;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PetStatus status) {
         this.status = status;
     }
 

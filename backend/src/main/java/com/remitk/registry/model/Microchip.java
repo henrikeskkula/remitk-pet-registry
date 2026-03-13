@@ -27,9 +27,9 @@ public class Microchip {
     private String importer;
 
     @NotNull
-    @Size(max = 20)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    private String status;
+    private MicrochipStatus status;
 
     // Automatically managed timestamps
     @CreationTimestamp
@@ -47,7 +47,7 @@ public class Microchip {
     public Microchip(String chipNumber, String importer) {
         this.chipNumber = chipNumber;
         this.importer = importer;
-        this.status = "FREE";
+        this.status = MicrochipStatus.FREE;
     }
 
     // ID-only constructor for referencing a microchip in other entities
@@ -68,7 +68,7 @@ public class Microchip {
         return importer;
     }
 
-    public String getStatus() {
+    public MicrochipStatus getStatus() {
         return status;
     }
 
@@ -80,7 +80,7 @@ public class Microchip {
         return updatedAt;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(MicrochipStatus status) {
         this.status = status;
     }
 }

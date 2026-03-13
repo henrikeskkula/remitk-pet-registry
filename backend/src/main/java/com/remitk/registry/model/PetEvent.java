@@ -2,7 +2,6 @@ package com.remitk.registry.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -16,22 +15,24 @@ public class PetEvent {
     private Long id;
 
     @NotNull
-    @Size(max = 50)
+    @Enumerated(EnumType.STRING)
     @Column(name = "event_type", nullable = false, length = 50)
-    private String eventType;
+    private PetEventType eventType;
 
     @NotNull
     @Column(name = "event_timestamp", nullable = false, updatable = false)
     private LocalDateTime eventTimestamp;
 
     @NotNull
-    @Size(max = 50)
+    @Enumerated(EnumType.STRING)
     @Column(name = "performed_by_role", nullable = false, length = 50)
-    private String performedByRole;
+    private UserRole performedByRole;
 
+    // TODO: Optional improvement: consider adding length/text semantics explicitly if long descriptions are expected.
     @Column(name = "description")
     private String description;
 
+    // TODO: Optional improvement: if metadata becomes structured later, consider JSON/JSONB handling.
     @Column(name = "metadata")
     private String metadata;
 
@@ -48,7 +49,7 @@ public class PetEvent {
     protected PetEvent() {}
 
     // Constructor for initial creation of entity
-    public PetEvent(String eventType, LocalDateTime eventTimestamp, String performedByRole, Pet pet, String description, String metadata) {
+    public PetEvent(PetEventType eventType, LocalDateTime eventTimestamp, UserRole performedByRole, Pet pet, String description, String metadata) {
         this.eventType = eventType;
         this.eventTimestamp = eventTimestamp;
         this.performedByRole = performedByRole;
@@ -63,7 +64,7 @@ public class PetEvent {
         return id;
     }
 
-    public String getEventType() {
+    public PetEventType getEventType() {
         return eventType;
     }
 
@@ -71,7 +72,7 @@ public class PetEvent {
         return eventTimestamp;
     }
 
-    public String getPerformedByRole() {
+    public UserRole getPerformedByRole() {
         return performedByRole;
     }
 
