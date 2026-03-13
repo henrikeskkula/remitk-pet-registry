@@ -64,7 +64,7 @@ public class Pet {
     private Owner owner;
 
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "microchip_id", nullable = false, unique = true)
     private Microchip microchip;
 
