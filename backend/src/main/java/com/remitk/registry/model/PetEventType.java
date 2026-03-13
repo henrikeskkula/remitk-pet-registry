@@ -1,0 +1,13 @@
+package com.remitk.registry.model;
+
+public enum PetEventType {
+    REGISTERED,
+    OWNER_ASSIGNED,
+    OWNER_TRANSFER_INITIATED,
+    OWNER_TRANSFER_COMPLETED,
+    OWNER_TRANSFER_REJECTED,
+    MARKED_MISSING,
+    MARKED_FOUND,
+    DECEASED,
+    EXPORTED
+}
