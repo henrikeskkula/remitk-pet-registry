@@ -1,9 +1,65 @@
-<h2>Pet detail</h2>
+<h1>Pet detail</h1>
+
+<div *ngIf="error">
+  {{ error }}
+</div>
 
 <div *ngIf="pet as petData">
-  <p>ID: {{ petData.id }}</p>
-  <p>Name: {{ petData.name }}</p>
-  <p>Species: {{ petData.species }}</p>
-  <p>Status: {{ petData.status }}</p>
-  <p>Owner: {{ petData.ownerId }}</p>
+
+  <table>
+    <tr>
+      <td>ID</td>
+      <td>{{ petData.id }}</td>
+    </tr>
+
+    <tr>
+      <td>Name</td>
+      <td>{{ petData.name }}</td>
+    </tr>
+
+    <tr>
+      <td>Species</td>
+      <td>{{ petData.species }}</td>
+    </tr>
+
+    <tr>
+      <td>Sex</td>
+      <td>{{ petData.sex }}</td>
+    </tr>
+
+    <tr>
+      <td>Birth date</td>
+      <td>{{ petData.birthDate }}</td>
+    </tr>
+
+    <tr>
+      <td>Breed</td>
+      <td>{{ petData.breed }}</td>
+    </tr>
+
+    <tr>
+      <td>Color</td>
+      <td>{{ petData.color }}</td>
+    </tr>
+
+    <tr>
+      <td>Status</td>
+      <td>{{ petData.status }}</td>
+    </tr>
+
+    <tr>
+      <td>Microchip</td>
+      <td>{{ petData.microchipId }}</td>
+    </tr>
+
+  </table>
+
 </div>
+
+<div *ngIf="!pet && !error">
+  Loading pet...
+</div>
+
+<br>
+
+<a routerLink="/pets">Back to pets</a>

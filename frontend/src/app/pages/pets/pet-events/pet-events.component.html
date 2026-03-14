@@ -1,1 +1,21 @@
-<p>pet-events works!</p>
+<h2>Pet events</h2>
+
+<table class="events-table" *ngIf="events.length">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Time</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let event of events">
+      <td>{{ event.id }}</td>
+      <td class="event-type">{{ event.type }}</td>
+      <td class="event-time">{{ event.time }}</td>
+      <td>{{ event.description || '-' }}</td>
+    </tr>
+  </tbody>
+</table><p>pet-events works!</p>

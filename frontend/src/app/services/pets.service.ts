@@ -10,12 +10,39 @@ export class PetsService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/api/pets';
 
-  getPets(filters?: { name?: string; species?: string; status?: string }): Observable<Pet[]> {
+  getPets(filters?: {
+    microchipId?: number;
+    name?: string;
+    ownerId?: number;
+    page?: number;
+    size?: number;
+    sortBy?: string;
+  }): Observable<Pet[]> {
     let params = new HttpParams();
 
-    if (filters?.name) params = params.set('name', filters.name);
-    if (filters?.species) params = params.set('species', filters.species);
-    if (filters?.status) params = params.set('status', filters.status);
+    if (filters?.microchipId !== undefined) {
+      params = params.set('microchipId', filters.microchipId);
+    }
+
+    if (filters?.name) {
+      params = params.set('name', filters.name);
+    }
+
+    if (filters?.ownerId !== undefined) {
+      params = params.set('ownerId', filters.ownerId);
+    }
+
+    if (filters?.page !== undefined) {
+      params = params.set('page', filters.page);
+    }
+
+    if (filters?.size !== undefined) {
+      params = params.set('size', filters.size);
+    }
+
+    if (filters?.sortBy) {
+      params = params.set('sortBy', filters.sortBy);
+    }
 
     return this.http.get<Pet[]>(this.apiUrl, { params });
   }

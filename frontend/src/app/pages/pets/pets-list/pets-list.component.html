@@ -1,17 +1,15 @@
 <h1>Pets</h1>
 
-<a routerLink="/pets/new">Add new pet</a>
-
-<div *ngIf="loading">
-  Loading pets...
+<div>
+  <input [(ngModel)]="searchName" placeholder="Search by pet name" />
+  <button (click)="searchPets()">Search</button>
+  <a routerLink="/pets/new">Add new pet</a>
 </div>
 
-<div *ngIf="error">
-  {{ error }}
-</div>
+<div *ngIf="loading">Loading pets...</div>
+<div *ngIf="error">{{ error }}</div>
 
 <table *ngIf="pets.length">
-
   <thead>
     <tr>
       <th>ID</th>
@@ -25,24 +23,14 @@
 
   <tbody>
     <tr *ngFor="let pet of pets">
-
       <td>{{ pet.id }}</td>
-
-      <td>
-        {{ pet.name || 'Found animal' }}
-      </td>
-
+      <td>{{ pet.name || 'Unknown pet'}}</td>
       <td>{{ pet.species }}</td>
-
       <td>{{ pet.status }}</td>
-
       <td>{{ pet.ownerId || '-' }}</td>
-
       <td>
         <a [routerLink]="['/pets', pet.id]">View</a>
       </td>
-
     </tr>
   </tbody>
-
 </table>

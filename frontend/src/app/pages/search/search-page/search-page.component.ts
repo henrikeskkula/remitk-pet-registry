@@ -1,45 +1,47 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { PetsService } from '../../../services/pets.service';
 import { Pet } from '../../../models/pet.model';
 
 @Component({
-  selector: 'app-pets-list',
+  selector: 'app-search-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './pets-list.component.html',
-  styleUrls: ['./pets-list.component.scss']
+  imports: [CommonModule, FormsModule, RouterModule],
+  templateUrl: './search-page.component.html',
+  styleUrls: ['./search-page.component.scss']
 })
-export class PetsListComponent {
+export class SearchPage {
+
   private petsService = inject(PetsService);
 
+  searchText = '';
   pets: Pet[] = [];
   loading = false;
   error = '';
-  searchName = '';
 
-  searchPets(): void {
-    this.loading = true;
-    this.error = '';
+  search(): void {
 
-    if (!this.searchName.trim()) {
+    if (!this.searchText.trim()) {
       this.error = 'Enter pet name';
-      this.loading = false;
-      this.pets = [];
       return;
     }
 
-    this.petsService.getPets({ name: this.searchName.trim() }).subscribe({
+    this.loading = true;
+    this.error = '';
+
+    this.petsService.getPets({ name: this.searchText.trim() }).subscribe({
       next: (data) => {
         this.pets = data;
         this.loading = false;
       },
       error: () => {
-        this.error = 'Pets loading failed';
+        this.error = 'Search failed';
         this.loading = false;
       }
     });
+
   }
+
 }
