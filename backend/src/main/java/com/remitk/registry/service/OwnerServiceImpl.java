@@ -4,7 +4,6 @@ import com.remitk.registry.controller.ResourceNotFoundException;
 import com.remitk.registry.model.Owner;
 import com.remitk.registry.model.Pet;
 import com.remitk.registry.repository.OwnerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.Optional;
 @Service
 public class OwnerServiceImpl implements OwnerService {
 
-    @Autowired
-    private OwnerRepository ownerRepository;
+    private final OwnerRepository ownerRepository;
+
+    public OwnerServiceImpl(OwnerRepository ownerRepository) {
+        this.ownerRepository = ownerRepository;
+    }
 
     @Override
     public Owner createOwner(Owner owner) {
@@ -29,8 +31,11 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Owner editOwner(Owner owner) throws ResourceNotFoundException {
-        if (ownerRepository.existsById(owner.getId())) {
-            return ownerRepository.save(owner);
+        Optional<Owner> ownerOptional = ownerRepository.findById(owner.getId());
+        if (ownerOptional.isPresent()) {
+            Owner existingOwner = ownerOptional.get();
+            existingOwner.updateOwner(owner.getPersonalCode(), owner.getFirstName(), owner.getLastName(), owner.getAddress(), owner.getEmail(), owner.getPhone());
+            return ownerRepository.save(existingOwner);
         }
         else {
             throw new ResourceNotFoundException("Owner not found");

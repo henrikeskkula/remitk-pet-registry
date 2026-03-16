@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerGlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ErrorResponse handleException(Exception ex) {
+    public ErrorResponse handleResourceNotFoundException(Exception ex) {
         return ErrorResponse.create(ex, HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponse handleIllegalArgumentException(Exception ex) {
+        return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }

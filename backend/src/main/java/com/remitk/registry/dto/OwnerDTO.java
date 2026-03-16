@@ -31,35 +31,61 @@ public class OwnerDTO {
     @Size(max = 50)
     private String phone;
 
-    // Functions for transforming the DTO to entity and vice versa
-    public Owner toOwner() {
-        Owner owner;
-        if (id == null) {
-            owner = new Owner(this.personalCode, this.firstName, this.lastName);
-        }
-        else {
-            owner = new Owner(id, this.personalCode, this.firstName, this.lastName);
-        }
-        owner.setAddress(this.address);
-        owner.setEmail(this.email);
-        owner.setPhone(this.phone);
-        return owner;
-    }
-
-    public static OwnerDTO fromOwner(Owner owner) {
-        OwnerDTO dto = new OwnerDTO();
-        dto.id = owner.getId();
-        dto.personalCode = owner.getPersonalCode();
-        dto.firstName = owner.getFirstName();
-        dto.lastName = owner.getLastName();
-        dto.address = owner.getAddress();
-        dto.email = owner.getEmail();
-        dto.phone = owner.getPhone();
-        return dto;
-    }
-
     // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPersonalCode() {
+        return personalCode;
+    }
+
+    public void setPersonalCode(String personalCode) {
+        this.personalCode = personalCode;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

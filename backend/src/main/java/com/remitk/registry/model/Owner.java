@@ -80,6 +80,16 @@ public class Owner {
         this.id = id;
     }
 
+    // Function for updating an existing owner
+    public void updateOwner(String personalCode, String firstName, String lastName, String address, String email, String phone) {
+        this.personalCode = personalCode;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+    }
+
     // Getters and setters
 
     public Long getId() {
