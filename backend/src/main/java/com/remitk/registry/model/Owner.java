@@ -67,6 +67,14 @@ public class Owner {
         this.lastName = lastName;
     }
 
+    // Constructor for updating an existing owner
+    public Owner(Long id, String personalCode, String firstName, String lastName) {
+        this.id = id;
+        this.personalCode = personalCode;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     // ID-only constructor for referencing an owner in other entities
     public Owner(Long id) {
         this.id = id;
