@@ -1,4 +1,6 @@
-<h2>Add new pet</h2>
+<h1>Create pet</h1>
+
+<div *ngIf="error">{{ error }}</div>
 
 <form (ngSubmit)="submit()">
   <div>
@@ -12,37 +14,62 @@
   </div>
 
   <div>
-    <label>Name</label>
-    <input [(ngModel)]="pet.name" name="name" />
+    <label>Owner ID</label>
+    <input type="number" [(ngModel)]="pet.ownerId" name="ownerId" />
   </div>
 
   <div>
     <label>Species</label>
     <select [(ngModel)]="pet.species" name="species">
-      <option value="DOG">DOG</option>
-      <option value="CAT">CAT</option>
-      <option value="FERRET">FERRET</option>
+      <option value="DOG">Dog</option>
+      <option value="CAT">Cat</option>
+      <option value="RABBIT">Rabbit</option>
     </select>
+  </div>
+
+  <div>
+    <label>Name</label>
+    <input [(ngModel)]="pet.name" name="name" />
   </div>
 
   <div>
     <label>Sex</label>
     <select [(ngModel)]="pet.sex" name="sex">
-      <option value="MALE">MALE</option>
-      <option value="FEMALE">FEMALE</option>
-      <option value="UNKNOWN">UNKNOWN</option>
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
+      <option value="UNKNOWN">Unknown</option>
     </select>
+  </div>
+
+  <div>
+    <label>Birth date</label>
+    <input type="date" [(ngModel)]="pet.birthDate" name="birthDate" />
+  </div>
+
+  <div>
+    <label>Breed</label>
+    <input [(ngModel)]="pet.breed" name="breed" />
+  </div>
+
+  <div>
+    <label>Color</label>
+    <input [(ngModel)]="pet.color" name="color" />
+  </div>
+
+  <div>
+    <label>Image URL</label>
+    <input [(ngModel)]="pet.imageUrl" name="imageUrl" />
   </div>
 
   <div>
     <label>Status</label>
     <select [(ngModel)]="pet.status" name="status">
-      <option value="ACTIVE">ACTIVE</option>
-      <option value="MISSING">MISSING</option>
-      <option value="DECEASED">DECEASED</option>
-      <option value="ABROAD">ABROAD</option>
+      <option value="ACTIVE">Active</option>
+      <option value="MISSING">Missing</option>
+      <option value="DECEASED">Deceased</option>
+      <option value="ABROAD">Abroad</option>
     </select>
   </div>
 
-  <button type="submit">Create pet</button>
+  <button type="submit">Save</button>
 </form>

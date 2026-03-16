@@ -33,7 +33,7 @@ export class PetsListComponent {
 
     this.petsService.getPets({ name: this.searchName.trim() }).subscribe({
       next: (data) => {
-        this.pets = data;
+        this.pets = data as Pet[];
         this.loading = false;
       },
       error: () => {
