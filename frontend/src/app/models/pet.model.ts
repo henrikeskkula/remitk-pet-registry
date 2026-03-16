@@ -1,4 +1,4 @@
-export type PetSpecies = 'DOG' | 'CAT' | 'RABBIT';
+export type PetSpecies = 'DOG' | 'CAT' | 'FERRET';
 export type PetSex = 'MALE' | 'FEMALE' | 'UNKNOWN';
 export type PetStatus = 'ACTIVE' | 'MISSING' | 'DECEASED' | 'ABROAD';
 

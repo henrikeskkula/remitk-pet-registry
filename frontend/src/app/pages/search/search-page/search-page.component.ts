@@ -24,7 +24,7 @@ export class SearchPage {
   search(): void {
 
     if (!this.searchText.trim()) {
-      this.error = 'Enter pet name';
+      this.error = 'Sisesta looma nimi või mikrokiibi number';
       return;
     }
 
@@ -37,7 +37,7 @@ export class SearchPage {
         this.loading = false;
       },
       error: () => {
-        this.error = 'Search failed';
+        this.error = 'Otsing ebaõnnestus';
         this.loading = false;
       }
     });

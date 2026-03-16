@@ -1,16 +1,16 @@
-<h1>Search</h1>
+<h1>Otsing</h1>
 
 <div class="search-box">
   <input
     [(ngModel)]="searchText"
-    placeholder="Enter pet name or microchip"
+    placeholder="Sisesta looma nimi või mikrokiibi number"
   />
 
-  <button (click)="search()">Search</button>
+  <button (click)="search()">Otsi</button>
 </div>
 
 <div *ngIf="loading">
-  Searching...
+  Otsin...
 </div>
 
 <div *ngIf="error">
@@ -19,16 +19,16 @@
 
 <div class="results" *ngIf="pets.length">
 
-  <h2>Pets</h2>
+  <h2>Loomad</h2>
 
   <table>
     <thead>
       <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Species</th>
-        <th>Status</th>
-        <th>Action</th>
+        <th>Nimi</th>
+        <th>Looma liik</th>
+        <th>Staatus</th>
+        <th>Tegevus</th>
       </tr>
     </thead>
 
@@ -40,7 +40,7 @@
         <td>{{ pet.status }}</td>
 
         <td>
-          <a [routerLink]="['/pets', pet.id]">View</a>
+          <a [routerLink]="['/pets', pet.id]">Vaata</a>
         </td>
       </tr>
     </tbody>

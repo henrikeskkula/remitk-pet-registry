@@ -8,7 +8,8 @@ import { MicrochipsService } from '../../../services/microchips.service';
   selector: 'app-microchip-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './microchip-form.component.html'
+  templateUrl: './microchip-form.component.html',
+  styleUrl: './microchip-form.component.scss'
 })
 export class MicrochipForm {
   private microchipsService = inject(MicrochipsService);
@@ -29,7 +30,7 @@ export class MicrochipForm {
 
     this.microchipsService.createMicrochip(this.model).subscribe({
       next: () => this.router.navigate(['/microchips']),
-      error: () => this.error = 'Microchipi salvestamine ebaõnnestus'
+      error: () => this.error = 'Mikrokiibi salvestamine ebaõnnestus'
     });
   }
 }

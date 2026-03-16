@@ -1,16 +1,15 @@
-<h1>Create microchip</h1>
+<h1>Lisa mikrokiib</h1>
 
-<div *ngIf="error" style="color: red; margin-bottom: 12px;">{{ error }}</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
 
-<div>
-  <label>Chip number</label><br>
+<div class="form-field">
+  <label>Mikrokiibi number</label><br>
   <input [(ngModel)]="model.chipNumber" />
 </div>
 
-<div>
-  <label>Importer</label><br>
+<div class="form-field">
+  <label>Importija</label><br>
   <input [(ngModel)]="model.importer" />
 </div>
 
-<br>
-<button (click)="save()">Save</button>
+<button (click)="save()">Salvesta</button>

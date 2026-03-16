@@ -1,12 +1,12 @@
-<h1>Pets</h1>
+<h1>Loomad</h1>
 
 <div>
-  <input [(ngModel)]="searchName" placeholder="Search by name" />
-  <button (click)="searchPets()">Search</button>
-  <a routerLink="/pets/new">Add pet</a>
+  <input [(ngModel)]="searchName" placeholder="Otsi nime järgi" />
+  <button (click)="searchPets()">Otsi</button>
+  <a routerLink="/pets/new">Lisa loom</a>
 </div>
 
-<div *ngIf="loading">Loading...</div>
+<div *ngIf="loading">Laadimine...</div>
 <div *ngIf="error">{{ error }}</div>
 
 <table *ngIf="!loading && pets.length">

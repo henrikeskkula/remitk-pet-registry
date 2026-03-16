@@ -1,24 +1,24 @@
-<h1>Microchips</h1>
+<h1>Mikrokiibid</h1>
 
-<div style="margin-bottom: 16px;">
-  <input [(ngModel)]="chipNumber" placeholder="Search by chip number" />
-  <input [(ngModel)]="importer" placeholder="Search by importer" style="margin-left: 8px;" />
-  <button (click)="search()" style="margin-left: 8px;">Search</button>
-  <a routerLink="/microchips/new" style="margin-left: 12px;">Add microchip</a>
+<div class="search-bar">
+  <input class="search-input" [(ngModel)]="chipNumber" placeholder="Otsi mikrokiibi numbri järgi" />
+  <input class="spaced-input" [(ngModel)]="importer" placeholder="Otsi importija järgi" />
+  <button class="spaced-action" (click)="search()">Otsi</button>
+  <a class="link-action" routerLink="/microchips/new">Lisa mikrokiip</a>
 </div>
 
-<div *ngIf="loading">Loading...</div>
+<div *ngIf="loading">Laen...</div>
 <div *ngIf="error">{{ error }}</div>
 
-<table *ngIf="microchips.length" border="1" cellpadding="8">
+<table *ngIf="microchips.length" class="microchip-table">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Chip number</th>
-      <th>Importer</th>
-      <th>Status</th>
-      <th>Update</th>
-      <th>Delete</th>
+      <th>Mikrokiibi number</th>
+      <th>Importija</th>
+      <th>Staatus</th>
+      <th>Uuenda</th>
+      <th>Kustuta</th>
     </tr>
   </thead>
   <tbody>
@@ -29,10 +29,10 @@
       <td>{{ chip.status }}</td>
       <td>
         <button (click)="updateStatus(chip, 'FREE')">FREE</button>
-        <button (click)="updateStatus(chip, 'USED')" style="margin-left: 6px;">USED</button>
+        <button class="inline-action" (click)="updateStatus(chip, 'USED')">Kasutajad</button>
       </td>
       <td>
-        <button (click)="remove(chip.id)">Delete</button>
+        <button (click)="remove(chip.id)">Kustuta</button>
       </td>
     </tr>
   </tbody>

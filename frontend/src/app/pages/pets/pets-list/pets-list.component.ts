@@ -25,7 +25,7 @@ export class PetsListComponent {
     this.error = '';
 
     if (!this.searchName.trim()) {
-      this.error = 'Enter pet name';
+      this.error = 'Sisesta looma nimi';
       this.loading = false;
       this.pets = [];
       return;
@@ -37,7 +37,7 @@ export class PetsListComponent {
         this.loading = false;
       },
       error: () => {
-        this.error = 'Pets loading failed';
+        this.error = 'Loomade laadimine ebaõnnestus';
         this.loading = false;
       }
     });

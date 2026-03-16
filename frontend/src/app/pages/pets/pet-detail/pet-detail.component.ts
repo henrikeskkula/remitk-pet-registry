@@ -27,7 +27,7 @@ export class PetDetailComponent implements OnInit {
   newOwnerId?: number;
   lastTransfer?: OwnerTransferRequest;
 
-  speciesOptions: PetSpecies[] = ['DOG', 'CAT', 'RABBIT'];
+  speciesOptions: PetSpecies[] = ['DOG', 'CAT', 'FERRET'];
   sexOptions: PetSex[] = ['MALE', 'FEMALE', 'UNKNOWN'];
   statusOptions: PetStatus[] = ['ACTIVE', 'MISSING', 'DECEASED', 'ABROAD'];
 

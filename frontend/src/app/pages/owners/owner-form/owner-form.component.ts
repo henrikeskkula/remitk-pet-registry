@@ -8,7 +8,8 @@ import { OwnersService } from '../../../services/owners.service';
   selector: 'app-owner-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './owner-form.component.html'
+  templateUrl: './owner-form.component.html',
+  styleUrl: './owner-form.component.scss'
 })
 export class OwnerForm {
   private ownersService = inject(OwnersService);

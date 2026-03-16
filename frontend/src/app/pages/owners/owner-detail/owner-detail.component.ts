@@ -10,7 +10,8 @@ import { Pet } from '../../../models/pet.model';
   selector: 'app-owner-detail',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './owner-detail.component.html'
+  templateUrl: './owner-detail.component.html',
+  styleUrl: './owner-detail.component.scss'
 })
 export class OwnerDetail {
   private route = inject(ActivatedRoute);

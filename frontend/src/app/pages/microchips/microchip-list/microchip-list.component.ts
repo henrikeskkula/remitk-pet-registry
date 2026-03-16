@@ -9,7 +9,8 @@ import { RouterLink } from '@angular/router';
   selector: 'app-microchip-list',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './microchip-list.component.html'
+  templateUrl: './microchip-list.component.html',
+  styleUrl: './microchip-list.component.scss'
 })
 export class MicrochipList {
   private microchipsService = inject(MicrochipsService);
@@ -25,7 +26,7 @@ export class MicrochipList {
     const hasImporter = !!this.importer.trim();
 
     if ((hasChipNumber && hasImporter) || (!hasChipNumber && !hasImporter)) {
-      this.error = 'Sisesta ainult üks filter: chipNumber või importer';
+      this.error = 'Sisesta ainult üks filter: mikrokiibi number või importija';
       this.microchips = [];
       return;
     }
