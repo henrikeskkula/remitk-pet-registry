@@ -1,89 +1,82 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { vi } from 'vitest';
+
+import { PetFormComponent } from './pet-form.component';
 import { PetsService } from '../../../services/pets.service';
+import { Pet } from '../../../models/pet.model';
 
-@Component({
-  selector: 'app-pet-form',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './pet-form.component.html'
-})
-export class PetFormComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private petsService = inject(PetsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+describe('PetFormComponent', () => {
+  let component: PetFormComponent;
+  let fixture: ComponentFixture<PetFormComponent>;
+  let createPetSpy: ReturnType<typeof vi.fn>;
+  let navigateSpy: ReturnType<typeof vi.fn>;
 
-  petId?: number;
-  error = '';
+  beforeEach(async () => {
+    createPetSpy = vi.fn().mockReturnValue(
+      of({
+        id: 1,
+        microchipId: 123,
+        ownerId: 5,
+        species: 'DOG',
+        name: 'Muri',
+        sex: 'MALE',
+        birthDate: '2024-01-01',
+        breed: 'Mixed',
+        color: 'Brown',
+        imageUrl: '',
+        status: 'ACTIVE',
+        createdAt: '2026-03-16T00:00:00Z',
+        updatedAt: '2026-03-16T00:00:00Z'
+      } satisfies Pet)
+    );
+    navigateSpy = vi.fn();
 
-  form = this.fb.group({
-    microchipId: ['', Validators.required],
-    ownerId: [''],
-    species: ['', Validators.required],
-    name: [''],
-    sex: ['', Validators.required],
-    birthDate: [''],
-    breed: [''],
-    color: [''],
-    imageUrl: [''],
-    status: ['ACTIVE', Validators.required]
+    await TestBed.configureTestingModule({
+      imports: [PetFormComponent],
+      providers: [
+        {
+          provide: PetsService,
+          useValue: {
+            createPet: createPetSpy
+          }
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: navigateSpy
+          }
+        }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PetFormComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.petId = Number(id);
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-      this.petsService.getPetById(this.petId).subscribe({
-        next: (pet) => {
-          this.form.patchValue({
-            microchipId: String(pet.microchipId),
-            ownerId: pet.ownerId ? String(pet.ownerId) : '',
-            species: pet.species,
-            name: pet.name || '',
-            sex: pet.sex,
-            birthDate: pet.birthDate || '',
-            breed: pet.breed || '',
-            color: pet.color || '',
-            imageUrl: pet.imageUrl || '',
-            status: pet.status
-          });
-        }
-      });
-    }
-  }
-
-  submit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    const raw = this.form.getRawValue();
-
-    const payload = {
-      microchipId: Number(raw.microchipId),
-      ownerId: raw.ownerId ? Number(raw.ownerId) : null,
-      species: raw.species!,
-      name: raw.name || null,
-      sex: raw.sex!,
-      birthDate: raw.birthDate || null,
-      breed: raw.breed || null,
-      color: raw.color || null,
-      imageUrl: raw.imageUrl || null,
-      status: raw.status!
+  it('should submit the pet and navigate to pets list', () => {
+    component.pet = {
+      microchipId: 123,
+      ownerId: 5,
+      species: 'DOG',
+      name: 'Muri',
+      sex: 'MALE',
+      birthDate: '2024-01-01',
+      breed: 'Mixed',
+      color: 'Brown',
+      imageUrl: '',
+      status: 'ACTIVE'
     };
 
-    const request = this.petId
-      ? this.petsService.updatePet(this.petId, payload)
-      : this.petsService.createPet(payload);
+    component.submit();
 
-    request.subscribe({
-      next: (pet) => this.router.navigate(['/pets', pet.id]),
-      error: () => (this.error = 'Saving failed.')
-    });
-  }
-}
+    expect(createPetSpy).toHaveBeenCalledWith(component.pet);
+    expect(navigateSpy).toHaveBeenCalledWith(['/pets']);
+  });
+});

@@ -1,13 +1,10 @@
-export type TransferRequestStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'CANCELLED';
-
 export interface OwnerTransferRequest {
   id: number;
   petId: number;
   currentOwnerId: number;
   newOwnerId: number;
-  status: TransferRequestStatus;
+  status: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'CANCELLED';
   initiatedAt: string;
   resolvedAt?: string | null;
   responseMessage?: string | null;
-  createdAt: string;
 }

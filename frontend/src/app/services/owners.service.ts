@@ -4,76 +4,53 @@ import { Observable } from 'rxjs';
 import { Owner } from '../models/owner.model';
 import { Pet } from '../models/pet.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class OwnersService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/owners';
+  private api = 'http://localhost:8080/api/owners';
 
-  getOwners(filters?: {
-    personalCode?: string;
-    name?: string;
-    page?: number;
-    size?: number;
-    sortBy?: string;
-  }): Observable<Owner[]> {
+  getOwners(filters: { personalCode?: string; name?: string; page?: number; size?: number; sortBy?: string }): Observable<any> {
     let params = new HttpParams();
 
-    if (filters?.personalCode) {
-      params = params.set('personalCode', filters.personalCode);
-    }
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params = params.set(key, String(value));
+      }
+    });
 
-    if (filters?.name) {
-      params = params.set('name', filters.name);
-    }
-
-    if (filters?.page !== undefined) {
-      params = params.set('page', filters.page);
-    }
-
-    if (filters?.size !== undefined) {
-      params = params.set('size', filters.size);
-    }
-
-    if (filters?.sortBy) {
-      params = params.set('sortBy', filters.sortBy);
-    }
-
-    return this.http.get<Owner[]>(this.apiUrl, { params });
+    return this.http.get<any>(this.api, { params });
   }
 
-  getOwnerById(id: number): Observable<Owner> {
-    return this.http.get<Owner>(`${this.apiUrl}/${id}`);
+  getOwner(id: number): Observable<Owner> {
+    return this.http.get<Owner>(`${this.api}/${id}`);
   }
 
-  createOwner(payload: Partial<Owner>): Observable<Owner> {
-    return this.http.post<Owner>(this.apiUrl, payload);
+  createOwner(owner: Partial<Owner>): Observable<Owner> {
+    return this.http.post<Owner>(this.api, owner);
   }
 
-  updateOwner(id: number, payload: Partial<Owner>): Observable<Owner> {
-    return this.http.put<Owner>(`${this.apiUrl}/${id}`, payload);
+  updateOwner(id: number, owner: Partial<Owner>): Observable<Owner> {
+    return this.http.put<Owner>(`${this.api}/${id}`, owner);
   }
 
-  getOwnerPets(id: number, paramsData?: {
-    page?: number;
-    size?: number;
-    sortBy?: string;
-  }): Observable<Pet[]> {
-    let params = new HttpParams();
+  deleteOwner(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.api}/${id}`);
+  }
 
-    if (paramsData?.page !== undefined) {
-      params = params.set('page', paramsData.page);
-    }
+  getOwnerPets(id: number, page = 0, size = 10, sortBy = 'id'): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sortBy', sortBy);
 
-    if (paramsData?.size !== undefined) {
-      params = params.set('size', paramsData.size);
-    }
+    return this.http.get<any>(`${this.api}/${id}/pets`, { params });
+  }
 
-    if (paramsData?.sortBy) {
-      params = params.set('sortBy', paramsData.sortBy);
-    }
-
-    return this.http.get<Pet[]>(`${this.apiUrl}/${id}/pets`, { params });
+  normalizeListResponse<T>(response: any): T[] {
+    if (Array.isArray(response)) return response;
+    if (Array.isArray(response?.content)) return response.content;
+    if (Array.isArray(response?.items)) return response.items;
+    if (Array.isArray(response?.data)) return response.data;
+    return [];
   }
 }

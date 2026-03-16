@@ -1,1 +1,16 @@
-<p>microchip-form works!</p>
+<h1>Create microchip</h1>
+
+<div *ngIf="error" style="color: red; margin-bottom: 12px;">{{ error }}</div>
+
+<div>
+  <label>Chip number</label><br>
+  <input [(ngModel)]="model.chipNumber" />
+</div>
+
+<div>
+  <label>Importer</label><br>
+  <input [(ngModel)]="model.importer" />
+</div>
+
+<br>
+<button (click)="save()">Save</button>

@@ -1,1 +1,67 @@
-<p>owner-detail works!</p>
+<h1>Owner detail</h1>
+
+<div *ngIf="error" style="color: red;">{{ error }}</div>
+
+<div *ngIf="owner">
+  <div>
+    <label>Personal code</label><br>
+    <input [(ngModel)]="owner.personalCode" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>First name</label><br>
+    <input [(ngModel)]="owner.firstName" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Last name</label><br>
+    <input [(ngModel)]="owner.lastName" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Address</label><br>
+    <input [(ngModel)]="owner.address" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Email</label><br>
+    <input [(ngModel)]="owner.email" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Phone</label><br>
+    <input [(ngModel)]="owner.phone" [disabled]="!editMode" />
+  </div>
+
+  <br>
+
+  <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+  <button *ngIf="editMode" (click)="save()">Save</button>
+  <button *ngIf="editMode" (click)="editMode = false">Cancel</button>
+  <button (click)="remove()" style="margin-left: 8px;">Delete</button>
+
+  <hr>
+
+  <h2>Owner pets</h2>
+
+  <table *ngIf="pets.length" border="1" cellpadding="8">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Species</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pet of pets">
+        <td>{{ pet.id }}</td>
+        <td>{{ pet.name }}</td>
+        <td>{{ pet.species }}</td>
+        <td>{{ pet.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!pets.length">No pets found.</div>
+</div>

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { MicrochipList } from './microchip-list.component';
 
@@ -9,6 +10,7 @@ describe('MicrochipList', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MicrochipList],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MicrochipList);

@@ -33,7 +33,7 @@ export class SearchPage {
 
     this.petsService.getPets({ name: this.searchText.trim() }).subscribe({
       next: (data) => {
-        this.pets = data;
+        this.pets = this.petsService.normalizeListResponse<Pet>(data);
         this.loading = false;
       },
       error: () => {

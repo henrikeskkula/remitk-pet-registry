@@ -1,1 +1,39 @@
-<p>microchip-list works!</p>
+<h1>Microchips</h1>
+
+<div style="margin-bottom: 16px;">
+  <input [(ngModel)]="chipNumber" placeholder="Search by chip number" />
+  <input [(ngModel)]="importer" placeholder="Search by importer" style="margin-left: 8px;" />
+  <button (click)="search()" style="margin-left: 8px;">Search</button>
+  <a routerLink="/microchips/new" style="margin-left: 12px;">Add microchip</a>
+</div>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="microchips.length" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Chip number</th>
+      <th>Importer</th>
+      <th>Status</th>
+      <th>Update</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let chip of microchips">
+      <td>{{ chip.id }}</td>
+      <td>{{ chip.chipNumber }}</td>
+      <td>{{ chip.importer }}</td>
+      <td>{{ chip.status }}</td>
+      <td>
+        <button (click)="updateStatus(chip, 'FREE')">FREE</button>
+        <button (click)="updateStatus(chip, 'USED')" style="margin-left: 6px;">USED</button>
+      </td>
+      <td>
+        <button (click)="remove(chip.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

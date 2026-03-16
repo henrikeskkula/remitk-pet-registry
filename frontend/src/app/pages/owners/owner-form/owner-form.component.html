@@ -1,1 +1,36 @@
-<p>owner-form works!</p>
+<h1>Create owner</h1>
+
+<div *ngIf="error" style="color: red; margin-bottom: 12px;">{{ error }}</div>
+
+<div>
+  <label>Personal code</label><br>
+  <input [(ngModel)]="model.personalCode" />
+</div>
+
+<div>
+  <label>First name</label><br>
+  <input [(ngModel)]="model.firstName" />
+</div>
+
+<div>
+  <label>Last name</label><br>
+  <input [(ngModel)]="model.lastName" />
+</div>
+
+<div>
+  <label>Address</label><br>
+  <input [(ngModel)]="model.address" />
+</div>
+
+<div>
+  <label>Email</label><br>
+  <input [(ngModel)]="model.email" />
+</div>
+
+<div>
+  <label>Phone</label><br>
+  <input [(ngModel)]="model.phone" />
+</div>
+
+<br>
+<button (click)="save()">Save</button>

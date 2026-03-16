@@ -17,7 +17,7 @@ export class PetsService {
     page?: number;
     size?: number;
     sortBy?: string;
-  }): Observable<Pet[]> {
+  }): Observable<any> {
     let params = new HttpParams();
 
     if (filters?.microchipId !== undefined) {
@@ -44,7 +44,7 @@ export class PetsService {
       params = params.set('sortBy', filters.sortBy);
     }
 
-    return this.http.get<Pet[]>(this.apiUrl, { params });
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
   getPetById(id: number): Observable<Pet> {
@@ -61,5 +61,13 @@ export class PetsService {
 
   deletePet(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  normalizeListResponse<T>(response: any): T[] {
+    if (Array.isArray(response)) return response;
+    if (Array.isArray(response?.content)) return response.content;
+    if (Array.isArray(response?.items)) return response.items;
+    if (Array.isArray(response?.data)) return response.data;
+    return [];
   }
 }

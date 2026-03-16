@@ -1,1 +1,31 @@
-<p>owner-list works!</p>
+<h1>Owners</h1>
+
+<div>
+  <input [(ngModel)]="searchName" placeholder="Search by name" />
+  <button (click)="searchOwners()">Search</button>
+  <a routerLink="/owners/new">Add owner</a>
+</div>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="owners.length">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Personal code</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let owner of owners">
+      <td>{{ owner.id }}</td>
+      <td>{{ owner.firstName }}</td>
+      <td>{{ owner.lastName }}</td>
+      <td>{{ owner.personalCode }}</td>
+      <td><a [routerLink]="['/owners', owner.id]">View</a></td>
+    </tr>
+  </tbody>
+</table>
