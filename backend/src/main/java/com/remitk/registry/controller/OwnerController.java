@@ -34,9 +34,10 @@ public class OwnerController {
     }
 
     @PutMapping("/api/owners/{id}")
-    public ResponseEntity<OwnerDTO> editOwnerById(@PathVariable Long id, @Valid @RequestBody OwnerDTO ownerDTO) throws ResourceNotFoundException {
+    public ResponseEntity<OwnerDTO> editOwnerById(@PathVariable Long id, @Valid @RequestBody OwnerDTO ownerDTO)
+            throws ResourceNotFoundException, BadRequestException {
         if (ownerDTO.getId() != null && !Objects.equals(id, ownerDTO.getId())) {
-            throw new IllegalArgumentException("ID in path and body must match");
+            throw new BadRequestException("ID in path and body must match");
         }
         ownerDTO.setId(id);
         Owner editedOwner = ownerService.editOwner(OwnerMapper.toOwner(ownerDTO));

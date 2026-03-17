@@ -12,8 +12,8 @@ public class ControllerGlobalExceptionHandler {
         return ErrorResponse.create(ex, HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResponse handleIllegalArgumentException(Exception ex) {
+    @ExceptionHandler(BadRequestException.class)
+    public ErrorResponse handleBadRequestException(Exception ex) {
         return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }
