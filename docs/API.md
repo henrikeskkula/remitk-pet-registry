@@ -183,7 +183,7 @@ A pet object, with directly modifiable fields.
 `GET /api/pets`
 
 Search pets by **microchipId**, **name**, or **ownerId**.  
-Exactly **one filter must be provided**. Returns only pets visible to the user. 
+Exactly **one filter must be provided**. Returns only pets visible to the user.
 
 ### Query Parameters
 
@@ -858,45 +858,18 @@ Only available for users that have access to that owner.
 
 ### Query Parameters
 
-| Parameter | Type    | Description                              |
-|-----------|---------|------------------------------------------|
-| page      | integer | Page index                               |
-| size      | integer | Page size                                |
-| sortBy    | string  | Sorting field                            |
-| direction | string  | Sorting direction, either "asc" or "desc" |
+| Parameter | Type    | Description   |
+|-----------|---------|---------------|
+| page      | integer | Page index    |
+| size      | integer | Page size     |
+| sortBy    | string  | Sorting field |
 
 ### Success
 
-| Code | Description                                                                                                            |
-|------|------------------------------------------------------------------------------------------------------------------------|
-| 200  | Returns an object representing the **paginated list of pet objects owned by the specified owner** and page parameters. |
+| Code | Description                                                              |
+|------|--------------------------------------------------------------------------|
+| 200  | Returns a **paginated list of pet objects owned by the specified owner** |
 
-#### Example response:
-```json
-{
-  "pets": [
-    {
-      "id": 3278378,
-      "microchipId": 783278492,
-      "species": "CAT",
-      "name": "Miisu",
-      "sex": "FEMALE",
-      "birthDate": "2025-02-02",
-      "breed": "lühikarvaline",
-      "color": "must",
-      "status": "MISSING",
-      "ownerId": 3213
-    },
-    ...
-  ],
-  "page": 0,
-  "size": 10,
-  "totalPages": 0,
-  "totalElements": 0,
-  "sortBy": "id",
-  "direction": "ASC"
-}
-```
 ### Errors
 
 | Code | Description              |
@@ -1033,7 +1006,7 @@ Returns details of a specific microchip.
 
 `PUT /api/microchips/{id}/status`
 
-Updates a microchip entity. Only available for admin users. 
+Updates a microchip entity. Only available for admin users.
 
 ### Request Body
 
