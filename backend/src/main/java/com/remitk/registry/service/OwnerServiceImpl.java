@@ -4,6 +4,9 @@ import com.remitk.registry.controller.ResourceNotFoundException;
 import com.remitk.registry.model.Owner;
 import com.remitk.registry.model.Pet;
 import com.remitk.registry.repository.OwnerRepository;
+import com.remitk.registry.repository.PetRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +16,11 @@ import java.util.Optional;
 public class OwnerServiceImpl implements OwnerService {
 
     private final OwnerRepository ownerRepository;
+    private final PetRepository petRepository;
 
-    public OwnerServiceImpl(OwnerRepository ownerRepository) {
+    public OwnerServiceImpl(OwnerRepository ownerRepository, PetRepository petRepository) {
         this.ownerRepository = ownerRepository;
+        this.petRepository = petRepository;
     }
 
     @Override
@@ -43,8 +48,10 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<Pet> getPetsByOwnerId(Long id) throws ResourceNotFoundException {
-        Optional<Owner> ownerOptional = ownerRepository.findById(id);
-        return ownerOptional.orElseThrow(() -> new ResourceNotFoundException("Owner not found")).getPets();
+    public Page<Pet> getPetsByOwnerId(Long id, Pageable pageable) throws ResourceNotFoundException {
+        if (!ownerRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Owner not found");
+        }
+        return petRepository.findByOwnerId(id, pageable);
     }
 }
