@@ -79,6 +79,15 @@ public class Pet {
         this.status = status;
     }
 
+    // Constructor for updating entity
+    public Pet(Long id, PetSpecies species, PetSex sex, Microchip microchip, PetStatus status) {
+        this.id = id;
+        this.species = species;
+        this.sex = sex;
+        this.microchip = microchip;
+        this.status = status;
+    }
+
     // ID-only constructor for referencing a pet in other entities
     public Pet(Long id) {
         this.id = id;
