@@ -858,11 +858,12 @@ Only available for users that have access to that owner.
 
 ### Query Parameters
 
-| Parameter | Type    | Description   |
-|-----------|---------|---------------|
-| page      | integer | Page index    |
-| size      | integer | Page size     |
-| sortBy    | string  | Sorting field |
+| Parameter | Type    | Description                              |
+|-----------|---------|------------------------------------------|
+| page      | integer | Page index                               |
+| size      | integer | Page size                                |
+| sortBy    | string  | Sorting field                            |
+| direction | string  | Sorting direction, either "asc" or "desc" |
 
 ### Success
 
@@ -883,7 +884,8 @@ Only available for users that have access to that owner.
       "birthDate": "2025-02-02",
       "breed": "lühikarvaline",
       "color": "must",
-      "status": "MISSING"
+      "status": "MISSING",
+      "ownerId": 3213
     },
     ...
   ],

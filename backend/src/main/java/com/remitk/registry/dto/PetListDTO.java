@@ -3,13 +3,13 @@ package com.remitk.registry.dto;
 import java.util.List;
 
 public class PetListDTO {
-    public List<PetDTO> pets;
-    public int page;
-    public int size;
-    public int totalPages;
-    public long totalElements;
-    public String sortBy;
-    public String direction;
+    private final List<PetDTO> pets;
+    private final int page;
+    private final int size;
+    private final int totalPages;
+    private final long totalElements;
+    private final String sortBy;
+    private final String direction;
 
     public PetListDTO(List<PetDTO> pets, int page, int size, int totalPages, long totalElements, String sortBy, String direction) {
         this.pets = pets;
@@ -19,5 +19,33 @@ public class PetListDTO {
         this.totalElements = totalElements;
         this.sortBy = sortBy;
         this.direction = direction;
+    }
+
+    public List<PetDTO> getPets() {
+        return pets;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public long getTotalElements() {
+        return totalElements;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public String getDirection() {
+        return direction;
     }
 }

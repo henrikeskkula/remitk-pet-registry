@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -25,6 +24,7 @@ public class OwnerController {
 
     @PostMapping("/api/owners")
     public ResponseEntity<OwnerDTO> createOwner(@Valid @RequestBody OwnerDTO ownerDTO) {
+        ownerDTO.setId(null);
         Owner createdOwner = ownerService.createOwner(OwnerMapper.toOwner(ownerDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(OwnerMapper.toOwnerDTO(createdOwner));
     }
@@ -50,28 +50,25 @@ public class OwnerController {
     public ResponseEntity<PetListDTO> getPetsByOwnerId(@PathVariable Long id,
                                                        @RequestParam(defaultValue = "0") Integer page,
                                                        @RequestParam(defaultValue = "10") Integer size,
-                                                       @RequestParam(defaultValue = "id asc") String sortBy)
+                                                       @RequestParam(defaultValue = "id") PetSortableFields sortBy,
+                                                       @RequestParam(defaultValue = "asc") String direction)
             throws ResourceNotFoundException, BadRequestException {
 
-        // parse the sort parameter, format: "field [asc|desc]"
-        String[] sortFields = sortBy.split(" ");
-        if (sortFields.length > 2) {
-            throw new BadRequestException("Invalid sortBy parameter, should be: \"field [asc|desc]\"");
-        }
-        if (sortFields.length == 2 && !sortFields[1].equalsIgnoreCase("asc") && !sortFields[1].equalsIgnoreCase("desc")) {
-            throw new BadRequestException("Invalid sortBy parameter, should be: \"field [asc|desc]\"");
-        }
-        String sortField = sortFields[0];
-        String sortOrder = "asc";
-        if (sortFields.length == 2) {
-            sortOrder = sortFields[1];
-        }
         Pageable pageable;
-        if (sortOrder.equalsIgnoreCase("asc")) {
-            pageable = PageRequest.of(page, size, Sort.by(sortField).ascending());
+        if (page < 0) {
+            throw new BadRequestException("Invalid page parameter, should not be negative");
+        }
+        else if (size <= 0) {
+            throw new BadRequestException("Invalid size parameter, should be positive");
+        }
+        if (direction.equalsIgnoreCase("asc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy.name()).ascending());
+        }
+        else if (direction.equalsIgnoreCase("desc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy.name()).descending());
         }
         else {
-            pageable = PageRequest.of(page, size, Sort.by(sortField).descending());
+            throw new BadRequestException("Invalid sort direction, should be 'asc' or 'desc'");
         }
         Page<PetDTO> ownerPetDTOs = ownerService.getPetsByOwnerId(id, pageable).map(PetMapper::toPetDTO);
         PetListDTO petListDTO = new PetListDTO(ownerPetDTOs.getContent(),
@@ -79,8 +76,8 @@ public class OwnerController {
                 ownerPetDTOs.getSize(),
                 ownerPetDTOs.getTotalPages(),
                 ownerPetDTOs.getTotalElements(),
-                ownerPetDTOs.getSort().iterator().next().getProperty(),
-                ownerPetDTOs.getSort().iterator().next().getDirection().name());
+                sortBy.name(),
+                direction.toLowerCase());
         return ResponseEntity.ok(petListDTO);
     }
 }
