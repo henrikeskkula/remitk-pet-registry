@@ -1,5 +1,6 @@
 package com.remitk.registry.service;
 
+import com.remitk.registry.controller.BadRequestException;
 import com.remitk.registry.controller.ResourceNotFoundException;
 import com.remitk.registry.model.Owner;
 import com.remitk.registry.model.Pet;
@@ -24,7 +25,10 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Owner createOwner(Owner owner) {
+    public Owner createOwner(Owner owner) throws BadRequestException {
+        if (ownerRepository.existsByPersonalCode(owner.getPersonalCode())) {
+            throw new BadRequestException("Person with this personal code already exists!");
+        }
         return ownerRepository.save(owner);
     }
 
@@ -35,7 +39,12 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Owner editOwner(Owner owner) throws ResourceNotFoundException {
+    public Owner editOwner(Owner owner) throws ResourceNotFoundException, BadRequestException {
+        Optional<Owner> matchingPersonalCodeOwnerOptional = ownerRepository.findByPersonalCode(owner.getPersonalCode());
+        if (matchingPersonalCodeOwnerOptional.isPresent() &&
+                !matchingPersonalCodeOwnerOptional.get().getId().equals(owner.getId())) {
+            throw new BadRequestException("Person with this personal code already exists!");
+        }
         Optional<Owner> ownerOptional = ownerRepository.findById(owner.getId());
         if (ownerOptional.isPresent()) {
             Owner existingOwner = ownerOptional.get();

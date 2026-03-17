@@ -17,7 +17,9 @@ public class PetMapper {
         petDTO.setImageUrl(pet.getImageUrl());
         petDTO.setStatus(pet.getStatus());
         petDTO.setMicrochipId(pet.getMicrochip().getId());
-        petDTO.setOwnerId(pet.getOwner().getId());
+        if (pet.getOwner() != null) {
+            petDTO.setOwnerId(pet.getOwner().getId());
+        }
         return petDTO;
     }
 
@@ -41,7 +43,9 @@ public class PetMapper {
         pet.setBreed(petDTO.getBreed());
         pet.setColor(petDTO.getColor());
         pet.setImageUrl(petDTO.getImageUrl());
-        pet.setOwner(new Owner(petDTO.getOwnerId()));
+        if (petDTO.getOwnerId() != null) {
+            pet.setOwner(new Owner(petDTO.getOwnerId()));
+        }
         return pet;
     }
 }

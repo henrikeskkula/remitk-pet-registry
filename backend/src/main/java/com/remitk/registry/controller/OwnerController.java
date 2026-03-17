@@ -23,7 +23,7 @@ public class OwnerController {
     }
 
     @PostMapping("/api/owners")
-    public ResponseEntity<OwnerDTO> createOwner(@Valid @RequestBody OwnerDTO ownerDTO) {
+    public ResponseEntity<OwnerDTO> createOwner(@Valid @RequestBody OwnerDTO ownerDTO) throws BadRequestException {
         ownerDTO.setId(null);
         Owner createdOwner = ownerService.createOwner(OwnerMapper.toOwner(ownerDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(OwnerMapper.toOwnerDTO(createdOwner));
