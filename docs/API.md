@@ -183,7 +183,7 @@ A pet object, with directly modifiable fields.
 `GET /api/pets`
 
 Search pets by **microchipId**, **name**, or **ownerId**.  
-Exactly **one filter must be provided**. Returns only pets visible to the user.
+Exactly **one filter must be provided**. Returns only pets visible to the user. 
 
 ### Query Parameters
 
@@ -1006,7 +1006,7 @@ Returns details of a specific microchip.
 
 `PUT /api/microchips/{id}/status`
 
-Updates a microchip entity. Only available for admin users.
+Updates a microchip entity. Only available for admin users. 
 
 ### Request Body
 
