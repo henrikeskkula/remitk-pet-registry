@@ -866,10 +866,35 @@ Only available for users that have access to that owner.
 
 ### Success
 
-| Code | Description                                                              |
-|------|--------------------------------------------------------------------------|
-| 200  | Returns a **paginated list of pet objects owned by the specified owner** |
+| Code | Description                                                                                                            |
+|------|------------------------------------------------------------------------------------------------------------------------|
+| 200  | Returns an object representing the **paginated list of pet objects owned by the specified owner** and page parameters. |
 
+#### Example response:
+```json
+{
+  "pets": [
+    {
+      "id": 3278378,
+      "microchipId": 783278492,
+      "species": "CAT",
+      "name": "Miisu",
+      "sex": "FEMALE",
+      "birthDate": "2025-02-02",
+      "breed": "lühikarvaline",
+      "color": "must",
+      "status": "MISSING"
+    },
+    ...
+  ],
+  "page": 0,
+  "size": 10,
+  "totalPages": 0,
+  "totalElements": 0,
+  "sortBy": "id",
+  "direction": "ASC"
+}
+```
 ### Errors
 
 | Code | Description              |
