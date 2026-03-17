@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerGlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ErrorResponse handleResourceNotFoundException(Exception ex) {
+    public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ErrorResponse.create(ex, HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ErrorResponse handleBadRequestException(Exception ex) {
+    public ErrorResponse handleBadRequestException(BadRequestException ex) {
         return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrorResponse handleMethodArgumentNotValidException(Exception ex) {
+    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }

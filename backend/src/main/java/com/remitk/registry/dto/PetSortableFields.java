@@ -3,7 +3,6 @@ package com.remitk.registry.dto;
 
 public enum PetSortableFields {
     id,
-    microchipId,
     species,
     sex,
     status,
@@ -12,5 +11,4 @@ public enum PetSortableFields {
     breed,
     color,
     imageUrl,
-    ownerId
 }
