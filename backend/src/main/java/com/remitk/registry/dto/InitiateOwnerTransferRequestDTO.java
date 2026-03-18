@@ -1,6 +1,9 @@
 package com.remitk.registry.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class InitiateOwnerTransferRequestDTO {
+    @NotNull
     private Long newOwnerId;
 
     public InitiateOwnerTransferRequestDTO(Long newOwnerId) {

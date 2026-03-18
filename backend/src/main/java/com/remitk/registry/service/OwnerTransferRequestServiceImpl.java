@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -43,11 +44,18 @@ public class OwnerTransferRequestServiceImpl implements OwnerTransferRequestServ
         if (pet.getOwner() == null) {
             throw new ResourceNotFoundException("Pet does not belong to any owner");
         }
-        if (!ownerRepository.existsById(newOwnerId)) {
+        Optional<Owner> newOwnerOptional = ownerRepository.findById(newOwnerId);
+        if (newOwnerOptional.isEmpty()) {
             throw new ResourceNotFoundException("New owner not found");
         }
         if (Objects.equals(pet.getOwner().getId(), newOwnerId)) {
             throw new BadRequestException("New owner cannot be the same as the current owner");
+        }
+        List<OwnerTransferRequest> previousOwnerTransferRequests = ownerTransferRequestRepository.findAllByPetId(petId);
+        for (OwnerTransferRequest request : previousOwnerTransferRequests) {
+            if (request.getStatus() == OwnerTransferRequestStatus.PENDING) {
+                throw new BadRequestException("A pending owner transfer request already exists for this pet");
+            }
         }
 
         PetEvent initiatedOwnerTransfer = new PetEvent(PetEventType.OWNER_TRANSFER_INITIATED,
@@ -60,7 +68,7 @@ public class OwnerTransferRequestServiceImpl implements OwnerTransferRequestServ
 
         OwnerTransferRequest transferRequest = new OwnerTransferRequest(pet,
                 pet.getOwner(),
-                new Owner(newOwnerId));
+                newOwnerOptional.get());
 
         if (transferRequest.getCurrentOwner().getEmail() != null) {
             logger.info("Mock email to {}: New owner transfer of pet with ID {} initiated!",
