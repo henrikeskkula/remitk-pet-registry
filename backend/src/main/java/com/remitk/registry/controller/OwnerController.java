@@ -22,6 +22,25 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
+    @GetMapping("/api/owners")
+    public ResponseEntity<OwnerListDTO> searchOwners(@RequestParam(required = false) String name,
+                                                     @RequestParam(required = false) String personalCode,
+                                                     @RequestParam(defaultValue = "0") Integer page,
+                                                     @RequestParam(defaultValue = "10") Integer size,
+                                                     @RequestParam(defaultValue = "id") OwnerSortableFields sortBy,
+                                                     @RequestParam(defaultValue = "asc") String direction) throws BadRequestException {
+        Pageable pageable = getPageable(page, size, sortBy.name(), direction);
+        Page<OwnerDTO> ownerDTOs = ownerService.searchOwners(name, personalCode, pageable).map(OwnerMapper::toOwnerDTO);
+        OwnerListDTO ownerListDTO = new OwnerListDTO(ownerDTOs.getContent(),
+                ownerDTOs.getNumber(),
+                ownerDTOs.getSize(),
+                ownerDTOs.getTotalPages(),
+                ownerDTOs.getTotalElements(),
+                sortBy.name(),
+                direction.toLowerCase());
+        return ResponseEntity.ok(ownerListDTO);
+    }
+
     @PostMapping("/api/owners")
     public ResponseEntity<OwnerDTO> createOwner(@Valid @RequestBody OwnerDTO ownerDTO) throws BadRequestException {
         ownerDTO.setId(null);
@@ -54,22 +73,7 @@ public class OwnerController {
                                                        @RequestParam(defaultValue = "asc") String direction)
             throws ResourceNotFoundException, BadRequestException {
 
-        Pageable pageable;
-        if (page < 0) {
-            throw new BadRequestException("Invalid page parameter, should not be negative");
-        }
-        else if (size <= 0) {
-            throw new BadRequestException("Invalid size parameter, should be positive");
-        }
-        if (direction.equalsIgnoreCase("asc")) {
-            pageable = PageRequest.of(page, size, Sort.by(sortBy.name()).ascending());
-        }
-        else if (direction.equalsIgnoreCase("desc")) {
-            pageable = PageRequest.of(page, size, Sort.by(sortBy.name()).descending());
-        }
-        else {
-            throw new BadRequestException("Invalid sort direction, should be 'asc' or 'desc'");
-        }
+        Pageable pageable = getPageable(page, size, sortBy.name(), direction);
         Page<PetDTO> ownerPetDTOs = ownerService.getPetsByOwnerId(id, pageable).map(PetMapper::toPetDTO);
         PetListDTO petListDTO = new PetListDTO(ownerPetDTOs.getContent(),
                 ownerPetDTOs.getNumber(),
@@ -79,5 +83,25 @@ public class OwnerController {
                 sortBy.name(),
                 direction.toLowerCase());
         return ResponseEntity.ok(petListDTO);
+    }
+
+    private Pageable getPageable(Integer page, Integer size, String sortBy, String direction) throws BadRequestException {
+        Pageable pageable;
+        if (page < 0) {
+            throw new BadRequestException("Invalid page parameter, should not be negative");
+        }
+        else if (size <= 0) {
+            throw new BadRequestException("Invalid size parameter, should be positive");
+        }
+        if (direction.equalsIgnoreCase("asc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        }
+        else if (direction.equalsIgnoreCase("desc")) {
+            pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        }
+        else {
+            throw new BadRequestException("Invalid sort direction, should be 'asc' or 'desc'");
+        }
+        return pageable;
     }
 }
