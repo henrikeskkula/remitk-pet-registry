@@ -29,4 +29,21 @@ public class OwnerTransferRequestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(transferRequest);
     }
 
+    @PostMapping("/api/transfers/{id}/accept")
+    public ResponseEntity<Void> acceptTransferRequest(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException {
+        ownerTransferRequestService.acceptTransferRequest(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/transfers/{id}/reject")
+    public ResponseEntity<Void> rejectTransferRequest(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException {
+        ownerTransferRequestService.rejectTransferRequest(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/transfers/{id}/cancel")
+    public ResponseEntity<Void> cancelTransferRequest(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException {
+        ownerTransferRequestService.cancelTransferRequest(id);
+        return ResponseEntity.ok().build();
+    }
 }
