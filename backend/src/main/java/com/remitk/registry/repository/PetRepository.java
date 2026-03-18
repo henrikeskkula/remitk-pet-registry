@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PetRepository extends JpaRepository<Pet, Long> {
     Page<Pet> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Pet> findByOwnerId(Long id, Pageable pageable);
+    Page<Pet> findByMicrochipId(Long id, Pageable pageable);
 }
