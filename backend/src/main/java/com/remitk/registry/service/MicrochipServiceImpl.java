@@ -2,8 +2,6 @@ package com.remitk.registry.service;
 
 import com.remitk.registry.controller.BadRequestException;
 import com.remitk.registry.controller.ResourceNotFoundException;
-import com.remitk.registry.dto.MicrochipDTO;
-import com.remitk.registry.dto.MicrochipMapper;
 import com.remitk.registry.model.Microchip;
 import com.remitk.registry.model.MicrochipStatus;
 import com.remitk.registry.repository.MicrochipRepository;
@@ -21,9 +19,7 @@ public class MicrochipServiceImpl implements MicrochipService {
     }
 
     @Override
-    public Microchip createMicrochip(MicrochipDTO microchipDTO) {
-        microchipDTO.setId(null);
-        Microchip microchip = MicrochipMapper.toMicrochip(microchipDTO);
+    public Microchip createMicrochip(Microchip microchip) {
         microchip.setStatus(MicrochipStatus.FREE);
         return microchipRepository.save(microchip);
     }

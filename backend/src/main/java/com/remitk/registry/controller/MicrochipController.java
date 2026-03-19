@@ -20,8 +20,9 @@ public class MicrochipController {
 
     @PostMapping("/api/microchips")
     public ResponseEntity<MicrochipDTO> createMicrochip(@RequestBody @Valid MicrochipDTO microchipDTO) {
+        microchipDTO.setId(null);
         MicrochipDTO newMicrochipDTO = MicrochipMapper.toMicrochipDTO(
-                microchipService.createMicrochip(microchipDTO));
+                microchipService.createMicrochip(MicrochipMapper.toMicrochip(microchipDTO)));
         return ResponseEntity.status(HttpStatus.CREATED).body(newMicrochipDTO);
     }
 

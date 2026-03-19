@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MicrochipService {
-    public Microchip createMicrochip(MicrochipDTO microchipDTO);
+    public Microchip createMicrochip(Microchip microchip);
     public Page<Microchip> searchMicrochips(String chipNumber, String importer, Pageable pageable) throws BadRequestException;
     public Microchip updateMicrochipStatus(Long id, MicrochipStatus status) throws ResourceNotFoundException;
 }
