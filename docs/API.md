@@ -166,6 +166,24 @@ A pet object, with directly modifiable fields.
 |------|------------------------------------|
 | 201  | Returns the **created pet object** |
 
+#### Response example
+
+```json
+{
+  "id": 2132,
+  "microchipId": 783278492,
+  "species": "CAT",
+  "name": "Miisu",
+  "sex": "FEMALE",
+  "birthDate": "2025-02-02",
+  "breed": "lühikarvaline",
+  "color": "must",
+  "status": "MISSING",
+  "imageUrl": null,
+  "ownerId": 32832
+}
+```
+
 ### Errors
 
 | Code | Description                                |
@@ -183,7 +201,7 @@ A pet object, with directly modifiable fields.
 `GET /api/pets`
 
 Search pets by **microchipId**, **name**, or **ownerId**.  
-Exactly **one filter must be provided**. Returns only pets visible to the user.
+No more than **one filter must be provided**. Returns only pets visible to the user.
 
 ### Query Parameters
 
@@ -194,7 +212,8 @@ Exactly **one filter must be provided**. Returns only pets visible to the user.
 | ownerId     | integer | -       | Filter by owner     |
 | page        | integer | 0       | Page number         |
 | size        | integer | 10      | Page size           |
-| sortBy      | string  | -       | Sort field          |
+| sortBy      | string  | id      | Sort field          |
+| direction   | string  | asc     | Sort direction      |
 
 ### Success
 
@@ -202,7 +221,34 @@ Exactly **one filter must be provided**. Returns only pets visible to the user.
 |------|----------------------------------------------------------------------------------------------------------------------------------|
 | 200  | Returns a **paginated JSON list of [pet objects](#pet-entity)** matching the search criteria, or an empty list if none is found. |
 
+#### Response example
 
+```json
+{
+  "pets": [
+    {
+      "id": 2132,
+      "microchipId": 783278492,
+      "species": "CAT",
+      "name": "Miisu",
+      "sex": "FEMALE",
+      "birthDate": "2025-02-02",
+      "breed": "lühikarvaline",
+      "color": "must",
+      "status": "MISSING",
+      "imageUrl": null,
+      "ownerId": 32832
+    },
+    ...
+  ],
+  "page": 0,
+  "size": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "sortBy": "id",
+  "direction": "asc"
+}
+```
 
 ### Errors
 
@@ -234,6 +280,24 @@ Requires user role to be able to see pet.
 | Code | Description                                                                            |
 |------|----------------------------------------------------------------------------------------|
 | 200  | Returns the **pet object** including microchip reference, species, owner, and metadata |
+
+#### Response example
+
+```json
+{
+  "id": 2132,
+  "microchipId": 783278492,
+  "species": "CAT",
+  "name": "Miisu",
+  "sex": "FEMALE",
+  "birthDate": "2025-02-02",
+  "breed": "lühikarvaline",
+  "color": "must",
+  "status": "MISSING",
+  "imageUrl": null,
+  "ownerId": 32832
+}
+```
 
 ### Errors
 
@@ -285,6 +349,24 @@ A pet object, with directly modifiable fields.
 | Code | Description                        |
 |------|------------------------------------|
 | 200  | Returns the **updated pet object** |
+
+#### Response example
+
+```json
+{
+  "id": 2132,
+  "microchipId": 783278492,
+  "species": "CAT",
+  "name": "Miisu",
+  "sex": "FEMALE",
+  "birthDate": "2025-02-02",
+  "breed": "lühikarvaline",
+  "color": "must",
+  "status": "MISSING",
+  "imageUrl": null,
+  "ownerId": 32832
+}
+```
 
 ### Errors
 
@@ -341,6 +423,14 @@ Binary JPEG file.
 |-----------|-------------------------------------------------------------------------------------------|
 | 200 / 201 | Returns a **imageUrl field in the response body pointing to the uploaded image resource** |
 
+
+#### Response example
+```json
+{
+  "imageUrl": "https://example.com/image.jpg"
+}
+```
+
 ### Errors
 
 | Code | Description                     |
@@ -364,6 +454,13 @@ Retrieves a link to the image associated with the pet.
 | Code | Description                                                                 |
 |------|-----------------------------------------------------------------------------|
 | 200  | Returns a **imageUrl field in the response body pointing to the stored pet image** |
+
+#### Response example
+```json
+{
+  "imageUrl": "https://example.com/image.jpg"
+}
+```
 
 ### Errors
 
@@ -441,6 +538,17 @@ Contains information about the event. Description and time are optional.
 |------|-------------------------------------------|
 | 201  | Returns the **created pet event object**  |
 
+#### Response example
+```json
+{
+  "id": 123,
+  "petId": 32832,
+  "type": "MARKED_MISSING",
+  "description": "Animal went missing",
+  "time": "2025-11-13T14:28:39",
+  "performedByRole": "VET"
+}
+```
 ### Errors
 
 | Code | Description              |
@@ -457,8 +565,8 @@ Contains information about the event. Description and time are optional.
 
 `GET /api/events`
 
-Search pet events by **PetId**, **eventType** or **description**.  
-Exactly one search filter must be provided.
+Search pet events by **petId**, **eventType** or **description**.  
+Up to one search filter must be provided.
 Only events of pets that the user is allowed to access are presented.
 
 ### Query Parameters
@@ -477,6 +585,29 @@ Only events of pets that the user is allowed to access are presented.
 | Code | Description                                                                           |
 |------|---------------------------------------------------------------------------------------|
 | 200  | Returns a **paginated JSON list of [pet event objects](#pet-event-entity)** or an empty list if not found. |
+
+#### Response example
+```json
+{
+  "petEvents": [
+    {
+      "id": 123,
+      "petId": 32832,
+      "type": "MARKED_MISSING",
+      "description": "Animal went missing",
+      "time": "2025-11-13T14:28:39",
+      "performedByRole": "VET"
+    },
+    ...
+  ],
+  "page": 0,
+  "size": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "sortBy": "id",
+  "direction": "asc"
+}
+```
 
 ### Errors
 
@@ -501,6 +632,18 @@ Only events of pets that the user is allowed to access are presented.
 | Code | Description                      |
 |------|----------------------------------|
 | 200  | Returns the **pet event object** |
+
+#### Response example
+```json
+{
+  "id": 123,
+  "petId": 32832,
+  "type": "MARKED_MISSING",
+  "description": "Animal went missing",
+  "time": "2025-11-13T14:28:39",
+  "performedByRole": "VET"
+}
+```
 
 ### Errors
 
@@ -593,14 +736,30 @@ The body must contain the ID of the new owner.
 |------|-----------------------------------------|
 | 201  | The resulting ownership transfer entity |
 
+#### Response example
+
+```json
+{
+  "id": 1234,
+  "petId": 32832,
+  "currentOwnerId": 3222,
+  "newOwnerId": 8929,
+  "status": "PENDING",
+  "initiatedAt": "2025-12-31T23:59:59",
+  "resolvedAt": null,
+  "responseMessage": null
+}
+```
+
 ### Errors
 
-| Code | Description              |
-|------|--------------------------|
-| 401  | Authentication required  |
-| 403  | Insufficient permissions |
-| 404  | Pet or owner not found   |
-| 500  | Internal server error    |
+| Code | Description                                                                       |
+|------|-----------------------------------------------------------------------------------|
+| 400  | Another transfer in process, currentOwner is equal to newOwner or another mistake |
+| 401  | Authentication required                                                           |
+| 403  | Insufficient permissions                                                          |
+| 404  | Pet or owner not found                                                            |
+| 500  | Internal server error                                                             |
 
 ---
 
@@ -632,6 +791,21 @@ Empty body.
 | Code | Description                    |
 |------|--------------------------------|
 | 200  | The resulting transfer object  |
+
+#### Response example
+
+```json
+{
+  "id": 1234,
+  "petId": 32832,
+  "currentOwnerId": 3222,
+  "newOwnerId": 8929,
+  "status": "ACCEPTED",
+  "initiatedAt": "2025-12-31T23:59:59",
+  "resolvedAt": "2026-01-01T00:00:01",
+  "responseMessage": "Happy to accept."
+}
+```
 
 ### Errors
 
@@ -697,6 +871,19 @@ Required fields:
 |------|--------------------------------------|
 | 201  | Returns the **created owner object** |
 
+#### Response example
+```json
+{
+  "id": 432,
+  "personalCode": "399020428347",
+  "firstName": "Jaan",
+  "lastName": "Tamm",
+  "address": "Koera tn 18, Tallinn, Harju maakond, Eesti",
+  "email": "jaan.tamm@gmail.com",
+  "phone": "+37254541010"
+}
+```
+
 ### Errors
 
 | Code | Description                              |
@@ -714,24 +901,49 @@ Required fields:
 `GET /api/owners`
 
 Search for owners by **name** or **personalCode**.  
-Exactly **one of the parameters must be provided**.
+Zero or one **of the parameters must be provided**.
 The user must have access to the owner.
 
 ### Query Parameters
 
-| Parameter    | Type    | Description                               |
-|--------------|---------|-------------------------------------------|
-| personalCode | string  | Search by national personal code          |
-| name         | string  | Search by owner name (first or last name) |
-| page         | integer | Page index                                |
-| size         | integer | Page size                                 |
-| sortBy       | string  | Field used for sorting                    |
+| Parameter    | Type    | Default | Description                               |
+|--------------|---------|---------|-------------------------------------------|
+| personalCode | string  | -       | Search by national personal code          |
+| name         | string  | -       | Search by owner name (first or last name) |
+| page         | integer | 0       | Page index                                |
+| size         | integer | 10      | Page size                                 |
+| sortBy       | string  | id      | Field used for sorting                    |
+| direction    | string  | asc     | Sorting direction                         |
 
 ### Success
 
 | Code | Description                                                                                                    |
 |------|----------------------------------------------------------------------------------------------------------------|
 | 200  | Returns a **paginated JSON list of [owner objects](#owner-entity)** matching the search criteria or an empty list if not found. |
+
+#### Response example
+```json
+{
+  "owners": [
+    {
+      "id": 432,
+      "personalCode": "399020428347",
+      "firstName": "Jaan",
+      "lastName": "Tamm",
+      "address": "Koera tn 18, Tallinn, Harju maakond, Eesti",
+      "email": "jaan.tamm@gmail.com",
+      "phone": "+37254541010"
+    },
+    ...
+  ],
+  "page": 0,
+  "size": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "sortBy": "id",
+  "direction": "asc"
+}
+```
 
 ### Errors
 
@@ -762,6 +974,19 @@ Returns details for a specific owner.
 | Code | Description                                                                      |
 |------|----------------------------------------------------------------------------------|
 | 200  | Returns the **owner object**, including personal details and contact information |
+
+#### Response example
+```json
+{
+  "id": 432,
+  "personalCode": "399020428347",
+  "firstName": "Jaan",
+  "lastName": "Tamm",
+  "address": "Koera tn 18, Tallinn, Harju maakond, Eesti",
+  "email": "jaan.tamm@gmail.com",
+  "phone": "+37254541010"
+}
+```
 
 ### Errors
 
@@ -806,6 +1031,19 @@ Required fields:
 | Code | Description                          |
 |------|--------------------------------------|
 | 200  | Returns the **updated owner object** |
+
+#### Response example
+```json
+{
+  "id": 432,
+  "personalCode": "399020428347",
+  "firstName": "Jaan",
+  "lastName": "Tamm",
+  "address": "Koera tn 18, Tallinn, Harju maakond, Eesti",
+  "email": "jaan.tamm@gmail.com",
+  "phone": "+37254541010"
+}
+```
 
 ### Errors
 
@@ -858,12 +1096,12 @@ Only available for users that have access to that owner.
 
 ### Query Parameters
 
-| Parameter | Type    | Description                              |
-|-----------|---------|------------------------------------------|
-| page      | integer | Page index                               |
-| size      | integer | Page size                                |
-| sortBy    | string  | Sorting field                            |
-| direction | string  | Sorting direction, either "asc" or "desc" |
+| Parameter | Type    | Default | Description                              |
+|-----------|---------|---------|------------------------------------------|
+| page      | integer | 0       | Page index                               |
+| size      | integer | 10      | Page size                                |
+| sortBy    | string  | id      | Sorting field                            |
+| direction | string  | asc     | Sorting direction, either "asc" or "desc" |
 
 ### Success
 
@@ -891,10 +1129,10 @@ Only available for users that have access to that owner.
   ],
   "page": 0,
   "size": 10,
-  "totalPages": 0,
-  "totalElements": 0,
+  "totalPages": 1,
+  "totalElements": 1,
   "sortBy": "id",
-  "direction": "ASC"
+  "direction": "asc"
 }
 ```
 ### Errors
@@ -952,6 +1190,16 @@ The fields in the example are required. A new microchip will always have a statu
 |------|------------------------------------------|
 | 201  | Returns the **created microchip object** |
 
+#### Response example
+```json
+{
+  "id": 432,
+  "chipNumber": "433847324",
+  "importer": "Loomakliinik OÜ",
+  "status": "FREE"
+}
+```
+
 ### Errors
 
 | Code | Description                              |
@@ -968,24 +1216,47 @@ The fields in the example are required. A new microchip will always have a statu
 
 `GET /api/microchips`
 
-Search microchips by **chipNumber** or **importer**.  
-Exactly **one filter must be provided**. Only available for admin users.
+Search microchips by **chipNumber**, **importer** or **status**.  
+Up to **one filter must be provided**. Only available for admin users.
 
 ### Query Parameters
 
-| Parameter  | Type    | Description                     |
-|------------|---------|---------------------------------|
-| chipNumber | string  | Search by chip number           |
-| importer   | string  | Search by importer organization |
-| page       | integer | Page index                      |
-| size       | integer | Page size                       |
-| sortBy     | string  | Sorting field                   |
+| Parameter  | Type    | Default | Description                     |
+|------------|---------|---------|---------------------------------|
+| chipNumber | string  | -       | Search by chip number           |
+| importer   | string  | -       | Search by importer organization |
+| status     | string  | -       | Search by chip status           |
+| page       | integer | 0       | Page index                      |
+| size       | integer | 10      | Page size                       |
+| sortBy     | string  | id      | Sorting field                   |
+| direction  | string  | asc     | Sort direction                  |
 
 ### Success
 
 | Code | Description                                                                                                        |
 |------|--------------------------------------------------------------------------------------------------------------------|
 | 200  | Returns a **paginated JSON list of [microchip objects](#microchip-entity)** matching the search criteria or an empty list if not found. |
+
+#### Response example
+```json
+{
+  "microchips": [
+    {
+      "id": 432,
+      "chipNumber": "433847324",
+      "importer": "Loomakliinik OÜ",
+      "status": "FREE"
+    },
+    ...
+  ],
+  "page": 0,
+  "size": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "sortBy": "id",
+  "direction": "asc"
+}
+```
 
 ### Errors
 
@@ -994,7 +1265,6 @@ Exactly **one filter must be provided**. Only available for admin users.
 | 400  | Invalid search parameters or multiple filters provided |
 | 401  | Authentication required                                |
 | 403  | Insufficient permissions                               |
-| 404  | No microchips found                                    |
 | 500  | Internal server error                                  |
 
 ---
@@ -1016,6 +1286,16 @@ Returns details of a specific microchip.
 | Code | Description                      |
 |------|----------------------------------|
 | 200  | Returns the **microchip object** |
+
+#### Response example
+```json
+{
+  "id": 432,
+  "chipNumber": "433847324",
+  "importer": "Loomakliinik OÜ",
+  "status": "FREE"
+}
+```
 
 ### Errors
 
@@ -1052,6 +1332,16 @@ A status is required.
 | Code | Description                              |
 |------|------------------------------------------|
 | 200  | Returns the **updated microchip object** |
+
+#### Response example
+```json
+{
+  "id": 432,
+  "chipNumber": "433847324",
+  "importer": "Loomakliinik OÜ",
+  "status": "USED"
+}
+```
 
 ### Errors
 
