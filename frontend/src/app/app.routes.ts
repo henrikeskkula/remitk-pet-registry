@@ -54,5 +54,7 @@ export const routes: Routes = [
     path: 'search',
     loadComponent: () =>
       import('./pages/search/search-page/search-page.component').then(m => m.SearchPage)
-  }
+  },
+
+  { path: '**', redirectTo: 'pets' }
 ];

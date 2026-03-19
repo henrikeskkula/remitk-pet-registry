@@ -1,7 +1,7 @@
 import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
+
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideAnimations(),
+    
     { provide: LOCALE_ID, useValue: 'et-EE' },
     { provide: MAT_DATE_LOCALE, useValue: 'et-EE' },
     { provide: NativeDateAdapter, useClass: EtDateAdapter },
