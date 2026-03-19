@@ -1,0 +1,35 @@
+<h1>Lisa loomapidaja</h1>
+
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<div class="form-field">
+  <label>Isikukood</label><br>
+  <input [(ngModel)]="model.personalCode" />
+</div>
+
+<div class="form-field">
+  <label>Eesnimi</label><br>
+  <input [(ngModel)]="model.firstName" />
+</div>
+
+<div class="form-field">
+  <label>Perekonnanimi</label><br>
+  <input [(ngModel)]="model.lastName" />
+</div>
+
+<div class="form-field">
+  <label>Elukoha aadress</label><br>
+  <input [(ngModel)]="model.address" />
+</div>
+
+<div class="form-field">
+  <label>E-posti aadress</label><br>
+  <input [(ngModel)]="model.email" />
+</div>
+
+<div class="form-field">
+  <label>Telefoninumber</label><br>
+  <input [(ngModel)]="model.phone" />
+</div>
+
+<button (click)="save()">Salvesta</button>

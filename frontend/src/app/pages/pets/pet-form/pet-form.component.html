@@ -1,0 +1,86 @@
+<h1>Lisa loom</h1>
+
+<div *ngIf="error">{{ error }}</div>
+
+<form (ngSubmit)="submit()">
+  <div>
+    <label>Mikrokiibi number</label>
+    <input
+      type="number"
+      [(ngModel)]="pet.microchipId"
+      name="microchipId"
+      required
+    />
+  </div>
+
+  <div>
+    <label>Loomapidaja number</label>
+    <input type="number" [(ngModel)]="pet.ownerId" name="ownerId" />
+  </div>
+
+  <div>
+    <label>Looma liik</label>
+    <select [(ngModel)]="pet.species" name="species">
+      <option value="DOG">Koer</option>
+      <option value="CAT">Kass</option>
+      <option value="FERRET">Tuhkur</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Nimi</label>
+    <input [(ngModel)]="pet.name" name="name" />
+  </div>
+
+  <div>
+    <label>Sugu</label>
+    <select [(ngModel)]="pet.sex" name="sex">
+      <option value="MALE">Isane</option>
+      <option value="FEMALE">Emane</option>
+      <option value="UNKNOWN">Teadmata</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Sünnikuupäev</label>
+    <br />
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="birthDateValue"
+        name="birthDateValue"
+        placeholder="pp.kk.aaaa"
+      />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label>Tõug</label>
+    <input [(ngModel)]="pet.breed" name="breed" />
+  </div>
+
+  <div>
+    <label>Värv</label>
+    <input [(ngModel)]="pet.color" name="color" />
+  </div>
+
+  <div>
+    <label>Pildi URL</label>
+    <input [(ngModel)]="pet.imageUrl" name="imageUrl" />
+  </div>
+
+  <div>
+    <label>Staatus</label>
+    <select [(ngModel)]="pet.status" name="status">
+      <option value="ACTIVE">Aktiivne</option>
+      <option value="MISSING">Kadunud</option>
+      <option value="DECEASED">Surnud</option>
+      <option value="ABROAD">Välismaal</option>
+    </select>
+  </div>
+
+  <button type="submit">Salvesta</button>
+</form>

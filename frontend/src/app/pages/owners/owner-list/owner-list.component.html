@@ -1,0 +1,31 @@
+<h1>Loomapidajad</h1>
+
+<div class="search-bar">
+  <input [(ngModel)]="searchName" placeholder="Otsi nime järgi" />
+  <button class="spaced-action" (click)="searchOwners()">Otsi</button>
+  <a class="link-action" routerLink="/owners/new">Lisa loomapidaja</a>
+</div>
+
+<div *ngIf="loading">Laen...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="owners.length" class="owners-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Eesnimi</th>
+      <th>Perekonnanimi</th>
+      <th>Isikukood</th>
+      <th>Tegevus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let owner of owners">
+      <td>{{ owner.id }}</td>
+      <td>{{ owner.firstName }}</td>
+      <td>{{ owner.lastName }}</td>
+      <td>{{ owner.personalCode }}</td>
+      <td><a [routerLink]="['/owners', owner.id]">View</a></td>
+    </tr>
+  </tbody>
+</table>
