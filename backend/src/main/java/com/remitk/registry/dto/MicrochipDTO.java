@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class MicrochipDTO {
-    private final Long id;
+    private Long id;
     @NotNull
     @Size(max = 50)
     private final String chipNumber;
@@ -36,5 +36,9 @@ public class MicrochipDTO {
 
     public MicrochipStatus getStatus() {
         return status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

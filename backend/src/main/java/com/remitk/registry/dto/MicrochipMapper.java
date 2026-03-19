@@ -3,7 +3,7 @@ package com.remitk.registry.dto;
 import com.remitk.registry.model.Microchip;
 
 public class MicrochipMapper {
-    public static MicrochipDTO tomicrochipDTO(Microchip microchip) {
+    public static MicrochipDTO toMicrochipDTO(Microchip microchip) {
         return new MicrochipDTO(microchip.getId(),
                 microchip.getChipNumber(),
                 microchip.getImporter(),
