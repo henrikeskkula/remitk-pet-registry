@@ -10,6 +10,10 @@ public class InitiateOwnerTransferRequestDTO {
         this.newOwnerId = newOwnerId;
     }
 
+    public InitiateOwnerTransferRequestDTO() {}
+
+    public void setNewOwnerId(Long newOwnerId) {}
+
     public Long getNewOwnerId() {
         return newOwnerId;
     }
