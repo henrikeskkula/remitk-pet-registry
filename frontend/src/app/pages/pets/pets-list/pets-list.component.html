@@ -1,0 +1,35 @@
+<h1>Loomad</h1>
+
+<div>
+  <input [(ngModel)]="searchName" placeholder="Otsi nime järgi" />
+  <button (click)="searchPets()">Otsi</button>
+  <a routerLink="/pets/new">Lisa loom</a>
+</div>
+
+<div *ngIf="loading">Laadimine...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="!loading && pets.length">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Species</th>
+      <th>Status</th>
+      <th>Owner ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pet of pets">
+      <td>{{ pet.id }}</td>
+      <td>{{ pet.name || 'Found animal' }}</td>
+      <td>{{ pet.species }}</td>
+      <td>{{ pet.status }}</td>
+      <td>{{ pet.ownerId || '-' }}</td>
+      <td>
+        <a [routerLink]="['/pets', pet.id]">View</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

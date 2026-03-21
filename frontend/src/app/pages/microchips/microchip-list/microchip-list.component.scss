@@ -1,0 +1,32 @@
+.search-bar {
+  margin-bottom: 16px;
+}
+
+.search-input,
+.spaced-input {
+  min-width: 240px;
+  padding: 8px 10px;
+}
+
+.spaced-input,
+.spaced-action {
+  margin-left: 8px;
+}
+
+.link-action {
+  margin-left: 12px;
+}
+
+.inline-action {
+  margin-left: 6px;
+}
+
+.microchip-table {
+  border-collapse: collapse;
+}
+
+.microchip-table th,
+.microchip-table td {
+  border: 1px solid #000;
+  padding: 8px;
+}

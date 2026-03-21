@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface OwnerRepository extends JpaRepository<Owner, Long> {
     boolean existsByPersonalCode(String personalCode);
     Optional<Owner> findByPersonalCode(String personalCode);
-    Page<Owner> findByFirstNameContainingIgnoreCase(String firstName, Pageable pageable);
-    Page<Owner> findByLastNameContainingIgnoreCase(String lastName, Pageable pageable);
+    Page<Owner> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName, Pageable pageable);
     Page<Owner> findByPersonalCodeContainingIgnoreCase(String personalCode, Pageable pageable);
 }

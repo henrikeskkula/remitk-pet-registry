@@ -1,0 +1,114 @@
+<h1>Pet detail</h1>
+
+<div *ngIf="loading">Laen...</div>
+<div *ngIf="error" style="color: red; margin-bottom: 12px;">{{ error }}</div>
+
+<div *ngIf="pet">
+  <div>
+    <label>ID</label><br>
+    <input [ngModel]="pet.id" disabled />
+  </div>
+
+  <div>
+    <label>Microchip ID</label><br>
+    <input type="number" [(ngModel)]="pet.microchipId" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Owner ID</label><br>
+    <input [ngModel]="pet.ownerId ?? ''" disabled />
+  </div>
+
+  <div>
+    <label>Species</label><br>
+    <select [(ngModel)]="pet.species" [disabled]="!editMode">
+      <option *ngFor="let option of speciesOptions" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label>Name</label><br>
+    <input [(ngModel)]="pet.name" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Sex</label><br>
+    <select [(ngModel)]="pet.sex" [disabled]="!editMode">
+      <option *ngFor="let option of sexOptions" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label>Birth date</label><br>
+    <input type="date" [(ngModel)]="pet.birthDate" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Breed</label><br>
+    <input [(ngModel)]="pet.breed" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Color</label><br>
+    <input [(ngModel)]="pet.color" [disabled]="!editMode" />
+  </div>
+
+  <div>
+    <label>Status</label><br>
+    <select [(ngModel)]="pet.status" [disabled]="!editMode">
+      <option *ngFor="let option of statusOptions" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label>Image URL</label><br>
+    <input [ngModel]="pet.imageUrl || ''" disabled />
+  </div>
+
+  <br>
+
+  <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+  <button *ngIf="editMode" (click)="save()">Save</button>
+  <button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
+  <button (click)="remove()" style="margin-left: 8px;">Delete</button>
+
+  <hr>
+
+  <h2>Ownership transfer</h2>
+
+  <div>
+    <label>New owner ID</label><br>
+    <input type="number" [(ngModel)]="newOwnerId" />
+    <button (click)="createTransfer()" style="margin-left: 8px;">Create transfer</button>
+  </div>
+
+  <div *ngIf="lastTransfer" style="margin-top: 16px;">
+    <p><strong>Transfer ID:</strong> {{ lastTransfer.id }}</p>
+    <p><strong>Status:</strong> {{ lastTransfer.status }}</p>
+    <p><strong>Current owner:</strong> {{ lastTransfer.currentOwnerId }}</p>
+    <p><strong>New owner:</strong> {{ lastTransfer.newOwnerId }}</p>
+    <p><strong>Initiated at:</strong> {{ lastTransfer.initiatedAt }}</p>
+    <p><strong>Resolved at:</strong> {{ lastTransfer.resolvedAt || '-' }}</p>
+    <p><strong>Response message:</strong> {{ lastTransfer.responseMessage || '-' }}</p>
+
+    <button (click)="acceptTransfer()">Accept</button>
+    <button (click)="rejectTransfer()" style="margin-left: 8px;">Reject</button>
+    <button (click)="cancelTransfer()" style="margin-left: 8px;">Cancel</button>
+  </div>
+
+  <hr>
+
+  <p>
+    <a [routerLink]="['/pets', pet.id, 'events']">Open pet events</a>
+  </p>
+
+  <p>
+    <a routerLink="/pets">Back to pets</a>
+  </p>
+</div>

@@ -1,0 +1,39 @@
+<h1>Mikrokiibid</h1>
+
+<div class="search-bar">
+  <input class="search-input" [(ngModel)]="chipNumber" placeholder="Otsi mikrokiibi numbri järgi" />
+  <input class="spaced-input" [(ngModel)]="importer" placeholder="Otsi importija järgi" />
+  <button class="spaced-action" (click)="search()">Otsi</button>
+  <a class="link-action" routerLink="/microchips/new">Lisa mikrokiip</a>
+</div>
+
+<div *ngIf="loading">Laen...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="microchips.length" class="microchip-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Mikrokiibi number</th>
+      <th>Importija</th>
+      <th>Staatus</th>
+      <th>Uuenda</th>
+      <th>Kustuta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let chip of microchips">
+      <td>{{ chip.id }}</td>
+      <td>{{ chip.chipNumber }}</td>
+      <td>{{ chip.importer }}</td>
+      <td>{{ chip.status }}</td>
+      <td>
+        <button (click)="updateStatus(chip, 'FREE')">FREE</button>
+        <button class="inline-action" (click)="updateStatus(chip, 'USED')">Kasutajad</button>
+      </td>
+      <td>
+        <button (click)="remove(chip.id)">Kustuta</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

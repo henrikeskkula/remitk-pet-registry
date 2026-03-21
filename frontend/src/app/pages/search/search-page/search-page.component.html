@@ -1,0 +1,54 @@
+<h1>Otsing</h1>
+
+<div class="search-box">
+  <input
+    [(ngModel)]="searchText"
+    placeholder="Sisesta looma nimi või mikrokiibi number"
+  />
+
+  <button (click)="search()">Otsi</button>
+</div>
+
+<div *ngIf="loading">
+  Otsin...
+</div>
+
+<div *ngIf="error">
+  {{ error }}
+</div>
+
+<div class="results" *ngIf="pets.length">
+
+  <h2>Loomad</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nimi</th>
+        <th>Looma liik</th>
+        <th>Staatus</th>
+        <th>Tegevus</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let pet of pets">
+        <td>{{ pet.id }}</td>
+        <td>{{ pet.name }}</td>
+        <td>{{ pet.species }}</td>
+        <td>{{ pet.status }}</td>
+
+        <td>
+          <a [routerLink]="['/pets', pet.id]">Vaata</a>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>
+
+<div *ngIf="!pets.length && !loading">
+  
+</div>

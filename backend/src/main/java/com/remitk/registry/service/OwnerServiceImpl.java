@@ -63,4 +63,21 @@ public class OwnerServiceImpl implements OwnerService {
         }
         return petRepository.findByOwnerId(id, pageable);
     }
+
+    @Override
+    public Page<Owner> searchOwners(String name, String personalCode, Pageable pageable) throws BadRequestException {
+        if ((name != null && !name.isBlank()) && (personalCode != null && !personalCode.isBlank())) {
+            throw new BadRequestException("Search is only allowed by one parameter at a time");
+        }
+        else if (name != null && !name.isBlank()) {
+            return ownerRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name, pageable);
+        }
+        else if (personalCode != null && !personalCode.isBlank()) {
+            return ownerRepository.findByPersonalCodeContainingIgnoreCase(personalCode, pageable);
+        }
+        else {
+            return ownerRepository.findAll(pageable);
+        }
+
+    }
 }

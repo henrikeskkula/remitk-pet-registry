@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 16px;
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.events-table th {
+  text-align: left;
+  background: #f3f3f3;
+}
+
+.events-table th,
+.events-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.event-type {
+  font-weight: bold;
+}
+
+.event-time {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}

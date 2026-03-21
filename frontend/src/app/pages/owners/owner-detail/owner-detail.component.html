@@ -1,0 +1,67 @@
+<h1>Loomapidaja andmed</h1>
+
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<div *ngIf="owner">
+  <div class="form-field">
+    <label>Isikukoood</label><br>
+    <input [(ngModel)]="owner.personalCode" [disabled]="!editMode" />
+  </div>
+
+  <div class="form-field">
+    <label>Eesnimi</label><br>
+    <input [(ngModel)]="owner.firstName" [disabled]="!editMode" />
+  </div>
+
+  <div class="form-field">
+    <label>Perekonnanimi</label><br>
+    <input [(ngModel)]="owner.lastName" [disabled]="!editMode" />
+  </div>
+
+  <div class="form-field">
+    <label>Elukoha aadress</label><br>
+    <input [(ngModel)]="owner.address" [disabled]="!editMode" />
+  </div>
+
+  <div class="form-field">
+    <label>E-posti aadress</label><br>
+    <input [(ngModel)]="owner.email" [disabled]="!editMode" />
+  </div>
+
+  <div class="form-field">
+    <label>Telefoninumber</label><br>
+    <input [(ngModel)]="owner.phone" [disabled]="!editMode" />
+  </div>
+
+  <div class="actions">
+    <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+    <button *ngIf="editMode" (click)="save()">Salvesta</button>
+    <button *ngIf="editMode" (click)="editMode = false">Tühista</button>
+    <button class="delete-action" (click)="remove()">Kustuta</button>
+  </div>
+
+  <hr>
+
+  <h2>Owner pets</h2>
+
+  <table *ngIf="pets.length" class="pets-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Species</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pet of pets">
+        <td>{{ pet.id }}</td>
+        <td>{{ pet.name }}</td>
+        <td>{{ pet.species }}</td>
+        <td>{{ pet.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!pets.length">No pets found.</div>
+</div>
