@@ -17,14 +17,17 @@ public class PetServiceImpl implements PetService{
     private final PetRepository petRepository;
     private final MicrochipRepository microchipRepository;
     private final PetEventRepository petEventRepository;
+    private final OwnerRepository ownerRepository;
 
     public PetServiceImpl(
             PetRepository petRepository,
             MicrochipRepository microchipRepository,
-            PetEventRepository petEventRepository) {
+            PetEventRepository petEventRepository,
+            OwnerRepository ownerRepository) {
         this.petRepository = petRepository;
         this.microchipRepository = microchipRepository;
         this.petEventRepository = petEventRepository;
+        this.ownerRepository = ownerRepository;
     }
 
     @Override
@@ -36,6 +39,12 @@ public class PetServiceImpl implements PetService{
 
         if (chip.getStatus() != MicrochipStatus.FREE) {
             throw new BadRequestException("Microchip already used");
+        }
+
+        if (pet.getOwner() != null) {
+            Owner owner = ownerRepository.findById(pet.getOwner().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
+            pet.setOwner(owner);
         }
 
         pet = petRepository.save(pet);
@@ -80,6 +89,11 @@ public class PetServiceImpl implements PetService{
             throw new ResourceNotFoundException("Pet not found");
         }
         Pet existingPet = existingPetOptional.get();
+        if (pet.getOwner() != null) {
+            Owner owner = ownerRepository.findById(pet.getOwner().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
+            existingPet.setOwner(owner);
+        }
         existingPet.setMicrochip(pet.getMicrochip());
         existingPet.setSex(pet.getSex());
         existingPet.setName(pet.getName());
