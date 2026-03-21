@@ -24,20 +24,11 @@ public class PetMapper {
     }
 
     public static Pet toPet(PetDTO petDTO) {
-        Pet pet;
-        if (petDTO.getId() == null) {
-            pet = new Pet(petDTO.getSpecies(),
-                    petDTO.getSex(),
-                    new Microchip(petDTO.getMicrochipId()),
-                    petDTO.getStatus());
-        }
-        else {
-            pet = new Pet(petDTO.getId(),
-                    petDTO.getSpecies(),
-                    petDTO.getSex(),
-                    new Microchip(petDTO.getMicrochipId()),
-                    petDTO.getStatus());
-        }
+        Pet pet = new Pet(petDTO.getId(),
+                petDTO.getSpecies(),
+                petDTO.getSex(),
+                new Microchip(petDTO.getMicrochipId()),
+                petDTO.getStatus());
         pet.setName(petDTO.getName());
         pet.setBirthDate(petDTO.getBirthDate());
         pet.setBreed(petDTO.getBreed());
@@ -46,6 +37,19 @@ public class PetMapper {
         if (petDTO.getOwnerId() != null) {
             pet.setOwner(new Owner(petDTO.getOwnerId()));
         }
+        return pet;
+    }
+
+    public static Pet toPet(PetInputDTO petInputDTO, Long id) {
+        Pet pet = new Pet(id,
+                petInputDTO.getSpecies(),
+                petInputDTO.getSex(),
+                new Microchip(petInputDTO.getMicrochipId()),
+                petInputDTO.getStatus());
+        pet.setName(petInputDTO.getName());
+        pet.setBirthDate(petInputDTO.getBirthDate());
+        pet.setBreed(petInputDTO.getBreed());
+        pet.setColor(petInputDTO.getColor());
         return pet;
     }
 }
