@@ -5,6 +5,8 @@ import com.remitk.registry.controller.ResourceNotFoundException;
 import com.remitk.registry.dto.RegisterPetRequest;
 import com.remitk.registry.model.*;
 import com.remitk.registry.repository.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,32 @@ public class PetService {
         this.microchipRepository = microchipRepository;
         this.ownerRepository = ownerRepository;
         this.petEventRepository = petEventRepository;
+    }
+
+    public Page<Pet> searchPets(String name, Long microchipId, Long ownerId, Pageable pageable) throws BadRequestException {
+        int parameters = 0;
+        if (name != null && !name.isBlank()) {
+            parameters++;
+        }
+        if (microchipId != null) {
+            parameters++;
+        }
+        if (ownerId != null) {
+            parameters++;
+        }
+        if (parameters > 1) {
+            throw new BadRequestException("Search is only allowed by one parameter at a time");
+        }
+        if (name != null && !name.isBlank()) {
+            return petRepository.findByNameContainingIgnoreCase(name, pageable);
+        }
+        if (microchipId != null) {
+            return petRepository.findByMicrochipId(microchipId, pageable);
+        }
+        if (ownerId != null) {
+            return petRepository.findByOwnerId(ownerId, pageable);
+        }
+        return petRepository.findAll(pageable);
     }
 
     @Transactional
