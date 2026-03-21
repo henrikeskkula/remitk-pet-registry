@@ -4,11 +4,15 @@ import com.remitk.registry.controller.BadRequestException;
 import com.remitk.registry.controller.ResourceNotFoundException;
 import com.remitk.registry.model.*;
 import com.remitk.registry.repository.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -146,5 +150,37 @@ public class PetServiceImpl implements PetService{
             throw new ResourceNotFoundException("Pet not found");
         }
         petRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Pet> searchPets(String name, Long microchipId, Long ownerId, Pageable pageable) throws BadRequestException {
+        int parameters = 0;
+        if (name != null && !name.isBlank()) {
+            parameters++;
+        }
+        if (microchipId != null) {
+            parameters++;
+        }
+        if (ownerId != null) {
+            parameters++;
+        }
+        if (parameters > 1) {
+            throw new BadRequestException("Search is only allowed by one parameter at a time");
+        }
+        if (name != null && !name.isBlank()) {
+            return petRepository.findByNameContainingIgnoreCase(name, pageable);
+        }
+        if (microchipId != null) {
+            // there can be only one pet with a microchipId, so return a page with only one element
+            Optional<Pet> petOptional = petRepository.findByMicrochipId(microchipId);
+            if (petOptional.isEmpty()) {
+                return Page.empty(pageable);
+            }
+            return new PageImpl<Pet>(List.of(petOptional.get()), pageable, 1);
+        }
+        if (ownerId != null) {
+            return petRepository.findByOwnerId(ownerId, pageable);
+        }
+        return petRepository.findAll(pageable);
     }
 }
