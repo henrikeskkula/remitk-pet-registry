@@ -44,10 +44,11 @@ public class Microchip {
     protected Microchip() {}
 
     // Constructor for initial creation of entity
-    public Microchip(String chipNumber, String importer) {
+    public Microchip(Long id, String chipNumber, String importer, MicrochipStatus status) {
+        this.id = id;
         this.chipNumber = chipNumber;
         this.importer = importer;
-        this.status = MicrochipStatus.FREE;
+        this.status = status;
     }
 
     // ID-only constructor for referencing a microchip in other entities
