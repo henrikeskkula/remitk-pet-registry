@@ -8,6 +8,7 @@ REST API for managing **pets, owners, microchips, pet events, and images**.
 
 # Table of Contents
 
+- [Errors](#errors)
 - [Authentication](#authentication)
 - [Pets](#pets)
   - [`POST /api/pets`](#create-pet)
@@ -100,6 +101,12 @@ Example:
 ```bash
 curl -u username:password {baseUrl}/api/pets
 ```
+
+---
+
+# Errors
+
+In case of error, the API returns a JSON object in a HTTP response with the suitable status code. Since implementation of error handling is not yet consistent, the JSON object is not consistent. However, intentional error messages are usually found as a string in the `detail` field.
 
 ---
 
