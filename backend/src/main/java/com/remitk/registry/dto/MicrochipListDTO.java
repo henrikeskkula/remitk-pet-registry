@@ -3,7 +3,7 @@ package com.remitk.registry.dto;
 import java.util.List;
 
 public class MicrochipListDTO {
-    private final List<MicrochipDTO> microchips;
+    private final List<MicrochipDTO> items;
     private final int page;
     private final int size;
     private final int totalPages;
@@ -11,8 +11,8 @@ public class MicrochipListDTO {
     private final String sortBy;
     private final String direction;
 
-    public MicrochipListDTO(List<MicrochipDTO> microchips, int page, int size, int totalPages, long totalElements, String sortBy, String direction) {
-        this.microchips = microchips;
+    public MicrochipListDTO(List<MicrochipDTO> items, int page, int size, int totalPages, long totalElements, String sortBy, String direction) {
+        this.items = items;
         this.page = page;
         this.size = size;
         this.totalPages = totalPages;
@@ -21,8 +21,8 @@ public class MicrochipListDTO {
         this.direction = direction;
     }
 
-    public List<MicrochipDTO> getMicrochips() {
-        return microchips;
+    public List<MicrochipDTO> getItems() {
+        return items;
     }
 
     public int getPage() {

@@ -3,7 +3,7 @@ package com.remitk.registry.dto;
 import java.util.List;
 
 public class OwnerListDTO {
-    private final List<OwnerDTO> owners;
+    private final List<OwnerDTO> items;
     private final int page;
     private final int size;
     private final int totalPages;
@@ -11,8 +11,8 @@ public class OwnerListDTO {
     private final String sortBy;
     private final String direction;
 
-    public OwnerListDTO(List<OwnerDTO> owners, int page, int size, int totalPages, long totalElements, String sortBy, String direction) {
-        this.owners = owners;
+    public OwnerListDTO(List<OwnerDTO> items, int page, int size, int totalPages, long totalElements, String sortBy, String direction) {
+        this.items = items;
         this.page = page;
         this.size = size;
         this.totalPages = totalPages;
@@ -21,8 +21,8 @@ public class OwnerListDTO {
         this.direction = direction;
     }
 
-    public List<OwnerDTO> getOwners() {
-        return owners;
+    public List<OwnerDTO> getItems() {
+        return items;
     }
 
     public int getPage() {
