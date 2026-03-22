@@ -50,4 +50,12 @@ public class MicrochipServiceImpl implements MicrochipService {
         microchip.setStatus(status);
         return microchipRepository.save(microchip);
     }
+
+    @Override
+    public void deletePetById(Long id) throws ResourceNotFoundException {
+        if (!microchipRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Microchip not found");
+        }
+        microchipRepository.deleteById(id);
+    }
 }

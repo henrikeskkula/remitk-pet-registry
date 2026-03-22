@@ -53,6 +53,12 @@ public class MicrochipController {
         return ResponseEntity.ok(microchipDTO);
     }
 
+    @DeleteMapping("/api/microchips/{id}")
+    public ResponseEntity<Void> deleteMicrochip(@PathVariable Long id) throws ResourceNotFoundException {
+        microchipService.deletePetById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     private Pageable getPageable(Integer page, Integer size, String sortBy, String direction) throws BadRequestException {
         Pageable pageable;
         if (page < 0) {

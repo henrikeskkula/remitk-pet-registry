@@ -12,4 +12,5 @@ public interface MicrochipService {
     public Microchip createMicrochip(Microchip microchip);
     public Page<Microchip> searchMicrochips(String chipNumber, String importer, Pageable pageable) throws BadRequestException;
     public Microchip updateMicrochipStatus(Long id, MicrochipStatus status) throws ResourceNotFoundException;
+    void deletePetById(Long id) throws ResourceNotFoundException;
 }
