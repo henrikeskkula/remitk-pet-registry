@@ -12,7 +12,6 @@ public class MicrochipDTO {
     @NotNull
     @Size(max = 255)
     private String importer;
-    @NotNull
     private MicrochipStatus status;
 
     public MicrochipDTO(Long id, String chipNumber, String importer, MicrochipStatus status) {
