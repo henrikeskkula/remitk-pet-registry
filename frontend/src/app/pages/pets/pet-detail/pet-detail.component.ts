@@ -59,10 +59,9 @@ export class PetDetailComponent implements OnInit {
   }
 
   save(): void {
-    if (!this.pet) {
-      return;
-    }
-
+    if (!this.pet) return;
+    
+    this. loading = true;
     this.error = '';
 
     this.petsService.updatePet(this.pet.id, this.pet).subscribe({
@@ -70,9 +69,11 @@ export class PetDetailComponent implements OnInit {
         this.pet = updated;
         this.originalPet = { ...updated };
         this.editMode = false;
+        this.loading = false;
       },
       error: () => {
         this.error = 'Failed to update pet.';
+        this.loading = false;
       }
     });
   }
@@ -88,18 +89,19 @@ export class PetDetailComponent implements OnInit {
   }
 
   remove(): void {
-    if (!this.pet) {
-      return;
-    }
+    if (!this.pet) return;
 
+    this.loading = true;
     this.error = '';
 
     this.petsService.deletePet(this.pet.id).subscribe({
       next: () => {
+        this.loading = false;
         this.router.navigate(['/pets']);
       },
       error: () => {
         this.error = 'Failed to delete pet.';
+        this.loading = false;
       }
     });
   }
@@ -110,14 +112,17 @@ export class PetDetailComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.error = '';
 
     this.transferRequestsService.createTransfer(this.pet.id, this.newOwnerId).subscribe({
       next: (transfer) => {
         this.lastTransfer = transfer;
+        this.loading = false;
       },
       error: () => {
         this.error = 'Failed to create transfer.';
+        this.loading = false;
       }
     });
   }
@@ -140,6 +145,7 @@ export class PetDetailComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.error = '';
 
     const request$ = action === 'accept'
@@ -150,13 +156,15 @@ export class PetDetailComponent implements OnInit {
 
     request$.subscribe({
       next: () => {
+        this.lastTransfer = undefined;
+        this.loading = false;
         if (action === 'accept' && this.pet) {
           this.loadPet(this.pet.id);
         }
-        this.lastTransfer = undefined;
       },
       error: () => {
         this.error = `Failed to ${action} transfer.`;
+        this.loading = false;
       }
     });
   }

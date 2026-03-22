@@ -43,23 +43,37 @@ export class MicrochipList {
         this.loading = false;
       },
       error: () => {
-        this.error = 'Microchipide laadimine ebaõnnestus';
+        this.error = 'Mikrokiibi laadimine ebaõnnestus';
         this.loading = false;
       }
     });
   }
 
   updateStatus(chip: Microchip, status: string): void {
+    this.loading = true;
+    this.error = '';
     this.microchipsService.updateStatus(chip.id, status).subscribe({
-      next: (updated) => chip.status = updated.status,
-      error: () => this.error = 'Staatuse uuendamine ebaõnnestus'
+      next: () => {
+        this.search();
+    },
+      error: () => {
+        this.error = 'Staatuse uuendamine ebaõnnestus';
+        this.loading = false;
+      }
     });
   }
 
   remove(id: number): void {
+    this.loading = true;
+    this.error = '';
     this.microchipsService.deleteMicrochip(id).subscribe({
-      next: () => this.microchips = this.microchips.filter(c => c.id !== id),
-      error: () => this.error = 'Kustutamine ebaõnnestus'
+      next: () => {
+        this.search();
+      },
+      error: () => {
+        this.error = 'Kustutamine ebaõnnestus';
+        this.loading = false;
+      }
     });
   }
 }
