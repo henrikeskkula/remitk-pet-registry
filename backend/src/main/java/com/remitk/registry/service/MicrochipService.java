@@ -2,7 +2,6 @@ package com.remitk.registry.service;
 
 import com.remitk.registry.controller.BadRequestException;
 import com.remitk.registry.controller.ResourceNotFoundException;
-import com.remitk.registry.dto.MicrochipDTO;
 import com.remitk.registry.model.Microchip;
 import com.remitk.registry.model.MicrochipStatus;
 import org.springframework.data.domain.Page;
@@ -12,5 +11,5 @@ public interface MicrochipService {
     public Microchip createMicrochip(Microchip microchip);
     public Page<Microchip> searchMicrochips(String chipNumber, String importer, Pageable pageable) throws BadRequestException;
     public Microchip updateMicrochipStatus(Long id, MicrochipStatus status) throws ResourceNotFoundException;
-    void deletePetById(Long id) throws ResourceNotFoundException;
+    void deleteMicrochipById(Long id) throws ResourceNotFoundException, BadRequestException;
 }

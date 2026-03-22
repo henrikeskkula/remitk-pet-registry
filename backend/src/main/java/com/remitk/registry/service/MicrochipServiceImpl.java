@@ -52,9 +52,13 @@ public class MicrochipServiceImpl implements MicrochipService {
     }
 
     @Override
-    public void deletePetById(Long id) throws ResourceNotFoundException {
-        if (!microchipRepository.existsById(id)) {
+    public void deleteMicrochipById(Long id) throws ResourceNotFoundException, BadRequestException {
+        Optional<Microchip> microchipOptional = microchipRepository.findById(id);
+        if (microchipOptional.isEmpty()) {
             throw new ResourceNotFoundException("Microchip not found");
+        }
+        if (microchipOptional.get().getStatus() != MicrochipStatus.FREE) {
+            throw new BadRequestException("Microchip that is not free can not be deleted");
         }
         microchipRepository.deleteById(id);
     }

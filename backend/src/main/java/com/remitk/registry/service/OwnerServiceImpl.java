@@ -82,8 +82,13 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public void deleteOwnerById(Long id) throws ResourceNotFoundException {
-        if (!ownerRepository.existsById(id)) {
+        Optional<Owner> ownerOptional = ownerRepository.findById(id);
+        if (ownerOptional.isEmpty()) {
             throw new ResourceNotFoundException("Owner not found");
+        }
+        for (Pet pet : ownerOptional.get().getPets()) {
+            pet.setOwner(null);
+            petRepository.save(pet);
         }
         ownerRepository.deleteById(id);
     }
