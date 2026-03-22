@@ -1,6 +1,7 @@
+import { ListResponse, toListResponse } from '../models/list-response.model';
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Pet } from '../models/pet.model';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class PetsService {
     page?: number;
     size?: number;
     sortBy?: string;
-  }): Observable<any> {
+  }): Observable<ListResponse<Pet>> {
     let params = new HttpParams();
 
     if (filters?.microchipId !== undefined) {
@@ -44,7 +45,8 @@ export class PetsService {
       params = params.set('sortBy', filters.sortBy);
     }
 
-    return this.http.get<any>(this.apiUrl, { params });
+    return this.http.get<unknown>(this.apiUrl, { params }).pipe(
+      map(raw => toListResponse<Pet>(raw as any)));
   }
 
   getPetById(id: number): Observable<Pet> {
@@ -63,11 +65,7 @@ export class PetsService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  normalizeListResponse<T>(response: any): T[] {
-    if (Array.isArray(response)) return response;
-    if (Array.isArray(response?.content)) return response.content;
-    if (Array.isArray(response?.items)) return response.items;
-    if (Array.isArray(response?.data)) return response.data;
-    return [];
+  normalizeListResponse<T>(response: ListResponse<T> | T[]): T[] {
+    return Array.isArray(response) ? response : response.items;
   }
 }

@@ -13,15 +13,15 @@ export class OwnerTransferRequestsService {
     return this.http.post<OwnerTransferRequest>(`${this.petsApi}/${petId}/transfer`, { newOwnerId });
   }
 
-  acceptTransfer(id: number): Observable<OwnerTransferRequest> {
-    return this.http.post<OwnerTransferRequest>(`${this.transfersApi}/${id}/accept`, {});
+  acceptTransfer(id: number): Observable<void> {
+    return this.http.post<void>(`${this.transfersApi}/${id}/accept`, {});
   }
 
-  rejectTransfer(id: number): Observable<OwnerTransferRequest> {
-    return this.http.post<OwnerTransferRequest>(`${this.transfersApi}/${id}/reject`, {});
+  rejectTransfer(id: number): Observable<void> {
+    return this.http.post<void>(`${this.transfersApi}/${id}/reject`, {});
   }
 
-  cancelTransfer(id: number): Observable<OwnerTransferRequest> {
-    return this.http.post<OwnerTransferRequest>(`${this.transfersApi}/${id}/cancel`, {});
+  cancelTransfer(id: number): Observable<void> {
+    return this.http.post<void>(`${this.transfersApi}/${id}/cancel`, {});
   }
 }

@@ -149,11 +149,11 @@ export class PetDetailComponent implements OnInit {
         : this.transferRequestsService.cancelTransfer(this.lastTransfer.id);
 
     request$.subscribe({
-      next: (transfer) => {
-        this.lastTransfer = transfer;
+      next: () => {
         if (action === 'accept' && this.pet) {
           this.loadPet(this.pet.id);
         }
+        this.lastTransfer = undefined;
       },
       error: () => {
         this.error = `Failed to ${action} transfer.`;
