@@ -232,7 +232,7 @@ No more than **one filter must be provided**. Returns only pets visible to the u
 
 ```json
 {
-  "pets": [
+  "items": [
     {
       "id": 2132,
       "microchipId": 783278492,
@@ -596,7 +596,7 @@ Only events of pets that the user is allowed to access are presented.
 #### Response example
 ```json
 {
-  "petEvents": [
+  "items": [
     {
       "id": 123,
       "petId": 32832,
@@ -931,7 +931,7 @@ The user must have access to the owner.
 #### Response example
 ```json
 {
-  "owners": [
+  "items": [
     {
       "id": 432,
       "personalCode": "399020428347",
@@ -1119,7 +1119,7 @@ Only available for users that have access to that owner.
 #### Example response:
 ```json
 {
-  "pets": [
+  "items": [
     {
       "id": 3278378,
       "microchipId": 783278492,
@@ -1247,7 +1247,7 @@ Up to **one filter must be provided**. Only available for admin users.
 #### Response example
 ```json
 {
-  "microchips": [
+  "items": [
     {
       "id": 432,
       "chipNumber": "433847324",
