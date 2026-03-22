@@ -54,7 +54,7 @@ public class MicrochipController {
     }
 
     @DeleteMapping("/api/microchips/{id}")
-    public ResponseEntity<Void> deleteMicrochip(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> deleteMicrochip(@PathVariable Long id) throws ResourceNotFoundException, BadRequestException {
         microchipService.deleteMicrochipById(id);
         return ResponseEntity.noContent().build();
     }
