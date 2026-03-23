@@ -42,9 +42,9 @@ export class PetEventsComponent {
   createEvent(): void {
     this.petEventsService.createEvent({
       petId: this.petId,
-      eventType: this.model.type,
+      type: this.model.type,
       description: this.model.description || undefined,
-      eventTimestamp: this.model.time || undefined
+      time: this.model.time || undefined
     }).subscribe({
       next: () => {
         this.model.description = '';

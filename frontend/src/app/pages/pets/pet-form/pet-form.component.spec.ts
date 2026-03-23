@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { vi } from 'vitest';
 
@@ -58,6 +58,32 @@ describe('PetFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should convert birthDateValue to ISO date before submit', () => {
+    component.birthDateValue = new Date(2024, 0, 5);
+    component.pet = {
+      microchipId: 123,
+      species: 'DOG',
+      sex: 'MALE',
+      status: 'ACTIVE'
+    };
+
+    component.submit();
+
+    expect(createPetSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        birthDate: '2024-01-05'
+      })
+    );
+  });
+
+  it('should set error when createPet fails', () => {
+    createPetSpy.mockReturnValueOnce(throwError(() => new Error('fail')));
+
+    component.submit();
+
+    expect(component.error).toBe('Looma lisamine ebaõnnestus');
   });
 
   it('should submit the pet and navigate to pets list', () => {

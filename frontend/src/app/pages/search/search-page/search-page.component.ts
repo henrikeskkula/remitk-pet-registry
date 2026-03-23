@@ -31,7 +31,13 @@ export class SearchPage {
     this.loading = true;
     this.error = '';
 
-    this.petsService.getPets({ name: this.searchText.trim() }).subscribe({
+    const query = this.searchText.trim();
+    const isNumber = /^\d+$/.test(query);
+    const filters = isNumber
+      ? { microchipId: Number(query) }
+      : { name: query };
+
+    this.petsService.getPets(filters).subscribe({
       next: (data) => {
         this.pets = this.petsService.normalizeListResponse<Pet>(data);
         this.loading = false;
