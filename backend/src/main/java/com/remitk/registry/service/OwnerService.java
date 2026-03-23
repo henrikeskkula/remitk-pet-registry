@@ -13,4 +13,5 @@ public interface OwnerService {
     Owner editOwner(Owner owner) throws ResourceNotFoundException, BadRequestException;
     Page<Pet> getPetsByOwnerId(Long id, Pageable pageable) throws ResourceNotFoundException;
     Page<Owner> searchOwners(String name, String personalCode, Pageable pageable) throws BadRequestException;
+    void deleteOwnerById(Long id) throws ResourceNotFoundException;
 }

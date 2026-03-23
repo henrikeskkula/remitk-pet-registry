@@ -78,6 +78,18 @@ public class OwnerServiceImpl implements OwnerService {
         else {
             return ownerRepository.findAll(pageable);
         }
+    }
 
+    @Override
+    public void deleteOwnerById(Long id) throws ResourceNotFoundException {
+        Optional<Owner> ownerOptional = ownerRepository.findById(id);
+        if (ownerOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Owner not found");
+        }
+        for (Pet pet : ownerOptional.get().getPets()) {
+            pet.setOwner(null);
+            petRepository.save(pet);
+        }
+        ownerRepository.deleteById(id);
     }
 }

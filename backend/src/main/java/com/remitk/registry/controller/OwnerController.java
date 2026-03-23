@@ -85,6 +85,12 @@ public class OwnerController {
         return ResponseEntity.ok(petListDTO);
     }
 
+    @DeleteMapping("/api/owners/{id}")
+    public ResponseEntity<Void> deleteOwnerById(@PathVariable Long id) throws ResourceNotFoundException {
+        ownerService.deleteOwnerById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     private Pageable getPageable(Integer page, Integer size, String sortBy, String direction) throws BadRequestException {
         Pageable pageable;
         if (page < 0) {
