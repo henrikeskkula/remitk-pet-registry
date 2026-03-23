@@ -17,9 +17,9 @@ export class PetEventsService {
 
   createEvent(payload: {
     petId: number;
-    eventType: string;
+    type: string;
     description?: string;
-    eventTimestamp?: string;
+    time?: string;
   }): Observable<PetEvent> {
     return this.http.post<PetEvent>(this.api, payload);
   }

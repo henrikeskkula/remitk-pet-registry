@@ -62,9 +62,9 @@ describe('PetEventsService', () => {
         {
           id: 1,
           petId: 5,
-          eventType: 'REGISTERED',
+          type: 'REGISTERED',
           description: 'Pet registered',
-          eventTimestamp: '2026-03-22T10:00:00Z',
+          time: '2026-03-22T10:00:00Z',
           createdAt: '2026-03-22T10:00:00Z'
         }
       ],
@@ -77,16 +77,16 @@ describe('PetEventsService', () => {
     });
 
     expect(result.items.length).toBe(1);
-    expect(result.items[0].eventType).toBe('REGISTERED');
+    expect(result.items[0].type).toBe('REGISTERED');
     expect(result.totalElements).toBe(1);
   });
 
   it('should create event with payload', () => {
     const payload = {
       petId: 5,
-      eventType: 'OWNER_CHANGED',
+      type: 'OWNER_CHANGED',
       description: 'Owner transfer',
-      eventTimestamp: '2026-03-22T11:00:00Z'
+      time: '2026-03-22T11:00:00Z'
     };
 
     service.createEvent(payload).subscribe();
@@ -98,9 +98,9 @@ describe('PetEventsService', () => {
     req.flush({
       id: 2,
       petId: 5,
-      eventType: 'OWNER_CHANGED',
+      type: 'OWNER_CHANGED',
       description: 'Owner transfer',
-      eventTimestamp: '2026-03-22T11:00:00Z',
+      time: '2026-03-22T11:00:00Z',
       createdAt: '2026-03-22T11:00:00Z'
     });
   });
