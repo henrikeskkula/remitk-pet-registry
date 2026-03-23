@@ -8,9 +8,9 @@ public class PetEventMapper {
         PetEventDTO petEventDTO = new PetEventDTO();
         petEventDTO.setId(petEvent.getId());
         petEventDTO.setPetId(petEvent.getPet().getId());
-        petEventDTO.setType(petEvent.getEventType());
+        petEventDTO.setType(petEvent.getType());
         petEventDTO.setDescription(petEvent.getDescription());
-        petEventDTO.setTime(petEvent.getEventTimestamp());
+        petEventDTO.setTime(petEvent.getTime());
         return petEventDTO;
     }
 

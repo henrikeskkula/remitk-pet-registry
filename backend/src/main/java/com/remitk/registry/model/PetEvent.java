@@ -17,11 +17,11 @@ public class PetEvent {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "event_type", nullable = false, length = 50)
-    private PetEventType eventType;
+    private PetEventType type;
 
     @NotNull
     @Column(name = "event_timestamp", nullable = false, updatable = false)
-    private LocalDateTime eventTimestamp;
+    private LocalDateTime time;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -49,9 +49,9 @@ public class PetEvent {
     protected PetEvent() {}
 
     // Constructor for initial creation of entity
-    public PetEvent(PetEventType eventType, LocalDateTime eventTimestamp, UserRole performedByRole, Pet pet, String description, String metadata) {
-        this.eventType = eventType;
-        this.eventTimestamp = eventTimestamp;
+    public PetEvent(PetEventType type, LocalDateTime time, UserRole performedByRole, Pet pet, String description, String metadata) {
+        this.type = type;
+        this.time = time;
         this.performedByRole = performedByRole;
         this.pet = pet;
         // Description and metadata may be null
@@ -64,12 +64,12 @@ public class PetEvent {
         return id;
     }
 
-    public PetEventType getEventType() {
-        return eventType;
+    public PetEventType getType() {
+        return type;
     }
 
-    public LocalDateTime getEventTimestamp() {
-        return eventTimestamp;
+    public LocalDateTime getTime() {
+        return time;
     }
 
     public UserRole getPerformedByRole() {
