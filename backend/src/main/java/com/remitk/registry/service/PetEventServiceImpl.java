@@ -48,7 +48,7 @@ public class PetEventServiceImpl implements PetEventService {
             return petEventRepository.findByPetId(petId, pageable);
         }
         if (eventType != null) {
-            return petEventRepository.findByEventType(eventType, pageable);
+            return petEventRepository.findByType(eventType, pageable);
         }
         if (description != null && !description.isBlank()) {
             return petEventRepository.findByDescriptionContainingIgnoreCase(description, pageable);
