@@ -12,23 +12,24 @@
 <table *ngIf="pets.length">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Species</th>
-      <th>Status</th>
-      <th>Owner ID</th>
-      <th>Actions</th>
+      <th>Nimi</th>
+      <th>Looma liik</th>
+      <th>Staatus</th>
+      <th>Loomapidaja ID</th>
+      <th>Tegevus</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let pet of pets">
       <td>{{ pet.id }}</td>
-      <td>{{ pet.name || 'Found animal' }}</td>
-      <td>{{ pet.species }}</td>
-      <td>{{ pet.status }}</td>
+      <td>{{ pet.name || 'Leitud loom' }}</td>
+      <td>{{ pet.species === 'DOG' ? 'Koer' : pet.species === 'CAT' ? 'Kass' : pet.species === 'FERRET' ? 'Tuhkur' :
+        pet.species }}</td>
+      <td>{{ pet.status === 'ACTIVE' ? 'Aktiivne' : pet.status === 'MISSING' ? 'Kadunud' : pet.status === 'DECEASED' ?
+        'Surnud' : pet.status === 'ABROAD' ? 'Välismaal' : pet.status }}</td>
       <td>{{ pet.ownerId || '-' }}</td>
       <td>
-        <a [routerLink]="['/pets', pet.id]">View</a>
+        <a [routerLink]="['/pets', pet.id]">Vaata</a>
       </td>
     </tr>
   </tbody>

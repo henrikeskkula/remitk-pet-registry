@@ -26,10 +26,10 @@
       <td>{{ chip.id }}</td>
       <td>{{ chip.chipNumber }}</td>
       <td>{{ chip.importer }}</td>
-      <td>{{ chip.status }}</td>
+      <td>{{ chip.status === 'FREE' ? 'Vaba' : chip.status === 'USED' ? 'Kasutatud' : chip.status }}</td>
       <td>
-        <button (click)="updateStatus(chip, 'FREE')">FREE</button>
-        <button class="inline-action" (click)="updateStatus(chip, 'USED')">Kasutajad</button>
+        <button (click)="updateStatus(chip, 'FREE')">Vaba</button>
+        <button class="inline-action" (click)="updateStatus(chip, 'USED')">Kasutatud</button>
       </td>
       <td>
         <button (click)="remove(chip.id)">Kustuta</button>

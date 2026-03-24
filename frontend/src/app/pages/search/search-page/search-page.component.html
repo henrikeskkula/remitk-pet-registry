@@ -31,8 +31,8 @@
       <tr *ngFor="let pet of pets">
         <td>{{ pet.id }}</td>
         <td>{{ pet.name }}</td>
-        <td>{{ pet.species }}</td>
-        <td>{{ pet.status }}</td>
+        <td>{{ pet.species === 'DOG' ? 'Koer' : pet.species === 'CAT' ? 'Kass' : pet.species === 'FERRET' ? 'Tuhkur' : pet.species }}</td>
+        <td>{{ pet.status === 'ACTIVE' ? 'Aktiivne' : pet.status === 'MISSING' ? 'Kadunud' : pet.status === 'DECEASED' ? 'Surnud' : pet.status === 'ABROAD' ? 'Välismaal' : pet.status }}</td>
 
         <td>
           <a [routerLink]="['/pets', pet.id]">Vaata</a>
