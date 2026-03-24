@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetEventRepository extends JpaRepository<PetEvent, Long> {
     public Page<PetEvent> findByPetId(Long petId, Pageable pageable);
-    public Page<PetEvent> findByType(PetEventType eventType, Pageable pageable);
+    public Page<PetEvent> findByType(PetEventType type, Pageable pageable);
     public Page<PetEvent> findByDescriptionContainingIgnoreCase(String description, Pageable pageable);
 }

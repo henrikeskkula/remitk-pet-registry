@@ -5,6 +5,7 @@ import com.remitk.registry.controller.ResourceNotFoundException;
 import com.remitk.registry.model.Microchip;
 import com.remitk.registry.model.MicrochipStatus;
 import com.remitk.registry.repository.MicrochipRepository;
+import com.remitk.registry.repository.PetRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,11 @@ import java.util.Optional;
 @Service
 public class MicrochipServiceImpl implements MicrochipService {
     private final MicrochipRepository microchipRepository;
-    public MicrochipServiceImpl(MicrochipRepository microchipRepository) {
+    private final PetRepository petRepository;
+
+    public MicrochipServiceImpl(MicrochipRepository microchipRepository, PetRepository petRepository) {
         this.microchipRepository = microchipRepository;
+        this.petRepository = petRepository;
     }
 
     @Override
@@ -59,6 +63,9 @@ public class MicrochipServiceImpl implements MicrochipService {
         }
         if (microchipOptional.get().getStatus() != MicrochipStatus.FREE) {
             throw new BadRequestException("Microchip that is not free can not be deleted");
+        }
+        if (petRepository.existsByMicrochipId(id)) {
+            throw new BadRequestException("Microchip is in use");
         }
         microchipRepository.deleteById(id);
     }
