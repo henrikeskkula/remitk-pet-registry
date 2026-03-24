@@ -1,9 +1,9 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PetsService } from '../../../services/pets.service';
-import { Pet } from '../../../models/pet.model';
+import { getPetSpeciesLabel, getPetStatusLabel, Pet } from '../../../models/pet.model';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -11,7 +11,8 @@ import { finalize } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './pets-list.component.html',
-  styleUrls: ['./pets-list.component.scss']
+  styleUrls: ['./pets-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PetsListComponent {
   private petsService = inject(PetsService);
@@ -21,6 +22,9 @@ export class PetsListComponent {
   loading = false;
   error = '';
   searchName = '';
+
+  readonly petSpeciesLabel = getPetSpeciesLabel;
+  readonly petStatusLabel = getPetStatusLabel;
 
   searchPets(): void {
     if (!this.searchName.trim()) {

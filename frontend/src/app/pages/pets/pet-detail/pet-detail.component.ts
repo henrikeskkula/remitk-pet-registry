@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -6,14 +6,23 @@ import { finalize } from 'rxjs';
 
 import { PetsService } from '../../../services/pets.service';
 import { OwnerTransferRequestsService } from '../../../services/owner-transfer-requests.service';
-import { Pet, PetSex, PetSpecies, PetStatus } from '../../../models/pet.model';
+import {
+  getPetSexLabel,
+  getPetSpeciesLabel,
+  getPetStatusLabel,
+  Pet,
+  PetSex,
+  PetSpecies,
+  PetStatus
+} from '../../../models/pet.model';
 import { OwnerTransferRequest } from '../../../models/owner-transfer-request.model';
 
 @Component({
   selector: 'app-pet-detail',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './pet-detail.component.html'
+  templateUrl: './pet-detail.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PetDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -33,6 +42,10 @@ export class PetDetailComponent implements OnInit {
   speciesOptions: PetSpecies[] = ['DOG', 'CAT', 'FERRET'];
   sexOptions: PetSex[] = ['MALE', 'FEMALE', 'UNKNOWN'];
   statusOptions: PetStatus[] = ['ACTIVE', 'MISSING', 'DECEASED', 'ABROAD'];
+
+  readonly petSpeciesLabel = getPetSpeciesLabel;
+  readonly petSexLabel = getPetSexLabel;
+  readonly petStatusLabel = getPetStatusLabel;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -151,7 +164,7 @@ export class PetDetailComponent implements OnInit {
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Üleanmise loomine ebaõnnestus.';
+          this.error = 'Üleandmise loomine ebaõnnestus.';
           this.cdr.markForCheck();
         }
       });

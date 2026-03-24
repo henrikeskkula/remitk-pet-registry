@@ -1,9 +1,9 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PetsService } from '../../../services/pets.service';
-import { Pet } from '../../../models/pet.model';
+import { getPetSpeciesLabel, getPetStatusLabel, Pet } from '../../../models/pet.model';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -11,7 +11,8 @@ import { finalize } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.scss']
+  styleUrls: ['./search-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchPage {
   private petsService = inject(PetsService);
@@ -22,10 +23,14 @@ export class SearchPage {
   loading = false;
   error = '';
 
+  readonly petSpeciesLabel = getPetSpeciesLabel;
+  readonly petStatusLabel = getPetStatusLabel;
+
   search(): void {
     if (!this.searchText.trim()) {
       this.error = 'Sisesta looma nimi või mikrokiibi number';
       this.pets = [];
+      this.cdr.markForCheck();
       return;
     }
 

@@ -7,11 +7,9 @@
 <div>
   <label>Tüüp</label><br>
   <select [(ngModel)]="model.type">
-    <option value="MARKED_MISSING">MARKED_MISSING</option>
-    <option value="MARKED_FOUND">MARKED_FOUND</option>
-    <option value="TRANSFER_INITIATED">TRANSFER_INITIATED</option>
-    <option value="TRANSFER_ACCEPTED">TRANSFER_ACCEPTED</option>
-    <option value="TRANSFER_REJECTED">TRANSFER_REJECTED</option>
+    <option *ngFor="let option of eventTypeOptions" [value]="option">
+      {{ petEventTypeLabel(option) }}
+    </option>
   </select>
 </div>
 
@@ -45,7 +43,7 @@
   <tbody>
     <tr *ngFor="let event of events">
       <td>{{ event.id }}</td>
-      <td>{{ event.type }}</td>
+      <td>{{ petEventTypeLabel(event.type) }}</td>
       <td>{{ event.time }}</td>
       <td>{{ event.performedByRole }}</td>
       <td>{{ event.description }}</td>

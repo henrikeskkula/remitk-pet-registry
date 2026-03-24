@@ -23,7 +23,7 @@
     <label>Looma liik</label><br>
     <select [(ngModel)]="pet.species" [disabled]="!editMode">
       <option *ngFor="let option of speciesOptions" [value]="option">
-        {{ option }}
+        {{ petSpeciesLabel(option) }}
       </option>
     </select>
   </div>
@@ -37,7 +37,7 @@
     <label>Sugu</label><br>
     <select [(ngModel)]="pet.sex" [disabled]="!editMode">
       <option *ngFor="let option of sexOptions" [value]="option">
-        {{ option }}
+        {{ petSexLabel(option) }}
       </option>
     </select>
   </div>
@@ -61,7 +61,7 @@
     <label>Staatus</label><br>
     <select [(ngModel)]="pet.status" [disabled]="!editMode">
       <option *ngFor="let option of statusOptions" [value]="option">
-        {{ option }}
+        {{ petStatusLabel(option) }}
       </option>
     </select>
   </div>

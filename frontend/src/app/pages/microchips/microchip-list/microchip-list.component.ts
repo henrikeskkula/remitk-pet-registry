@@ -1,8 +1,8 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MicrochipsService } from '../../../services/microchips.service';
-import { Microchip } from '../../../models/microchip.model';
+import { getMicrochipStatusLabel, Microchip } from '../../../models/microchip.model';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 
@@ -11,7 +11,8 @@ import { finalize } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './microchip-list.component.html',
-  styleUrl: './microchip-list.component.scss'
+  styleUrl: './microchip-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MicrochipList {
   private microchipsService = inject(MicrochipsService);
@@ -22,6 +23,8 @@ export class MicrochipList {
   importer = '';
   error = '';
   loading = false;
+
+  readonly microchipStatusLabel = getMicrochipStatusLabel;
 
   search(): void {
     const hasChipNumber = !!this.chipNumber.trim();

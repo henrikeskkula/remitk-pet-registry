@@ -26,7 +26,7 @@
       <td>{{ chip.id }}</td>
       <td>{{ chip.chipNumber }}</td>
       <td>{{ chip.importer }}</td>
-      <td>{{ chip.status === 'FREE' ? 'Vaba' : chip.status === 'USED' ? 'Kasutatud' : chip.status }}</td>
+      <td>{{ microchipStatusLabel(chip.status) }}</td>
       <td>
         <button (click)="updateStatus(chip, 'FREE')">Vaba</button>
         <button class="inline-action" (click)="updateStatus(chip, 'USED')">Kasutatud</button>

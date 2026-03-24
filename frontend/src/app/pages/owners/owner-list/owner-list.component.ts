@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -11,7 +11,8 @@ import { finalize } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './owner-list.component.html',
-  styleUrl: './owner-list.component.scss'
+  styleUrl: './owner-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OwnerList {
   private ownersService = inject(OwnersService);
@@ -44,7 +45,7 @@ export class OwnerList {
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Ownerite laadimine ebaõnnestus';
+          this.error = 'Loomapidajate laadimine ebaõnnestus';
           this.owners = [];
           this.cdr.markForCheck();
         }

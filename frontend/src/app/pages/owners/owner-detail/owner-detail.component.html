@@ -4,7 +4,7 @@
 
 <div *ngIf="owner">
   <div class="form-field">
-    <label>Isikukoood</label><br>
+    <label>Isikukood</label><br>
     <input [(ngModel)]="owner.personalCode" [disabled]="!editMode" />
   </div>
 
@@ -34,36 +34,34 @@
   </div>
 
   <div class="actions">
-    <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+    <button *ngIf="!editMode" (click)="editMode = true">Muuda</button>
     <button *ngIf="editMode" (click)="save()">Salvesta</button>
-    <button *ngIf="editMode" (click)="editMode = false">Tühista</button>
+    <button *ngIf="editMode" (click)="cancelEdit()">Tühista</button>
     <button class="delete-action" (click)="remove()">Kustuta</button>
   </div>
 
   <hr>
 
-  <h2>Owner pets</h2>
+  <h2>Loomapidaja loomad</h2>
 
   <table *ngIf="pets.length" class="pets-table">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Species</th>
-        <th>Status</th>
+        <th>Nimi</th>
+        <th>Looma liik</th>
+        <th>Staatus</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let pet of pets">
         <td>{{ pet.id }}</td>
         <td>{{ pet.name }}</td>
-        <td>{{ pet.species === 'DOG' ? 'Koer' : pet.species === 'CAT' ? 'Kass' : pet.species === 'FERRET' ? 'Tuhkur' :
-          pet.species }}</td>
-        <td>{{ pet.status === 'ACTIVE' ? 'Aktiivne' : pet.status === 'MISSING' ? 'Kadunud' : pet.status === 'DECEASED' ?
-          'Surnud' : pet.status === 'ABROAD' ? 'Välismaal' : pet.status }}</td>
+        <td>{{ petSpeciesLabel(pet.species) }}</td>
+        <td>{{ petStatusLabel(pet.status) }}</td>
       </tr>
     </tbody>
   </table>
 
-  <div *ngIf="!pets.length">No pets found.</div>
+  <div *ngIf="!pets.length">Loomi ei leitud.</div>
 </div>
