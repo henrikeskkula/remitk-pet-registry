@@ -1,0 +1,101 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 28px;
+  background:
+    radial-gradient(60% 40% at 50% 10%, rgba(97, 172, 255, 0.35), transparent 70%),
+    radial-gradient(45% 30% at 50% 90%, rgba(78, 144, 255, 0.28), transparent 70%),
+    linear-gradient(160deg, #071327 0%, #0f2b5a 55%, #12376f 100%);
+}
+
+.app-card {
+  width: min(960px, 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 24px 60px rgba(4, 16, 36, 0.6),
+    0 0 0 1px rgba(173, 213, 255, 0.2) inset;
+  backdrop-filter: blur(8px);
+}
+
+header {
+  background: linear-gradient(120deg, #1d57a8 0%, #2b79df 100%);
+  color: #fff;
+  padding: 16px 20px;
+}
+
+header h1 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* <-- lisatud */
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(245, 249, 255, 0.9);
+  border-bottom: 1px solid rgba(165, 187, 222, 0.65);
+}
+
+nav a {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid #c9d7ea;
+  background: #eef3fa;
+  color: #42526a;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.16s ease;
+}
+
+nav a:hover {
+  border-color: #2b79df;
+  color: #1d57a8;
+  background: #f6faff;
+}
+
+nav a.active {
+  border-color: #7cb1f1;
+  background: linear-gradient(120deg, #9fcbff 0%, #79aef2 100%);
+  color: #123c77;
+}
+
+main {
+  background: linear-gradient(180deg, rgba(239, 245, 255, 0.92) 0%, rgba(227, 237, 252, 0.9) 100%);
+  padding: 24px 20px 28px;
+  min-height: 460px;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  main {
+    min-height: auto;
+    padding: 18px 14px 20px;
+  }
+
+  .main-content {
+    max-width: 100%;
+  }
+}
