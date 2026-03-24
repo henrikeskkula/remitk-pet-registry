@@ -8,7 +8,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { PetsService } from '../../../services/pets.service';
-import { Pet } from '../../../models/pet.model';
+import {
+  Pet,
+  PetSpecies,
+  PetSex,
+  PetStatus,
+  getPetSpeciesLabel,
+  getPetSexLabel,
+  getPetStatusLabel
+} from '../../../models/pet.model';
 
 @Component({
   selector: 'app-pet-form',
@@ -27,6 +35,13 @@ import { Pet } from '../../../models/pet.model';
 export class PetFormComponent {
   private petsService = inject(PetsService);
   private router = inject(Router);
+
+  readonly speciesOptions: PetSpecies[] = ['DOG', 'CAT', 'FERRET'];
+  readonly sexOptions: PetSex[] = ['MALE', 'FEMALE', 'UNKNOWN'];
+  readonly statusOptions: PetStatus[] = ['ACTIVE', 'MISSING', 'DECEASED', 'ABROAD'];
+  readonly petSpeciesLabel = getPetSpeciesLabel;
+  readonly petSexLabel = getPetSexLabel;
+  readonly petStatusLabel = getPetStatusLabel;
 
   error = '';
   birthDateValue: Date | null = null;
