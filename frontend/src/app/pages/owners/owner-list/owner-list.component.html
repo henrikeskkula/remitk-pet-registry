@@ -2,11 +2,11 @@
 
 <div class="search-bar">
   <input [(ngModel)]="searchName" placeholder="Otsi nime järgi" />
-  <button class="spaced-action" (click)="searchOwners()">Otsi</button>
+  <button class="spaced-action" [disabled]="loading" (click)="searchOwners()">Otsi</button>
   <a class="link-action" routerLink="/owners/new">Lisa loomapidaja</a>
 </div>
 
-<div *ngIf="loading">Laen...</div>
+<div *ngIf="loading && !owners.length">Laen...</div>
 <div *ngIf="error">{{ error }}</div>
 
 <table *ngIf="owners.length" class="owners-table">

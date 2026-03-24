@@ -3,11 +3,11 @@
 <div class="search-bar">
   <input class="search-input" [(ngModel)]="chipNumber" placeholder="Otsi mikrokiibi numbri järgi" />
   <input class="spaced-input" [(ngModel)]="importer" placeholder="Otsi importija järgi" />
-  <button class="spaced-action" (click)="search()">Otsi</button>
+  <button class="spaced-action" [disabled]="loading" (click)="search()">Otsi</button>
   <a class="link-action" routerLink="/microchips/new">Lisa mikrokiip</a>
 </div>
 
-<div *ngIf="loading">Laen...</div>
+<div *ngIf="loading && !microchips.length">Laen...</div>
 <div *ngIf="error">{{ error }}</div>
 
 <table *ngIf="microchips.length" class="microchip-table">

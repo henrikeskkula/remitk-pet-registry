@@ -1,17 +1,12 @@
 <h1>Otsing</h1>
 
 <div class="search-box">
-  <input
-    [(ngModel)]="searchText"
-    placeholder="Sisesta looma nimi või mikrokiibi number"
-  />
+  <input [(ngModel)]="searchText" placeholder="Sisesta looma nimi või mikrokiibi number" />
 
-  <button (click)="search()">Otsi</button>
+  <button [disabled]="loading" (click)="search()">Otsi</button>
 </div>
 
-<div *ngIf="loading">
-  Otsin...
-</div>
+<div *ngIf="loading && !pets.length"> Otsin... </div>
 
 <div *ngIf="error">
   {{ error }}
@@ -50,5 +45,5 @@
 </div>
 
 <div *ngIf="!pets.length && !loading">
-  
+
 </div>

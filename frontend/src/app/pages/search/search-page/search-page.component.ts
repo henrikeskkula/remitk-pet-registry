@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PetsService } from '../../../services/pets.service';
 import { Pet } from '../../../models/pet.model';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-search-page',
@@ -13,8 +14,8 @@ import { Pet } from '../../../models/pet.model';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPage {
-
   private petsService = inject(PetsService);
+  private cdr = inject(ChangeDetectorRef);
 
   searchText = '';
   pets: Pet[] = [];
@@ -22,9 +23,9 @@ export class SearchPage {
   error = '';
 
   search(): void {
-
     if (!this.searchText.trim()) {
       this.error = 'Sisesta looma nimi või mikrokiibi number';
+      this.pets = [];
       return;
     }
 
@@ -37,17 +38,21 @@ export class SearchPage {
       ? { microchipId: Number(query) }
       : { name: query };
 
-    this.petsService.getPets(filters).subscribe({
-      next: (data) => {
-        this.pets = this.petsService.normalizeListResponse<Pet>(data);
+    this.petsService.getPets(filters)
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Otsing ebaõnnestus';
-        this.loading = false;
-      }
-    });
-
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: (data) => {
+          this.pets = this.petsService.normalizeListResponse<Pet>(data);
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          this.error = 'Otsing ebaõnnestus';
+          this.pets = [];
+          this.cdr.markForCheck();
+        }
+      });
   }
-
 }

@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PetsService } from '../../../services/pets.service';
 import { Pet } from '../../../models/pet.model';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-pets-list',
@@ -14,6 +15,7 @@ import { Pet } from '../../../models/pet.model';
 })
 export class PetsListComponent {
   private petsService = inject(PetsService);
+  private cdr = inject(ChangeDetectorRef);
 
   pets: Pet[] = [];
   loading = false;
@@ -21,25 +23,31 @@ export class PetsListComponent {
   searchName = '';
 
   searchPets(): void {
-    this.loading = true;
-    this.error = '';
-
     if (!this.searchName.trim()) {
       this.error = 'Sisesta looma nimi';
-      this.loading = false;
       this.pets = [];
+      this.cdr.markForCheck();
       return;
     }
 
-    this.petsService.getPets({ name: this.searchName.trim() }).subscribe({
-      next: (data) => {
-        this.pets = this.petsService.normalizeListResponse<Pet>(data);
+    this.loading = true;
+    this.error = '';
+
+    this.petsService.getPets({ name: this.searchName.trim() })
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Loomade laadimine ebaõnnestus';
-        this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: (data) => {
+          this.pets = this.petsService.normalizeListResponse<Pet>(data);
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.error = 'Loomade laadimine ebaõnnestus';
+          this.pets = [];
+          this.cdr.markForCheck();
+        }
+      });
   }
 }

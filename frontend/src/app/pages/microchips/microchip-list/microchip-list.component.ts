@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MicrochipsService } from '../../../services/microchips.service';
 import { Microchip } from '../../../models/microchip.model';
 import { RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-microchip-list',
@@ -14,6 +15,7 @@ import { RouterLink } from '@angular/router';
 })
 export class MicrochipList {
   private microchipsService = inject(MicrochipsService);
+  private cdr = inject(ChangeDetectorRef);
 
   microchips: Microchip[] = [];
   chipNumber = '';
@@ -28,6 +30,7 @@ export class MicrochipList {
     if ((hasChipNumber && hasImporter) || (!hasChipNumber && !hasImporter)) {
       this.error = 'Sisesta ainult üks filter: mikrokiibi number või importija';
       this.microchips = [];
+      this.cdr.markForCheck();
       return;
     }
 
@@ -37,43 +40,59 @@ export class MicrochipList {
     this.microchipsService.getMicrochips({
       chipNumber: hasChipNumber ? this.chipNumber.trim() : undefined,
       importer: hasImporter ? this.importer.trim() : undefined
-    }).subscribe({
-      next: (res) => {
-        this.microchips = this.microchipsService.normalizeListResponse<Microchip>(res);
+    })
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Mikrokiibi laadimine ebaõnnestus';
-        this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: (res) => {
+          this.microchips = this.microchipsService.normalizeListResponse<Microchip>(res);
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.error = 'Mikrokiibi laadimine ebaõnnestus';
+          this.microchips = [];
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   updateStatus(chip: Microchip, status: string): void {
     this.loading = true;
     this.error = '';
-    this.microchipsService.updateStatus(chip.id, status).subscribe({
-      next: () => {
-        this.search();
-    },
-      error: () => {
-        this.error = 'Staatuse uuendamine ebaõnnestus';
+    this.microchipsService.updateStatus(chip.id, status)
+      .pipe(finalize(() => {
         this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: () => {
+          this.search();
+        },
+        error: () => {
+          this.error = 'Staatuse uuendamine ebaõnnestus';
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   remove(id: number): void {
     this.loading = true;
     this.error = '';
-    this.microchipsService.deleteMicrochip(id).subscribe({
-      next: () => {
-        this.search();
-      },
-      error: () => {
-        this.error = 'Kustutamine ebaõnnestus';
+    this.microchipsService.deleteMicrochip(id)
+      .pipe(finalize(() => {
         this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: () => {
+          this.search();
+        },
+        error: () => {
+          this.error = 'Kustutamine ebaõnnestus';
+          this.cdr.markForCheck();
+        }
+      });
   }
 }
