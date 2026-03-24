@@ -36,7 +36,7 @@ export class OwnerForm {
 
     this.ownersService.createOwner(this.model).subscribe({
       next: (owner) => this.router.navigate(['/owners', owner.id]),
-      error: () => this.error = 'Owneri salvestamine ebaõnnestus'
+      error: () => this.error = 'Loomapidaja salvestamine ebaõnnestus'
     });
   }
 }

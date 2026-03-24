@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PetEventsService } from '../../../services/pet-events.service';
-import { PetEvent } from '../../../models/pet-event.model';
+import { getPetEventTypeLabel, PetEvent, PetEventType } from '../../../models/pet-event.model';
 
 @Component({
   selector: 'app-pet-events',
@@ -19,8 +19,17 @@ export class PetEventsComponent {
   events: PetEvent[] = [];
   error = '';
 
+  readonly eventTypeOptions: PetEventType[] = [
+    'MARKED_MISSING',
+    'MARKED_FOUND',
+    'TRANSFER_INITIATED',
+    'TRANSFER_ACCEPTED',
+    'TRANSFER_REJECTED'
+  ];
+  readonly petEventTypeLabel = getPetEventTypeLabel;
+
   model = {
-    type: 'MARKED_MISSING',
+    type: 'MARKED_MISSING' as PetEventType,
     description: '',
     time: ''
   };
@@ -35,7 +44,7 @@ export class PetEventsComponent {
   loadEvents(): void {
     this.petEventsService.getEventsByPetId(this.petId).subscribe({
       next: (res) => this.events = this.petEventsService.normalizeListResponse<PetEvent>(res),
-      error: () => this.error = 'Eventide laadimine ebaõnnestus'
+      error: () => this.error = 'Sündmuste laadimine ebaõnnestus'
     });
   }
 
@@ -51,7 +60,7 @@ export class PetEventsComponent {
         this.model.time = '';
         this.loadEvents();
       },
-      error: () => this.error = 'Eventi loomine ebaõnnestus'
+      error: () => this.error = 'Sündmuse loomine ebaõnnestus'
     });
   }
 }

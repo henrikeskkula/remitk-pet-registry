@@ -1,14 +1,20 @@
-<header>
-  <h1>REMITK RIIKLIK LEMMIKLOOMAREGISTER</h1>
-</header>
+<div class="app-shell">
+  <div class="app-card">
+    <header>
+      <h1>REMITK RIIKLIK LEMMIKLOOMAREGISTER</h1>
+    </header>
 
-<nav>
-  <a routerLink="/pets">Loomad</a> |
-  <a routerLink="/owners">Loomapidajad</a> |
-  <a routerLink="/microchips">Mikrokiibid</a> |
-  <a routerLink="/search">Otsing</a> |
-</nav>
+    <nav>
+      <a routerLink="/pets" routerLinkActive="active">Loomad</a>
+      <a routerLink="/owners" routerLinkActive="active">Loomapidajad</a>
+      <a routerLink="/microchips" routerLinkActive="active">Mikrokiibid</a>
+      <a routerLink="/search" routerLinkActive="active">Otsing</a>
+    </nav>
 
-<main>
-    <router-outlet></router-outlet>
-</main>
+    <main>
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

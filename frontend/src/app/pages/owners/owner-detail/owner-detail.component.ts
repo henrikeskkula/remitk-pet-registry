@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OwnersService } from '../../../services/owners.service';
 import { Owner } from '../../../models/owner.model';
-import { Pet } from '../../../models/pet.model';
+import { getPetSpeciesLabel, getPetStatusLabel, Pet } from '../../../models/pet.model';
 
 @Component({
   selector: 'app-owner-detail',
@@ -25,6 +25,9 @@ export class OwnerDetail implements OnInit {
   loading = false;
   editMode = false;
 
+  readonly petSpeciesLabel = getPetSpeciesLabel;
+  readonly petStatusLabel = getPetStatusLabel;
+
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!id) return;
@@ -35,12 +38,12 @@ export class OwnerDetail implements OnInit {
 
   loadOwner(id: number): void {
     this.loading = true;
-    this.error = '';    
+    this.error = '';
     this.ownersService.getOwner(id).subscribe({
       next: (owner) => {
         this.owner = owner,
-        this.originalOwner = { ...owner };
-        this.loading = false;        
+          this.originalOwner = { ...owner };
+        this.loading = false;
       },
       error: () => {
         this.error = 'Loomapidaja laadimine ebaõnnestus'
@@ -52,7 +55,7 @@ export class OwnerDetail implements OnInit {
   loadPets(id: number): void {
     this.ownersService.getOwnerPets(id).subscribe({
       next: (res) => this.pets = this.ownersService.normalizeListResponse<Pet>(res),
-      error: () => {this.error = 'Loomapidaja loomade laadimine ebaõnnestus';}
+      error: () => { this.error = 'Loomapidaja loomade laadimine ebaõnnestus'; }
     });
   }
 
@@ -65,9 +68,9 @@ export class OwnerDetail implements OnInit {
     this.ownersService.updateOwner(this.owner.id, this.owner).subscribe({
       next: (updated) => {
         this.owner = updated;
-        this.originalOwner = { ...updated };        
+        this.originalOwner = { ...updated };
         this.editMode = false;
-        this.loading = false;        
+        this.loading = false;
       },
       error: () => {
         this.error = 'Loomapidaja uuendamine ebaõnnestus'
@@ -87,7 +90,7 @@ export class OwnerDetail implements OnInit {
     if (!this.owner) return;
 
     this.loading = true;
-    this.error = '';    
+    this.error = '';
 
     this.ownersService.deleteOwner(this.owner.id).subscribe({
       next: () => {

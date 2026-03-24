@@ -5,12 +5,7 @@
 <form (ngSubmit)="submit()">
   <div>
     <label>Mikrokiibi number</label>
-    <input
-      type="number"
-      [(ngModel)]="pet.microchipId"
-      name="microchipId"
-      required
-    />
+    <input type="number" [(ngModel)]="pet.microchipId" name="microchipId" required />
   </div>
 
   <div>
@@ -21,9 +16,7 @@
   <div>
     <label>Looma liik</label>
     <select [(ngModel)]="pet.species" name="species">
-      <option value="DOG">Koer</option>
-      <option value="CAT">Kass</option>
-      <option value="FERRET">Tuhkur</option>
+      <option *ngFor="let s of speciesOptions" [value]="s">{{ petSpeciesLabel(s) }}</option>
     </select>
   </div>
 
@@ -35,9 +28,7 @@
   <div>
     <label>Sugu</label>
     <select [(ngModel)]="pet.sex" name="sex">
-      <option value="MALE">Isane</option>
-      <option value="FEMALE">Emane</option>
-      <option value="UNKNOWN">Teadmata</option>
+      <option *ngFor="let s of sexOptions" [value]="s">{{ petSexLabel(s) }}</option>
     </select>
   </div>
 
@@ -45,13 +36,8 @@
     <label>Sünnikuupäev</label>
     <br />
     <mat-form-field appearance="outline">
-      <input
-        matInput
-        [matDatepicker]="picker"
-        [(ngModel)]="birthDateValue"
-        name="birthDateValue"
-        placeholder="pp.kk.aaaa"
-      />
+      <input matInput [matDatepicker]="picker" [(ngModel)]="birthDateValue" name="birthDateValue"
+        placeholder="pp.kk.aaaa" />
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -75,10 +61,7 @@
   <div>
     <label>Staatus</label>
     <select [(ngModel)]="pet.status" name="status">
-      <option value="ACTIVE">Aktiivne</option>
-      <option value="MISSING">Kadunud</option>
-      <option value="DECEASED">Surnud</option>
-      <option value="ABROAD">Välismaal</option>
+      <option *ngFor="let s of statusOptions" [value]="s">{{ petStatusLabel(s) }}</option>
     </select>
   </div>
 

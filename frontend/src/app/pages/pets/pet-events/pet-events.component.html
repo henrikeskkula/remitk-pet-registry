@@ -1,51 +1,49 @@
-<h1>Pet events</h1>
+<h1>Looma sündmused</h1>
 
 <div *ngIf="error" style="color: red;">{{ error }}</div>
 
-<h2>Create event</h2>
+<h2>Loo sündmus</h2>
 
 <div>
-  <label>Type</label><br>
+  <label>Tüüp</label><br>
   <select [(ngModel)]="model.type">
-    <option value="MARKED_MISSING">MARKED_MISSING</option>
-    <option value="MARKED_FOUND">MARKED_FOUND</option>
-    <option value="TRANSFER_INITIATED">TRANSFER_INITIATED</option>
-    <option value="TRANSFER_ACCEPTED">TRANSFER_ACCEPTED</option>
-    <option value="TRANSFER_REJECTED">TRANSFER_REJECTED</option>
+    <option *ngFor="let option of eventTypeOptions" [value]="option">
+      {{ petEventTypeLabel(option) }}
+    </option>
   </select>
 </div>
 
 <div>
-  <label>Description</label><br>
+  <label>Kirjeldus</label><br>
   <input [(ngModel)]="model.description" />
 </div>
 
 <div>
-  <label>Time</label><br>
+  <label>Aeg</label><br>
   <input [(ngModel)]="model.time" placeholder="2025-11-13T14:28:39" />
 </div>
 
 <br>
-<button (click)="createEvent()">Create event</button>
+<button (click)="createEvent()">Loo sündmus</button>
 
 <hr>
 
-<h2>Event list</h2>
+<h2>Sündmuste nimekiri</h2>
 
 <table *ngIf="events.length" border="1" cellpadding="8">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Type</th>
-      <th>Time</th>
-      <th>Role</th>
-      <th>Description</th>
+      <th>Tüüp</th>
+      <th>Aeg</th>
+      <th>Roll</th>
+      <th>Kirjeldus</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let event of events">
       <td>{{ event.id }}</td>
-      <td>{{ event.type }}</td>
+      <td>{{ petEventTypeLabel(event.type) }}</td>
       <td>{{ event.time }}</td>
       <td>{{ event.performedByRole }}</td>
       <td>{{ event.description }}</td>
@@ -53,4 +51,4 @@
   </tbody>
 </table>
 
-<div *ngIf="!events.length">No events found.</div>
+<div *ngIf="!events.length">Sündmusi ei leitud.</div>

@@ -1,17 +1,12 @@
 <h1>Otsing</h1>
 
 <div class="search-box">
-  <input
-    [(ngModel)]="searchText"
-    placeholder="Sisesta looma nimi või mikrokiibi number"
-  />
+  <input [(ngModel)]="searchText" placeholder="Sisesta looma nimi või mikrokiibi number" />
 
-  <button (click)="search()">Otsi</button>
+  <button [disabled]="loading" (click)="search()">Otsi</button>
 </div>
 
-<div *ngIf="loading">
-  Otsin...
-</div>
+<div *ngIf="loading && !pets.length"> Otsin... </div>
 
 <div *ngIf="error">
   {{ error }}
@@ -36,8 +31,8 @@
       <tr *ngFor="let pet of pets">
         <td>{{ pet.id }}</td>
         <td>{{ pet.name }}</td>
-        <td>{{ pet.species }}</td>
-        <td>{{ pet.status }}</td>
+        <td>{{ petSpeciesLabel(pet.species) }}</td>
+        <td>{{ petStatusLabel(pet.status) }}</td>
 
         <td>
           <a [routerLink]="['/pets', pet.id]">Vaata</a>
@@ -50,5 +45,5 @@
 </div>
 
 <div *ngIf="!pets.length && !loading">
-  
+
 </div>

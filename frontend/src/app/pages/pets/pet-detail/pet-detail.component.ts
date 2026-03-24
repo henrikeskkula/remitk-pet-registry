@@ -1,23 +1,35 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { finalize } from 'rxjs';
+
 import { PetsService } from '../../../services/pets.service';
 import { OwnerTransferRequestsService } from '../../../services/owner-transfer-requests.service';
-import { Pet, PetSex, PetSpecies, PetStatus } from '../../../models/pet.model';
+import {
+  getPetSexLabel,
+  getPetSpeciesLabel,
+  getPetStatusLabel,
+  Pet,
+  PetSex,
+  PetSpecies,
+  PetStatus
+} from '../../../models/pet.model';
 import { OwnerTransferRequest } from '../../../models/owner-transfer-request.model';
 
 @Component({
   selector: 'app-pet-detail',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './pet-detail.component.html'
+  templateUrl: './pet-detail.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PetDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private petsService = inject(PetsService);
   private transferRequestsService = inject(OwnerTransferRequestsService);
+  private cdr = inject(ChangeDetectorRef);
 
   pet?: Pet;
   originalPet?: Pet;
@@ -31,10 +43,15 @@ export class PetDetailComponent implements OnInit {
   sexOptions: PetSex[] = ['MALE', 'FEMALE', 'UNKNOWN'];
   statusOptions: PetStatus[] = ['ACTIVE', 'MISSING', 'DECEASED', 'ABROAD'];
 
+  readonly petSpeciesLabel = getPetSpeciesLabel;
+  readonly petSexLabel = getPetSexLabel;
+  readonly petStatusLabel = getPetStatusLabel;
+
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!id) {
-      this.error = 'Invalid pet id.';
+      this.error = 'Vigane looma ID.';
+      this.cdr.markForCheck();
       return;
     }
 
@@ -44,48 +61,62 @@ export class PetDetailComponent implements OnInit {
   loadPet(id: number): void {
     this.loading = true;
     this.error = '';
+    this.cdr.markForCheck();
 
-    this.petsService.getPetById(id).subscribe({
-      next: (data) => {
-        this.pet = data;
-        this.originalPet = { ...data };
+    this.petsService.getPetById(id)
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to load pet.';
-        this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: (data) => {
+          this.pet = data;
+          this.originalPet = { ...data };
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.error = 'Looma laadimine ebaõnnestus.';
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   save(): void {
     if (!this.pet) return;
-    
-    this. loading = true;
-    this.error = '';
 
-    this.petsService.updatePet(this.pet.id, this.pet).subscribe({
-      next: (updated) => {
-        this.pet = updated;
-        this.originalPet = { ...updated };
-        this.editMode = false;
+    this.loading = true;
+    this.error = '';
+    this.cdr.markForCheck();
+
+    this.petsService.updatePet(this.pet.id, this.pet)
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to update pet.';
-        this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: (updated) => {
+          this.pet = updated;
+          this.originalPet = { ...updated };
+          this.editMode = false;
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.error = 'Looma värskendamine ebaõnnestus.';
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   cancelEdit(): void {
     if (!this.originalPet) {
       this.editMode = false;
+      this.cdr.markForCheck();
       return;
     }
 
     this.pet = { ...this.originalPet };
     this.editMode = false;
+    this.cdr.markForCheck();
   }
 
   remove(): void {
@@ -93,38 +124,50 @@ export class PetDetailComponent implements OnInit {
 
     this.loading = true;
     this.error = '';
+    this.cdr.markForCheck();
 
-    this.petsService.deletePet(this.pet.id).subscribe({
-      next: () => {
+    this.petsService.deletePet(this.pet.id)
+      .pipe(finalize(() => {
         this.loading = false;
-        this.router.navigate(['/pets']);
-      },
-      error: () => {
-        this.error = 'Failed to delete pet.';
-        this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/pets']);
+        },
+        error: () => {
+          this.error = 'Looma kustutamine ebaõnnestus.';
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   createTransfer(): void {
     if (!this.pet || this.newOwnerId === undefined || this.newOwnerId === null) {
-      this.error = 'New owner ID is required.';
+      this.error = 'Uue omaniku ID on nõutav.';
+      this.cdr.markForCheck();
       return;
     }
 
     this.loading = true;
     this.error = '';
+    this.cdr.markForCheck();
 
-    this.transferRequestsService.createTransfer(this.pet.id, this.newOwnerId).subscribe({
-      next: (transfer) => {
-        this.lastTransfer = transfer;
+    this.transferRequestsService.createTransfer(this.pet.id, this.newOwnerId)
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to create transfer.';
-        this.loading = false;
-      }
-    });
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: (transfer) => {
+          this.lastTransfer = transfer;
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.error = 'Üleandmise loomine ebaõnnestus.';
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   acceptTransfer(): void {
@@ -141,12 +184,14 @@ export class PetDetailComponent implements OnInit {
 
   private updateTransfer(action: 'accept' | 'reject' | 'cancel'): void {
     if (!this.lastTransfer) {
-      this.error = 'No transfer selected.';
+      this.error = 'Üleandmine pole valitud.';
+      this.cdr.markForCheck();
       return;
     }
 
     this.loading = true;
     this.error = '';
+    this.cdr.markForCheck();
 
     const request$ = action === 'accept'
       ? this.transferRequestsService.acceptTransfer(this.lastTransfer.id)
@@ -154,18 +199,24 @@ export class PetDetailComponent implements OnInit {
         ? this.transferRequestsService.rejectTransfer(this.lastTransfer.id)
         : this.transferRequestsService.cancelTransfer(this.lastTransfer.id);
 
-    request$.subscribe({
-      next: () => {
-        this.lastTransfer = undefined;
+    request$
+      .pipe(finalize(() => {
         this.loading = false;
-        if (action === 'accept' && this.pet) {
-          this.loadPet(this.pet.id);
+        this.cdr.markForCheck();
+      }))
+      .subscribe({
+        next: () => {
+          this.lastTransfer = undefined;
+          this.cdr.markForCheck();
+
+          if (action === 'accept' && this.pet) {
+            this.loadPet(this.pet.id);
+          }
+        },
+        error: () => {
+          this.error = `Üleandmise ${action === 'accept' ? 'kinnitus' : action === 'reject' ? 'tagasilükkamine' : 'tühistamine'} ebaõnnestus.`;
+          this.cdr.markForCheck();
         }
-      },
-      error: () => {
-        this.error = `Failed to ${action} transfer.`;
-        this.loading = false;
-      }
-    });
+      });
   }
 }
