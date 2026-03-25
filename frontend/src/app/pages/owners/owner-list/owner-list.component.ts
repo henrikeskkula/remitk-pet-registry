@@ -45,7 +45,7 @@ export class OwnerList {
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Loomapidajate laadimine ebaõnnestus';
+          this.error = 'Loomapida otsing ebaõnnestus';
           this.owners = [];
           this.cdr.markForCheck();
         }

@@ -48,7 +48,7 @@ export class PetsListComponent {
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Loomade laadimine ebaõnnestus';
+          this.error = 'Looma otsing ebaõnnestus';
           this.pets = [];
           this.cdr.markForCheck();
         }

@@ -51,6 +51,7 @@ export class SearchPage {
       .subscribe({
         next: (data) => {
           this.pets = this.petsService.normalizeListResponse<Pet>(data);
+          this.error = this.pets.length === 0 ? 'Tulemusi ei leitud' : '';
           this.cdr.markForCheck();
         },
         error: (err) => {

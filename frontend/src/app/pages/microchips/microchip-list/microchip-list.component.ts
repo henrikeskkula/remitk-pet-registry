@@ -54,7 +54,7 @@ export class MicrochipList {
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Mikrokiibi laadimine ebaõnnestus';
+          this.error = 'Mikrokiibi otsing ebaõnnestus';
           this.microchips = [];
           this.cdr.markForCheck();
         }
