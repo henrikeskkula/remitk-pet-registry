@@ -51,6 +51,7 @@ export class MicrochipList {
       .subscribe({
         next: (res) => {
           this.microchips = this.microchipsService.normalizeListResponse<Microchip>(res);
+          this.error = this.microchips.length === 0 ? 'Tulemusi ei leitud' : '';
           this.cdr.markForCheck();
         },
         error: () => {

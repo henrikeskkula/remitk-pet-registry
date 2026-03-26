@@ -1,5 +1,6 @@
 <h1>Loomapidaja andmed</h1>
 
+<div *ngIf="loading && !owner">Laen...</div>
 <div *ngIf="error" class="error-message">{{ error }}</div>
 
 <div *ngIf="owner">
@@ -44,6 +45,8 @@
 
   <h2>Loomapidaja loomad</h2>
 
+  <div *ngIf="petsLoading">Laen loomi...</div>
+
   <table *ngIf="pets.length" class="pets-table">
     <thead>
       <tr>
@@ -51,6 +54,7 @@
         <th>Nimi</th>
         <th>Looma liik</th>
         <th>Staatus</th>
+        <th>Tegevus</th>
       </tr>
     </thead>
     <tbody>
@@ -59,9 +63,10 @@
         <td>{{ pet.name }}</td>
         <td>{{ petSpeciesLabel(pet.species) }}</td>
         <td>{{ petStatusLabel(pet.status) }}</td>
+        <td><a [routerLink]="['/pets', pet.id]">Vaata</a></td>
       </tr>
     </tbody>
   </table>
 
-  <div *ngIf="!pets.length">Loomi ei leitud.</div>
+  <div *ngIf="!petsLoading && !pets.length">Loomi ei leitud.</div>
 </div>

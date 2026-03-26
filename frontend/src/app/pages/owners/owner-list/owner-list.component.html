@@ -7,7 +7,7 @@
 </div>
 
 <div *ngIf="loading && !owners.length">Laen...</div>
-<div *ngIf="error">{{ error }}</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
 
 <table *ngIf="owners.length" class="owners-table">
   <thead>
