@@ -45,10 +45,11 @@ export class PetsListComponent {
       .subscribe({
         next: (data) => {
           this.pets = this.petsService.normalizeListResponse<Pet>(data);
+          this.error = this.pets.length === 0 ? 'Tulemusi ei leitud' : '';
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Loomade laadimine ebaõnnestus';
+          this.error = 'Looma otsing ebaõnnestus';
           this.pets = [];
           this.cdr.markForCheck();
         }

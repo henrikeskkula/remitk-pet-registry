@@ -28,7 +28,7 @@ cp .env.example .env
 
 ```env
 POSTGRES_DB=remitk
-POSTGRES_USER=remitk
+POSTGRES_USER=<your-username>
 POSTGRES_PASSWORD=<your-password>
 ```
 
@@ -48,7 +48,7 @@ Set the required environment variables (or export them in your shell):
 
 ```bash
 export DB_URL=jdbc:postgresql://localhost:5432/remitk
-export DB_USERNAME=remitk
+export DB_USERNAME=<your-db_username>
 export DB_PASSWORD=<your-password>
 ```
 
@@ -72,6 +72,15 @@ npm start
 ```
 
 Frontend starts at **http://localhost:4200**
+
+### 4. Frontend tests
+
+Run unit tests (watch mode):
+
+```bash
+cd frontend
+npm test
+```
 
 ---
 

@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MAT_DATE_LOCALE, MatDateFormats, NativeDateAdapter } from '@angular/material/core';
 
 export const ET_DATE_FORMATS: MatDateFormats = {
@@ -35,7 +35,7 @@ export const ET_DATE_FORMATS: MatDateFormats = {
     }
   }
 };
-
+@Injectable()
 export class EtDateAdapter extends NativeDateAdapter {
   private readonly matDateLocale = inject(MAT_DATE_LOCALE, { optional: true });
 

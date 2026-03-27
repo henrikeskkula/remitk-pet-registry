@@ -42,10 +42,11 @@ export class OwnerList {
       .subscribe({
         next: (data) => {
           this.owners = this.ownersService.normalizeListResponse<Owner>(data);
+          this.error = this.owners.length === 0 ? 'Tulemusi ei leitud' : '';
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Loomapidajate laadimine ebaõnnestus';
+          this.error = 'Loomapidaja otsing ebaõnnestus';
           this.owners = [];
           this.cdr.markForCheck();
         }

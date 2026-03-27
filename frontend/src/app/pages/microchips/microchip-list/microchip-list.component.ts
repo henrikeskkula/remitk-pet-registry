@@ -51,10 +51,11 @@ export class MicrochipList {
       .subscribe({
         next: (res) => {
           this.microchips = this.microchipsService.normalizeListResponse<Microchip>(res);
+          this.error = this.microchips.length === 0 ? 'Tulemusi ei leitud' : '';
           this.cdr.markForCheck();
         },
         error: () => {
-          this.error = 'Mikrokiibi laadimine ebaõnnestus';
+          this.error = 'Mikrokiibi otsing ebaõnnestus';
           this.microchips = [];
           this.cdr.markForCheck();
         }
